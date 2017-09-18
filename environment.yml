@@ -1,5 +1,5 @@
 
-name: bmelecture03
+name: bme590hrm
 dependencies:
   - python>=3.5
   - numpy
