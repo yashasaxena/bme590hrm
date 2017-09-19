@@ -1,0 +1,15 @@
+language: python
+python:
+  - 3.6
+install:
+  - sudo apt-get update # update packages
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh # install miniconda
+  - bash miniconda.sh -b -p $HOME/miniconda 
+  - export PATH="$HOME/miniconda/bin:$PATH" # Set the path
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no # Set configuration on conda to not prompt for y/n prompts
+  - conda update -q conda # Update
+  - conda env create -f environment.yml # Create your envronment
+  - source activate bme590hrm 
+script:
+  - py.test # Run the tests
