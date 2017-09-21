@@ -21,10 +21,10 @@ def test_tachy_present():
     assert(avghr.tachy(200),  False)
 
 def test_tachy_not_present():
-    assert(avghr.tachy(80),  False)
+    assert(avghr.tachy(80),  True)
 
 def test_brachy_present():
     assert(avghr.brachy(30), False)
 
- def test_brachy_not_present():
-    assert (avghr.brachy(75), False)
+def test_brachy_not_present():
+    assert (avghr.brachy(65), True)
