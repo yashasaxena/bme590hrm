@@ -21,8 +21,8 @@ def test_avghr():
 
 
 def test_tachy():
-    assert(tachy(avghr_val), False)
+    assert(tachy(200), False)
 
 
 def test_brachy():
-    assert(brachy(avghr_val), False)
+    assert(brachy(30), False)
