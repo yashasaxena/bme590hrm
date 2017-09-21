@@ -9,7 +9,7 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no # Set configuration on conda to not prompt for y/n prompts
   - conda update -q conda # Update
-  - conda env create -f environment.yml # Create your envronment
+  - conda create -q -n bme590hrm # Create your envronment
   - source activate bme590hrm 
 script:
   - py.test # Run the tests
