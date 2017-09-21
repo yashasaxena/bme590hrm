@@ -23,7 +23,7 @@ def testcolumns():
 
 #test that the headers are present
 def testheader():
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         datavalidation_code.headercheck('FaultyData_UnitTest.csv')
 
 #test that the data type after the first row is all float/int
@@ -45,14 +45,6 @@ def testnumpyarray():
 #def teststring():
     #with pytest.raises(TypeError):
      #   sumfxn2.summation_func('a', 'b')
-
-def main():
-    print("Blah")
-    with open('FaultyData_UnitTest.csv') as HR:
-        csv_HR = csv.reader(HR)
-
-    for row in csv_HR:
-        print (row);
 
 
 

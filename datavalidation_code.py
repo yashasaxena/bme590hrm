@@ -2,7 +2,7 @@
 import csv
 import numpy as np
 
-HR_data = [0, 0]  # initialize a matrix to store data
+HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 #Open CSV
 #filename = 'ecg_data.csv'
@@ -21,7 +21,7 @@ def headercheck(filename):  # checks presence of headers
         csv_HR = csv.reader(HR)
         header_row = next(csv_HR)
         if (type(header_row[0]) != str) or (type(header_row[1]) != str):
-            raise TypeError('Data headers are not present, please check and try again.')
+            raise ValueError('Data headers are not present, please check and try again.')
 
 def datatypecheck(filename):  # checks float/int
     with open(filename) as HR:
@@ -49,6 +49,6 @@ def dataextraction(filename):
             time = float(row[0])
             signal = float(row[1])
             HR_data=np.vstack([HR_data, [time, signal]])
-
+    HR_data
 
 #HR.close()
