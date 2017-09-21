@@ -1,13 +1,8 @@
 import pytest
-import sumfxn
-
 import numpy
-
-import sys
-# import iPython
-# import pytest
-# # import "pytest-cov"
-# import "pytest-pep8"
+import pytest_cov
+import pytest_pep8
+import unittest
 
 """
 
