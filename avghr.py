@@ -11,16 +11,16 @@ def hr_averaging(time_array, mv_array, averaging_time):
 
     return average_hr_val
 
-def tachy(average_hr_val):
-    if average_hr_val > 100:
+def tachy(average_hr_val, tachy_limit = 100):
+    if average_hr_val > tachy_limit:
         print("Tachycardia was found!")
         return False
     else:
         return True
 
-def brachy(average_hr_val):
+def brachy(average_hr_val, brachy_limit = 60):
 
-    if average_hr_val < 60:
+    if average_hr_val < brachy_limit:
         print("Brachycardia was found!")
         return False
 
