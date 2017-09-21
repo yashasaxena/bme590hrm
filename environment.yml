@@ -2,6 +2,8 @@ name: bme590hrm
 dependencies:
   - python>=3.5
   - numpy
+  - scipy
+  - csv
   - pytest
   - pytest-pep8
   - pytest-cov
