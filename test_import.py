@@ -1,5 +1,5 @@
 import pytest
-
+import unittest
 import datavalidation_code
 
 import numpy
@@ -21,30 +21,23 @@ def testcolumns():
     with pytest.raises(TypeError):
         datavalidation_code.columncheck('FaultyData_UnitTest.csv')
 
+
 #test that the headers are present
-def testheader():
-    with pytest.raises(ValueError):
-        datavalidation_code.headercheck('FaultyData_UnitTest.csv')
+#def testheader():
+#    with pytest.raises(ValueError):
+#        datavalidation_code.headercheck('FaultyData_UnitTest.csv')
 
 #test that the data type after the first row is all float/int
 def testdatatype():
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         datavalidation_code.datatypecheck('FaultyData_UnitTest.csv')
 
 #test that the data values are within a practical range
 def testvaluerange():
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         datavalidation_code.datapracticality('FaultyData_UnitTest.csv')
 
-# test that the read data was parsed correctly into numpy arrays
-def testnumpyarray():
-    with pytest.raises(TypeError):
-        datavalidation_code.dataextraction('FaultyData_UnitTest.csv')
-
-
-#def teststring():
-    #with pytest.raises(TypeError):
-     #   sumfxn2.summation_func('a', 'b')
-
-
-
+def testdataisgood():
+    assert datavalidation_code.columncheck("ecg_data.csv")==1
+    assert datavalidation_code.datatypecheck("ecg_data.csv")==1
+    assert datavalidation_code.datapracticality("ecg_data.csv")==1
