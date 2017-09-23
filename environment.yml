@@ -4,7 +4,6 @@ dependencies:
   - numpy
   - scipy
   - pytest
-  - unittest
   - pytest-pep8
   - pytest-cov
   - ipython
