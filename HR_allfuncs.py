@@ -1,8 +1,6 @@
 import numpy as np
-import scipy
 from scipy import signal
 import csv
-import matplotlib.pyplot as plt
 
 
 def dataextraction(filename):
