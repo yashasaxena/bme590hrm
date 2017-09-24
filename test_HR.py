@@ -17,7 +17,7 @@ array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
 def test_peakdetect():
-    assert hr.HR_peakdetect(array_test) == 10
+    assert len(hr.HR_peakdetect(array_test)) == 10
 
 def test_instHR():
     assert hr.instHR(array_test_time) == 60

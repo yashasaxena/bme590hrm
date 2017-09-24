@@ -1,4 +1,5 @@
 {
-  "test_HR.py": true,
+  "test_HR.py::test_instHR": true,
+  "test_HR.py::test_peakdetect": true,
   "test_function_IHR.py::test_instHR": true
 }
