@@ -12,7 +12,7 @@ t = np.arange(0, 10, 0.001)
 signal = abs(np.sin(t*np.pi)**3)
 
 #combine t and sin_vals arrays
-array_test = np.concatenate((t,sin_vals),axis=0)
+array_test = np.concatenate((t,signal),axis=0)
 array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
