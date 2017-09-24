@@ -1,0 +1,210 @@
+Assumptions:
+(1) based on low HR of 40 BPM, have at least 1 full cardiac cycle every 1.5 s
+(2) in period of 9 s, can accumulate 6+ cardiac cycles
+(3) not getting noise blips in signal that would cause multiple crossings per cardiac cycle (this probably is the case though--digital "hysteresis")
+(4) don't have max/min calculation functions for arrays
+
+Timeline:
+(1) start reading analog input @ 0 s
+(2) calculate first threshold @ 9 s (no threshold averaging)
+(3) start reading digital input @ 9 s
+(4) display 1st HR @ 18 s (for testing, 1 ana + 1 dig; for output, 1 value)
+(5) calculate 2nd threshold @ 18 s (init threshold averaging ~ prev + current)
+...
+ 
+Questions:
+(1) Can run parallel processes, e.g. do calculations on input from each signal simultaneously?
+(2) Can add to length of vector?
+(3) Can have defined and undefined indices in same vector?
+(4) In C++, if modify a global variable, does everything referencing/using that global variable recognize the change, or do need to manually send changes?
+(5) Turn on analog pin with action or by setting boolean variable to on?
+
+
+
+Pseudocode
+
+"Global" variables:
+
+private:
+cycleMaxsECG
+cycleMinsECG
+cycleMaxsPP
+cycleMinsECG
+
+thresholdECG (current threshold being sent to hardware)
+thresholdPP (current threshold being sent to hardware)
+recentThresholdsECG (holds 2 most recent calculated thresholds)
+recentThresholdsPP (holds 2 most recent calculated thresholds)
+
+counterAnaECG
+counterAnaPP
+counterDigECG
+counterDigPP
+
+public:
+combinedHR
+
+sampRate == sampling rate (10 kHz)
+cycle == duration of collection cycle (1.5s)
+period == # cycles per period (6, so 9s)
+cyclesHR == # cycles before calculate HR (6)
+
+
+
+Main loop():
+(1) get new threshold
+(2) Analog output pins
+(3) until STOP,
+(3a) get new HR
+(3b) get new threshold
+
+
+
+get new threshold:
+(1) Analog input pin 1 (ECG)
+(2) Analog input pin 2 (PP)
+(3) Extract threshold input (Note: Calculate threshold nested within)
+(4) return threshold
+
+
+Analog output pin:
+(1) assign  thresholdECG  to analog output pin 1 (ECG)
+(2) assign thresholdPP to analog output pin 2 (PP)
+(3) turn on analog pin 1 (ECG); turn on analog pin 2 (PP)
+
+
+get new HR:
+(1) count #cycles
+(2) when #cycles > cyclesHR
+(2a) calculate HRs
+(3) MCU display
+
+
+
+Threshold/EventDetection Class:
+Class variables:
+private:
+rawAnaInputECG
+rawAnaInputPP
+rawAnaValueECG
+rawAnaValuePP
+
+Analog input pin 1 (ECG) + event detection:
+(1) read raw analog input into rawAnaInputECG ((sampRate*cycle)x1 array)
+(2) store value of rawAnaInputECG in rawAnaValueECG[1]
+CONCERN: noise causing multiple crossings per real peak
+(3-5) if have thresholdECG && thresholdPP
+(3a) if rawAnaValueECG[1] >= thresholdECG && rawAnaValueECG[2] < thresholdECG 
+(3b) increase the value of counterAnaECG by 1
+(4) move rawAnaValueECG[1] to rawAnaValueECG[2]
+(5) when timecounter==9seconds go to calculate HR
+
+
+Analog input pin 2 (PP) + event detection:
+(1) read raw analog input into rawAnaInputPP ((sampRate*cycle)x1 array)
+(2) store value of rawAnaInputPP in rawAnaValuePP[1]
+(3-5) if have thresholdECG && thresholdPP (3-5)
+(3a) if rawAnaValuePP[1] >= thresholdPP && rawAnaValuePP[2] < thresholdPP 
+(3b) increase the value of counterAnaPP by 1
+(4) move rawAnaValuePP[1] to rawAnaValuePP[2]
+(5) when timecounter==9seconds go to calculate HR
+
+
+Extract threshold input:
+(1a) ~max value detection of rawAnaInputECG;~ store in cycleMaxsECG (periodx1 array)
+(1b) ~max value detection of rawAnaInputPP;~ store in cycleMaxsPP (periodx1 array)
+(2a) ~min value detection of rawAnaInputECG;~ store in cycleMinsECG (periodx1 array)
+(2b) ~min value detection of rawAnaInputPP;~ store in cycleMinsPP (periodx1 array)
+(3) clear rawAnaInputECG; clear rawAnaInputPP
+(4) if cycleMinsPP is full (?and other period arrays?), Calculate threshold
+(5) Analog input pin 1 (ECG); Analog input pin 2 (PP)
+(6) return threshold
+
+
+Calculate threshold: (have to merge PP & ECG)
+(1a) calc maxPrdECG (avg of (period-2) middle cycleMaxsECG values)
+(1b) calc maxPrdPP (avg of (period-2) middle cycleMaxsPP values)
+(2a) calc minPrdECG (avg of (period-2) middle cycleMinsECG values)
+(2b) calc minPrdPP (avg of (period-2) middle cycleMinsPP values)
+(3) calc prdThresholdECG ((%(maxPrdECG-minPrdECG) + minPrdECG)
+(3) calc prdThresholdPP ((%(maxPrdPP-minPrdPP) + minPrdPP)
+(4) if recentThresholdsECG is empty (ie getting 1st threshold), store in recentThresholdsECG[2]
+(4a) thresholdECG equals recentThesholdsECG[2]
+(4b) otherwise,
+(4bi) move recentThresholdsECG[2] to recentThresholdsECG[1]
+(4bii) store prdThresholdECG in recentThresholdsECG[1]
+(4biii) thresholdECG equals average of recentThresholdsECG (i.e., send thresholdECG to analog out)
+(4) if recentThresholdsPP is empty (i.e. getting 1st thresholdPP), store in recentThresholdsPP[2]
+(4a) thresholdPP equals recentThesholdsPP[2]
+(4b) otherwise,
+(4bi) move recentThresholdsPP[2] to recentThresholdsPP[1]
+(4bii) store prdThresholdPP in recentThresholdsPP[1]
+(4biii) thresholdPP equals average of recentThresholdsPP (i.e., send threshold to analog out)
+(5) clear cycleMaxsECG; clear cycleMaxsPP; clear cycleMinsECG; clear cycleMinsPP
+(6) return threshold
+
+
+private:
+counterDigECG
+counterDigPP
+rawDigValueECG
+rawDigValuePP
+
+Digital input pin 1 (ECG) + event detection:
+(1-4) if threshold is not empty:
+(2) set rawDigValueECG[1] to inputPin1
+(3) if rawDigValueECG[1] == 1 && ! rawDigValueECG[2] == 1, increment counterDigECG
+(4) rawDigValueECG[2] = rawDigValueECG[1]
+
+Digital input pin 2 (PP) + event detection:
+(1) if threshold is not empty:
+(2) set rawDigValuePP[1] to inputPin2
+(3) if rawDigValuePP[1] == 1 && !rawDigValueECG[2] == 1, increment counter
+
+
+HR Class:
+Class variables:
+~public for testing, private for use~
+HRAnaECG
+HRAnaPP
+HRDigECG
+HRDigPP
+
+Calculate HRs:
+CONSIDERATION: count cycles to calculate duration of HR instead of set time
+(1) calculate HRAnaECG (counterAnaECG * 60/15)
+(2) calculate HRAnaPP (counterAnaPP * 60/15)
+(3) calculate HRDigECG (counterDigECG * 60/15)
+(4) calculate HRDigPP (counterDigPP * 60/15)
+(5) calculate combinedHR (avg HRAnaECG,HRAnaPP,HRDigECG,&HRDigPP)
+
+
+MCU Display:
+~for testing~
+~(1) if no HR, display "Calculating value" or "Loading" or "Please wait"~ 
+~(1a) display 5 separate HR values (or cycle through them w/ String of variable name)~
+
+~for use~
+~(1) if no HR, display "Calculating value" or "Loading" or "Please wait"~
+~(1a) display combinedHR~
+
+
+STOP (button):
+(1) stop loop
+(2) display last HR
+(3) clear all data (except display)
+
+
+RESET (button):
+(1) stop loop
+(2) clear all data
+(3) run whole program again
+
+
+~for testing only (probs)~
+INCREASE THRESHOLD % (button):
+(1) add 5 to threshold
+
+DECREASE THRESHOLD % (button):
+(1) subtract 5 from threshold
+~for testing only (probs)~
