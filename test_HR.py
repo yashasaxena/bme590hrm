@@ -1,5 +1,4 @@
 import HR_allfuncs as hr
-import math
 import numpy as np
 import pytest
 
@@ -10,10 +9,7 @@ import pytest
 # expected peaks should be 10
 
 t = np.arange(0, 10, 0.001)
-sin_vals = []
-pi = math.pi
-for x in range(0,len(t)):
-    sin_vals[x] = math.sin(2*pi*t[x])
+signal = abs(np.sin(t*np.pi)**3)
 
 #combine t and sin_vals arrays
 array_test = np.concatenate((t,sin_vals),axis=0)
