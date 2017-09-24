@@ -20,4 +20,4 @@ def test_peakdetect():
     assert len(hr.HR_peakdetect(array_test)) == 10
 
 def test_instHR():
-    assert hr.instHR(array_test_time) == 60
+    assert int(hr.instHR(array_test_time)) == 60
