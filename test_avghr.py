@@ -49,13 +49,14 @@ def test_avghr_withfloat():
     assert(avghr.hr_averaging(.333), 90)
 
 
-def test_tachystring():
-    with pytest.raises(TypeError):
-        avghr.tachy("word")
-
 def test_tachylim_valid():
     with pytest.raises(ValueError):
         avghr.tachy(80, -1)
+
+
+def test_tachystring():
+    with pytest.raises(TypeError):
+        avghr.tachy("word")
 
 
 def test_tachy_present():
@@ -70,7 +71,9 @@ def test_brachylim_valid():
     with pytest.raises(ValueError):
         avghr.brachy(80,-1)
 
-
+def test_brachystring():
+    with pytest.raises(TypeError):
+        avghr.brachy("word")
 
 def test_brachy_present():
     assert(avghr.brachy(30), False)
@@ -80,7 +83,5 @@ def test_brachy_not_present():
     assert (avghr.brachy(65), True)
 
 
-def test_brachystring():
-    with pytest.raises(TypeError):
-        avghr.brachy("word")
+
 

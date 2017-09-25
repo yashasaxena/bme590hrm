@@ -100,6 +100,10 @@ def hr_averaging(averaging_time):
 
 
 def tachy(average_hr_val, tachy_limit=100):
+    # check for non-zero averaging time
+    if tachy_limit <= 0:
+        print("Your tachycardia limit must be greater than zero.")
+        raise ValueError
 
     try:
         tachy_limit = complex(tachy_limit)
@@ -116,6 +120,9 @@ def tachy(average_hr_val, tachy_limit=100):
 
 def brachy(average_hr_val, brachy_limit=60):
 
+    if brachy_limit <= 0:
+        print("Your brachycardia limit must be greater than zero.")
+        raise ValueError
     try:
         brachy_limit = complex(brachy_limit)
         brachy_limit = brachy_limit.real
