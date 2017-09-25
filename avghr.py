@@ -8,7 +8,7 @@ min_to_sec = 60
 num_arg = 1
 
 
-def hr_averaging(averaging_time):
+def hr_averaging(averaging_time,filename):
 
     """
     .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
@@ -50,7 +50,7 @@ def hr_averaging(averaging_time):
     averaging_time_sec = averaging_time * min_to_sec
 
     # extract hr data from .csv file
-    hr_data = datavalidation_code.dataextraction("ecg_data.csv")
+    hr_data = datavalidation_code.dataextraction(filename)
     orig_time_data = hr_data[:, 0]
     max_acq_time = max(orig_time_data)
 

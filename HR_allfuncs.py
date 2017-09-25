@@ -5,7 +5,7 @@ from fractions import Fraction
 import sys
 
 min_to_sec = 60
-num_arg = 1
+num_arg = 3
 HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 #Open CSV
@@ -134,7 +134,7 @@ def instHR(t_array):
 
 
 
-def hr_averaging(averaging_time):
+def hr_averaging(averaging_time,time_array):
 
     """
     .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
@@ -142,7 +142,7 @@ def hr_averaging(averaging_time):
     Calculate the average HR based upon ECG data.
 
     :param averaging_time: time period (in min) used to calculate average HR
-    :param tachy_limit: sets the tachycardia threshold limit, defaults to 100
+    :param time_array: the time_array after peak_detect has been called
     :param brachy_limit: sets the brachycardia threshold limit, defaults to 100
     :rtype: integer value of average HR
     """
@@ -176,9 +176,7 @@ def hr_averaging(averaging_time):
     averaging_time_sec = averaging_time * min_to_sec
 
     # extract hr data from .csv file
-    hr_data = dataextraction("ecg_data.csv")
-    orig_time_data = hr_data[:, 0]
-    max_acq_time = max(orig_time_data)
+    max_acq_time = max(time_array)
 
     # check if averaging time is longer than ECG acq time
     if averaging_time_sec > max_acq_time:
@@ -187,10 +185,6 @@ def hr_averaging(averaging_time):
     else:
         pass
 
-    # perform peak detection
-    time_list = HR_peakdetect(hr_data)
-    print(len(time_list))
-    time_array = np.asarray(time_list)
 
     final_ind = 0
     final_min = abs(time_array[0] - averaging_time_sec)
@@ -201,24 +195,19 @@ def hr_averaging(averaging_time):
     for i in range(0, len(time_array)):
 
         min_val = abs(time_array[i] - averaging_time_sec)
-        print(min_val)
-
         if min_val < final_min:
             final_min = min_val
             final_ind = i
 
-    print(final_ind)
     # final_ind = np.argwhere(min(abs(time_array - averaging_time_sec)))
     # avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
     time_array_sliced = time_array[:final_ind+1]
-    print(len(time_array_sliced))
     average_hr_val = int(round((len(time_array_sliced))/averaging_time))
-    print(average_hr_val)
     return average_hr_val
 
 
-def tachy(average_hr_val, tachy_limit=100):
+def tachy(average_hr_val, tachy_limit):
 
     """
     .. function:: tachy(average_hr_val, tachy_limit)
@@ -248,7 +237,7 @@ def tachy(average_hr_val, tachy_limit=100):
         return False
 
 
-def brachy(average_hr_val, brachy_limit=60):
+def brachy(average_hr_val, brachy_limit):
 
     """
     .. function:: brachy(average_hr_val, brachy_limit)
@@ -274,4 +263,4 @@ def brachy(average_hr_val, brachy_limit=60):
         return True
 
     else:
-        return FAlse
+        return False
