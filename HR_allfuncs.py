@@ -23,6 +23,11 @@ def dataextraction(filename):
 
 
 def HR_peakdetect(data_array):
+    """
+            .. function:: HR_peakdetect(data_array)
+            Returns a time array of times where peak was detected
+            :param data_array: a 2-d array with time and voltage values
+    """
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
     # differentiation process window, baseline correction
@@ -46,6 +51,11 @@ def HR_peakdetect(data_array):
 
 
 def instHR(t_array):
+    """
+            .. function:: instHR(t_array)
+            Calculates instant heart rate from peak time array
+            :param t_array: a 1-d list with time values of peaks
+    """
     dt_first_beat = t_array[2] - t_array[1]
 
     instHR = 1/dt_first_beat * 60
