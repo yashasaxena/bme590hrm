@@ -38,6 +38,6 @@ def testvaluerange():
         datavalidation_code.datapracticality('FaultyData_UnitTest.csv')
 
 def testdataisgood():
-    assert datavalidation_code.columncheck("ecg_data.csv")==1
-    assert datavalidation_code.datatypecheck("ecg_data.csv")==1
-    assert datavalidation_code.datapracticality("ecg_data.csv")==1
+    assert datavalidation_code.columncheck("GoodData_UnitTest.csv")==1
+    assert datavalidation_code.datatypecheck("GoodData_UnitTest.csv")==1
+    assert datavalidation_code.datapracticality("GoodData_UnitTest.csv")==1
