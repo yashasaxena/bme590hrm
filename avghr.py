@@ -8,10 +8,18 @@ min_to_sec = 60
 num_arg = 1
 
 
-
 def hr_averaging(averaging_time):
 
-    #check for valid num_args
+    """
+    .. function:: hr_averaging(averaging_time)
+
+    Calculate the average HR based upon ECG data.
+
+    :param averaging_time: time period (in min) used to calculate average HR
+    :rtype: integer value of average HR
+
+    """
+    # check for valid num_args
     try:
         num_arg == sys.argv
     except TypeError:
@@ -26,13 +34,12 @@ def hr_averaging(averaging_time):
         print("You cannot divide by zero")
         raise ZeroDivisionError
 
-
-    #check for non-zero averaging time
+    # check for non-zero averaging time
     if averaging_time <= 0:
         print("Your averaging time input must be greater than zero.")
         raise ValueError
 
-    #convert averaging time to float
+    # convert averaging time to float
     try:
         averaging_time = float(averaging_time)
     except TypeError:
@@ -40,32 +47,28 @@ def hr_averaging(averaging_time):
 
     averaging_time_sec = averaging_time * min_to_sec
 
-
-    #extract hr data from .csv file
+    # extract hr data from .csv file
     hr_data = datavalidation_code.dataextraction("ecg_data.csv")
     orig_time_data = hr_data[:, 0]
     max_acq_time = max(orig_time_data)
 
-    #check if averaging time is longer than ECG acq time
+    # check if averaging time is longer than ECG acq time
     if averaging_time_sec > max_acq_time:
         print("Your averaging time is longer than the ECG acquisition time, try a new value")
         raise ValueError
     else:
         pass
 
-    #perform peak detection
+    # perform peak detection
     time_list = HR_peakdetect.HR_peakdetect(hr_data)
     print(len(time_list))
     time_array = np.asarray(time_list)
-
 
     final_ind = 0
     final_min = abs(time_array[0] - averaging_time_sec)
     XXX = []
     test_pos = np.argwhere(min(abs(time_array - averaging_time_sec)))
     print(test_pos)
-
-
 
     for i in range(0, len(time_array)):
 
@@ -77,8 +80,8 @@ def hr_averaging(averaging_time):
             final_ind = i
 
     print(final_ind)
-    #final_ind = np.argwhere(min(abs(time_array - averaging_time_sec)))
-    #avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
+    # final_ind = np.argwhere(min(abs(time_array - averaging_time_sec)))
+    # avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
     time_array_sliced = time_array[:final_ind+1]
     print(len(time_array_sliced))
@@ -87,19 +90,16 @@ def hr_averaging(averaging_time):
     return average_hr_val
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 def tachy(average_hr_val, tachy_limit=100):
+    """
+    .. function:: tachy(average_hr_val, tachy_limit)
+
+    Determine if tachycardia occured during ECG acquisition.
+
+    :param average_hr_val: average HR value calculated from hr_averaging()
+    :param tachy_limit: tachycardia limit to be specified
+    :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
+    """
     # check for non-zero averaging time
     if tachy_limit <= 0:
         print("Your tachycardia limit must be greater than zero.")
@@ -119,7 +119,15 @@ def tachy(average_hr_val, tachy_limit=100):
 
 
 def brachy(average_hr_val, brachy_limit=60):
+    """
+    .. function:: brachy(average_hr_val, brachy_limit)
 
+    Determine if brachycardia occured during ECG acquisition.
+
+    :param average_hr_val: average HR value calculated from hr_averaging()
+    :param brachy_limit: brachycardia limit to be specified
+    :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
+        """
     if brachy_limit <= 0:
         print("Your brachycardia limit must be greater than zero.")
         raise ValueError
@@ -135,5 +143,3 @@ def brachy(average_hr_val, brachy_limit=60):
 
     else:
         return True
-
-hr_averaging(.333)
