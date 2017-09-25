@@ -18,8 +18,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Running the Code:
 1. Pull from master branch.
 2. Set up Conda environment (bme590hrm). 
-3. To run file, python JSY_HRcalc_programfile.py (data file must be titled "ecg_data.csv").
-3.a) This file should output all required information. Output test file will be named HR_Specs.text
+3. To run file, python JSY_HRcalc_programfile.py XX YY ZZ(data file must be titled "ecg_data.csv"). Where XX is desired averaging time (min, float acceptable), YY is brachycardia limit (bpm, float acceptable), and ZZ is tachycardia limit (bpm, float acceptable). XX parameter is required. YY and ZZ parameter is optional and default values are 100 and 60.
+3.a) This file should output all required information to the command line. Output will also be stored in a test file will named HR_Specs.txt and will be saved in the repository you are working in. 
+
+Note: There is a file ecg_data.csv in the master branch right now, please keep this in mind when running code. 
 
 Unit Test Files:
 - test_import.py
