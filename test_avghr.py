@@ -1,11 +1,5 @@
 import pytest
-import numpy as np
-import pytest_cov
-import pytest_pep8
-import unittest
 import avghr
-import sys
-import math
 
 """
 
