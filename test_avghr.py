@@ -53,6 +53,10 @@ def test_tachystring():
     with pytest.raises(TypeError):
         avghr.tachy("word")
 
+def test_tachylim_valid():
+    with pytest.raises(ValueError):
+        avghr.tachy(80, -1)
+
 
 def test_tachy_present():
     assert(avghr.tachy(200),  False)
@@ -60,6 +64,12 @@ def test_tachy_present():
 
 def test_tachy_not_present():
     assert(avghr.tachy(80),  True)
+
+
+def test_brachylim_valid():
+    with pytest.raises(ValueError):
+        avghr.brachy(80,-1)
+
 
 
 def test_brachy_present():
