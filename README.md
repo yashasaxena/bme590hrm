@@ -1,6 +1,9 @@
 bme590hrm
+
 HW Assignment #2 
+
 Medical Software Design Evaluators: Palmeri, Kumar, Desai 
+
 Contributors: Hoballah, S. Shah, Saxena
 
 https://travis-ci.org/yashasaxena/bme590hrm.svg?branch=master
