@@ -17,8 +17,8 @@ def hr_averaging(averaging_time):
 
     :param averaging_time: time period (in min) used to calculate average HR
     :rtype: integer value of average HR
-
     """
+
     # check for valid num_args
     try:
         num_arg == sys.argv
@@ -66,9 +66,9 @@ def hr_averaging(averaging_time):
 
     final_ind = 0
     final_min = abs(time_array[0] - averaging_time_sec)
-    XXX = []
-    test_pos = np.argwhere(min(abs(time_array - averaging_time_sec)))
-    print(test_pos)
+    # XXX = []
+    # test_pos = np.argwhere(min(abs(time_array - averaging_time_sec)))
+    # print(test_pos)
 
     for i in range(0, len(time_array)):
 
@@ -91,6 +91,7 @@ def hr_averaging(averaging_time):
 
 
 def tachy(average_hr_val, tachy_limit=100):
+
     """
     .. function:: tachy(average_hr_val, tachy_limit)
 
@@ -100,6 +101,7 @@ def tachy(average_hr_val, tachy_limit=100):
     :param tachy_limit: tachycardia limit to be specified
     :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
     """
+
     # check for non-zero averaging time
     if tachy_limit <= 0:
         print("Your tachycardia limit must be greater than zero.")
@@ -119,6 +121,7 @@ def tachy(average_hr_val, tachy_limit=100):
 
 
 def brachy(average_hr_val, brachy_limit=60):
+
     """
     .. function:: brachy(average_hr_val, brachy_limit)
 
@@ -127,7 +130,8 @@ def brachy(average_hr_val, brachy_limit=60):
     :param average_hr_val: average HR value calculated from hr_averaging()
     :param brachy_limit: brachycardia limit to be specified
     :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
-        """
+    """
+
     if brachy_limit <= 0:
         print("Your brachycardia limit must be greater than zero.")
         raise ValueError
