@@ -8,6 +8,11 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 #filename = 'ecg_data.csv'
 
 def dataextraction(filename):
+
+    """ """
+    """..function: dataextraction():
+     opens CSV file, converts all numbers to float type, then creates an array to append rows """
+
     HR_data = np.array([0, 0])
 
     with open(filename) as HR:
@@ -28,6 +33,11 @@ def dataextraction(filename):
 
 # DATA VALIDATION
 def columncheck(filename): #checks number of columns
+
+    """"""
+    """..function columncheck():
+     makes sure the data is arranged in 2 columns"""
+
     with open(filename) as HR:
         csv_HR = csv.reader(HR)
         for row in csv_HR:
@@ -46,6 +56,9 @@ def columncheck(filename): #checks number of columns
 #   return b
 
 def datatypecheck(filename):  # checks float/int
+    """"""
+    """..function: datatypecheck():
+     makes sure there are no strings in the data"""
     datafile = dataextraction(filename)
     #csv_HR = csv.reader(HR)
     #next(csv_HR)
@@ -57,12 +70,15 @@ def datatypecheck(filename):  # checks float/int
     return c
 
 def datapracticality(filename):  # checks that the signal range will make sense
+    """"""
+    """..function: datapracticality():
+     checks that the signal is within an expected range (below 10mV"""
     datafile=dataextraction(filename)
     #csv_HR = csv.reader(HR)
     #next(csv_HR)
     #for row in csv_HR:
     for x in range(0,len(datafile)):
-        if datafile[x,1]>=100: #check mV range for typical ECG Data
+        if datafile[x,1]>=10: #check mV range for typical ECG Data
             raise TypeError('Data seems irregular, please check and try again')
     d=1
     return d
