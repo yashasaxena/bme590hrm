@@ -12,12 +12,20 @@ t = np.arange(0, 10, 0.001)
 signal = abs(np.sin(t*np.pi)**3)
 
 #combine t and sin_vals arrays
-array_test = np.column_stack((t,signal))
+array_test = np.concatenate((t,sin_vals),axis=0)
 array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
 def test_peakdetect():
-    assert len(hr.HR_peakdetect(array_test)) == 10
+    """
+    .. function:: test_peakdetect():
+    Tests if the number of peaks for a defined sine wave is returned by peak detection function
+    """
+    assert hr.HR_peakdetect(array_test) == 10
 
 def test_instHR():
-    assert int(round(hr.instHR(array_test_time),0)) == 60
+    """
+        .. function:: test_instHR():
+        Tests if instant heart rate calculated is equal to T * 60s/min
+    """
+    assert int(hr.instHR(array_test_time)) == 60
