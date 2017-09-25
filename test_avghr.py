@@ -6,8 +6,7 @@ import unittest
 import avghr
 import sys
 import math
-import ecg_data.csv
-import datavalidation
+import datavalidation_code
 
 """
 
@@ -15,8 +14,18 @@ unit tests for average HR code
 
 """
 
+def test_numinputs():
+    with pytest.raises(ValueError):
+        avghr.hr_averaging(1)
+
+
+def teststring():
+    with pytest.raises(TypeError):
+        avghr.hr_averaging("word")
+
+
 def test_avghr():
-    assert(avghr.hr_averaging(ecg_data.csv), 30)
+    assert(avghr.hr_averaging((1/3)), 90)
 
 
 def test_tachy_present():
@@ -36,10 +45,3 @@ def test_brachy_not_present():
 
 
 
-def test_averagingtime():
-    with pytest.raises(ValueError):
-        avghr.hr_averaging(t,y,)
-
-def teststring():
-    with pytest.raises(TypeError):
-        avghr.hr_averaging(t,y, "word")

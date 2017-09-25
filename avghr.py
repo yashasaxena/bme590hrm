@@ -1,12 +1,13 @@
 import numpy as np
 import sys
 import HR_peakdetect
+import datavalidation_code
 
 min_to_sec = 60
-num_arg = 3
+num_arg = 1
 
 
-def hr_averaging(time_array, mv_array, averaging_time):
+def hr_averaging(averaging_time):
 
     try:
         num_arg == sys.argv
@@ -19,13 +20,16 @@ def hr_averaging(time_array, mv_array, averaging_time):
     except ValueError:
         print("Your averaging_time input is not a number, please input a number.")
 
+    hr_data = datavalidation_code.dataextraction("ecg_data.csv")
+    time_array = HR_peakdetect.HR_peakdetect(hr_data)
+
     averaging_time_sec = averaging_time * min_to_sec
-    HR_peakdetect()
+
     avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
-    mv_array_sliced = mv_array[:avg_index]
+    time_array_sliced = time_array[:avg_index]
 
-    average_hr_val = (len(mv_array_sliced))/averaging_time
+    average_hr_val = (len(time_array_sliced))/averaging_time
 
     return average_hr_val
 
