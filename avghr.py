@@ -28,6 +28,13 @@ def hr_averaging(averaging_time):
 
     averaging_time_sec = averaging_time * min_to_sec
 
+    try:
+        averaging_time_sec < np.max(time_array)
+
+    except ValueError:
+        print("Your averaging time is longer than the ecg_data acquisition time")
+
+
     avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
     time_array_sliced = time_array[:avg_index]

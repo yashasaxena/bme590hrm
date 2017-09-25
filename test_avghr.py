@@ -24,6 +24,10 @@ def teststring():
         avghr.hr_averaging("word")
 
 
+def test_valid_avgingtime():
+    assert(avghr.hr_averaging(10))
+
+
 def test_avghr():
     assert(avghr.hr_averaging((1/3)), 90)
 
