@@ -11,11 +11,13 @@ num_arg = 1
 def hr_averaging(averaging_time):
 
     """
-    .. function:: hr_averaging(averaging_time)
+    .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
 
     Calculate the average HR based upon ECG data.
 
     :param averaging_time: time period (in min) used to calculate average HR
+    :param tachy_limit: sets the tachycardia threshold limit, defaults to 100
+    :param brachy_limit: sets the brachycardia threshold limit, defaults to 100
     :rtype: integer value of average HR
     """
 
