@@ -1,4 +1,27 @@
 # where we import our combined function file
+import HR_allfuncs as HR
+filename = "ecg_data.csv"
+def run_hr_func(averaging_time, tachy_limit = 100, brachy_limit=60):
+    if(HR.columncheck(filename) == 1):
+        pass
+    if(HR.datatypecheck(filename) == 1):
+        pass
+    if(HR.datapracticality(filename)==1):
+        pass
+    HR_data = HR.dataextraction(filename)
+
+    time_array = HR.HR_peakdetect(HR_data)
+
+    inst_hrval = HR.instHR(time_array)
+
+    average_hr_val = HR.hr_averaging(averaging_time)
+
+    tachy_present = HR.tachy(average_hr_val, tachy_limit)
+    brachy_present = HR.brachy(average_hr_val, brachy_limit)
+
+
+
+
 
 
 

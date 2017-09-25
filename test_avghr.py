@@ -1,5 +1,5 @@
 import pytest
-import avghr
+import HR_allfuncs as HR
 
 """
 
@@ -14,7 +14,7 @@ def test_numinputs():
     Test if the number of inputs for hr_averaging() is valid, otherwise throw error
     """
     with pytest.raises(TypeError):
-        avghr.hr_averaging()
+        HR.hr_averaging()
 
 
 def test_nonzero_avgingtime():
@@ -23,7 +23,7 @@ def test_nonzero_avgingtime():
     Test if the averaging time is a non-zero and positive number, otherwise throw error
     """
     with pytest.raises(ValueError):
-        avghr.hr_averaging(0)
+        HR.hr_averaging(0)
 
 
 def test_validlen_avgingtime():
@@ -32,7 +32,7 @@ def test_validlen_avgingtime():
     Test if the averaging time less than or equal to the length of ECG acquisition time, otherwise throw error
     """
     with pytest.raises(ValueError):
-        avghr.hr_averaging(15)
+        HR.hr_averaging(15)
 
 
 def test_isnumber_avgingtime():
@@ -41,7 +41,7 @@ def test_isnumber_avgingtime():
     Test if the averaging time is a number, otherwise throw error
     """
     with pytest.raises(ValueError):
-        avghr.hr_averaging("word")
+        HR.hr_averaging("word")
 
 
 def test_fraction_divby0():
@@ -50,7 +50,7 @@ def test_fraction_divby0():
     Test if the averaging time is a valid fraction, throw error if zero division occurs
     """
     with pytest.raises(ZeroDivisionError):
-        avghr.hr_averaging('1/0')
+        HR.hr_averaging('1/0')
 
 
 def test_fraction_validsyntax():
@@ -59,7 +59,7 @@ def test_fraction_validsyntax():
     Test if the averaging time uses valid fraction syntax
     """
     with pytest.raises(ValueError):
-        avghr.hr_averaging('1/2/3')
+        HR.hr_averaging('1/2/3')
 
 
 def test_avghr_withfraction():
@@ -67,7 +67,7 @@ def test_avghr_withfraction():
     .. function:: test_avghr_withfraction():
     Test if the avghr function calculates the correct avg HR using a fraction
     """
-    assert(avghr.hr_averaging('1/4'), 90)
+    assert(HR.hr_averaging('1/4'), 90)
 
 
 def test_avghr_with_float_as_string():
@@ -75,7 +75,7 @@ def test_avghr_with_float_as_string():
     .. function:: test_avghr_with_float_as_string():
     Test if the avghr function calculates the correct avg HR using a decimal value passed as a string
     """
-    assert(avghr.hr_averaging('.3'), 90)
+    assert(HR.hr_averaging('.3'), 90)
 
 
 def test_avghr_with_float():
@@ -83,7 +83,7 @@ def test_avghr_with_float():
     .. function:: test_avghr_with_float():
     Test if the avghr function calculates the correct avg HR using a decimal value
     """
-    assert(avghr.hr_averaging(.333), 90)
+    assert(HR.hr_averaging(.333), 90)
 
 
 def test_tachylim_valid():
@@ -92,7 +92,7 @@ def test_tachylim_valid():
     Test if the tachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        avghr.tachy(80, -1)
+        HR.tachy(80, -1)
 
 
 def test_tachystring():
@@ -101,7 +101,7 @@ def test_tachystring():
     Test if the tachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        avghr.tachy("word")
+        HR.tachy("word")
 
 
 def test_tachy_present():
@@ -109,7 +109,7 @@ def test_tachy_present():
     .. function:: test_tachy_present():
     Test to see if tachycardia is present
     """
-    assert(avghr.tachy(200),  False)
+    assert(HR.tachy(200),  True)
 
 
 def test_tachy_not_present():
@@ -117,7 +117,7 @@ def test_tachy_not_present():
     .. function:: test_tachy_not_present():
     Test to see if tachycardia is not present
     """
-    assert(avghr.tachy(80),  True)
+    assert(HR.tachy(80),  False)
 
 
 def test_brachylim_valid():
@@ -126,7 +126,7 @@ def test_brachylim_valid():
     Test if the brachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        avghr.brachy(80, -1)
+        HR.brachy(80, -1)
 
 
 def test_brachystring():
@@ -135,7 +135,7 @@ def test_brachystring():
     Test if the brachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        avghr.brachy("word")
+        HR.brachy("word")
 
 
 def test_brachy_present():
@@ -143,7 +143,7 @@ def test_brachy_present():
     .. function:: test_brachy_present():
     Test to see if brachycardia is present
     """
-    assert(avghr.brachy(30), False)
+    assert(HR.brachy(30), True)
 
 
 def test_brachy_not_present():
@@ -151,4 +151,4 @@ def test_brachy_not_present():
     .. function:: test_brachy_not_present():
     Test to see if brachycardia is not present
     """
-    assert (avghr.brachy(65), True)
+    assert (HR.brachy(65), False)
