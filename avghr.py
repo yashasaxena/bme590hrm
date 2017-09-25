@@ -11,7 +11,7 @@ def hr_averaging(averaging_time):
 
     try:
         num_arg == sys.argv
-    except ValueError:
+    except TypeError:
         print("Please input the correct number of arguments")
 
     try:
@@ -21,7 +21,10 @@ def hr_averaging(averaging_time):
         print("Your averaging_time input is not a number, please input a number.")
 
     hr_data = datavalidation_code.dataextraction("ecg_data.csv")
-    time_array = HR_peakdetect.HR_peakdetect(hr_data)
+
+    time_list = HR_peakdetect.HR_peakdetect(hr_data)
+
+    time_array = np.asarray(time_list)
 
     averaging_time_sec = averaging_time * min_to_sec
 

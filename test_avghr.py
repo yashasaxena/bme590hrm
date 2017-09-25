@@ -15,8 +15,8 @@ unit tests for average HR code
 """
 
 def test_numinputs():
-    with pytest.raises(ValueError):
-        avghr.hr_averaging(1)
+    with pytest.raises(TypeError):
+        avghr.hr_averaging()
 
 
 def teststring():
