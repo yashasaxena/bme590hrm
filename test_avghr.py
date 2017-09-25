@@ -6,7 +6,6 @@ import unittest
 import avghr
 import sys
 import math
-import datavalidation_code
 
 """
 
@@ -19,17 +18,40 @@ def test_numinputs():
         avghr.hr_averaging()
 
 
-def teststring():
-    with pytest.raises(TypeError):
+def test_nonzero_avgingtime():
+    with pytest.raises(ValueError):
+        avghr.hr_averaging(0)
+
+
+def test_validlen_avgingtime():
+    with pytest.raises(ValueError):
+        avghr.hr_averaging(15)
+
+def test_isnumber_avgingtime():
+    with pytest.raises(ValueError):
         avghr.hr_averaging("word")
 
 
-def test_valid_avgingtime():
-    assert(avghr.hr_averaging(10))
+def test_fraction_divby0():
+    with pytest.raises(ZeroDivisionError):
+        avghr.hr_averaging('1/0')
+
+def test_fraction_validsyntax():
+    with pytest.raises(ValueError):
+        avghr.hr_averaging('1/2/3')
 
 
-def test_avghr():
-    assert(avghr.hr_averaging((1/3)), 90)
+def test_avghr_withfraction():
+    assert(avghr.hr_averaging('1/4'), 90)
+
+
+def test_avghr_withfloat():
+    assert(avghr.hr_averaging(.333), 90)
+
+
+def test_tachystring():
+    with pytest.raises(TypeError):
+        avghr.tachy("word")
 
 
 def test_tachy_present():
@@ -48,4 +70,7 @@ def test_brachy_not_present():
     assert (avghr.brachy(65), True)
 
 
+def test_brachystring():
+    with pytest.raises(TypeError):
+        avghr.brachy("word")
 
