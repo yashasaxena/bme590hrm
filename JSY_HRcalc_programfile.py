@@ -1,5 +1,6 @@
 # where we import our combined function file
 import HR_allfuncs as hr
+import sys
 filename = "ecg_data.csv"
 def run_hr_func(averaging_time, tachy_limit = 100, brachy_limit=60):
     if(hr.columncheck(filename) == 1):
@@ -19,12 +20,23 @@ def run_hr_func(averaging_time, tachy_limit = 100, brachy_limit=60):
     tachy_present = hr.tachy(average_hr_val, tachy_limit)
     brachy_present = hr.brachy(average_hr_val, brachy_limit)
 
+    hr_txt = open("HR_Specs.txt", "w")
+    hr_txt.write("Patient Name: Heart Patient Dude\n")
+    hr_txt.write("Estimated instant heart rate: {:.3f}\n".format(inst_hrval))
+    hr_txt.write("Estimated average heart rate: {:.3f}\n".format(average_hr_val))
+    hr_txt.write("Sign of tachycardia: " + tachy_present + "\n")
+    hr_txt.write("Sign of brachycardia: " + brachy_present + "\n")
+    hr_txt.write("Please note that values were extracted from a fixed sample of data.\n")
+    hr_txt.write("Consult your physician for further information and clarification.\n")
 
+    hr_txt.close()
 
-
-
-
-
+    # read from the file to command line
+    f = open('HR_Specs.txt')
+    for line in iter(f):
+        print
+    line
+    f.close()
 
 # use Sonali's functions to validate data before extraction
 # use Sonali's function to extract data
@@ -35,25 +47,22 @@ def run_hr_func(averaging_time, tachy_limit = 100, brachy_limit=60):
 
 #basic syntax on opening, and writing to a file
 
-def main():
-    hr_txt = open("HR_Specs.txt","w")
-    hr_txt.write("Patient Name: Heart Patient Dude")
-    hr_txt.write("Estimated instant heart rate: {}" + "{:.3f}".format(#inst hr variable))
-    hr_txt.write("Estimated average heart rate: {}" + "{:.3f}".format(#avg hr variable))
-    hr_txt.write("Sign of tachycardia: {}" + #tachycardia variable)
-    hr_txt.write("Sign of brachycardia: {}" + #brachycardia variable)
-    hr_txt.write("Please note that values were extracted from a fixed sample of data.")
-    hr_txt.write("Consult your physician for further information and clarification.")
 
-    hr_txt.close()
-
-    #read from the file to command line
-    f = open('HR_Spects.txt')
-    for line in iter(f):
-        print line
-    f.close()
+def main(argv):
+    if len(sys.argv) == 2:
+        averaging_time = sys.argv[1]
+        run_hr_func(averaging_time)
+    if len(sys.argv) == 3:
+        averaging_time = sys.argv[1]
+        tachy_limit = sys.argv[2]
+        run_hr_func(averaging_time,tachy_limit)
+    if len(sys.argv) == 4:
+        averaging_time = sys.argv[1]
+        tachy_limit = sys.argv[2]
+        brachy_limit = sys.argv[3]
+        run_hr_func(averaging_time,tachy_limit,brachy_limit)
 
 
 if __name__ == "__main__":
-    main()
+    main(argv)
 
