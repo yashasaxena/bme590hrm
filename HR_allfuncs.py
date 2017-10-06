@@ -13,7 +13,7 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 def dataextraction(filename):
 
-    """ """
+
     """..function: dataextraction():
      opens CSV file, converts all numbers to float type, then creates an array to append rows """
 
@@ -38,7 +38,7 @@ def dataextraction(filename):
 # DATA VALIDATION
 def columncheck(filename): #checks number of columns
 
-    """"""
+
     """..function columncheck():
      makes sure the data is arranged in 2 columns"""
 
@@ -60,7 +60,7 @@ def columncheck(filename): #checks number of columns
 #   return b
 
 def datatypecheck(filename):  # checks float/int
-    """"""
+
     """..function: datatypecheck():
      makes sure there are no strings in the data"""
     datafile = dataextraction(filename)
@@ -74,7 +74,7 @@ def datatypecheck(filename):  # checks float/int
     return c
 
 def datapracticality(filename):  # checks that the signal range will make sense
-    """"""
+
     """..function: datapracticality():
      checks that the signal is within an expected range (below 10mV"""
     datafile=dataextraction(filename)
@@ -91,10 +91,9 @@ def datapracticality(filename):  # checks that the signal range will make sense
 
 
 def HR_peakdetect(data_array):
-    """
-            .. function:: HR_peakdetect(data_array)
-            Returns a time array of times where peak was detected
-            :param data_array: a 2-d array with time and voltage values
+    """ Returns a time array of times where peak was detected
+
+    :param data_array: a 2-d array with time and voltage values
     """
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
@@ -115,14 +114,13 @@ def HR_peakdetect(data_array):
         y = peakind[c]
         time_array.append(data_array[y, 0])
 
-    return time_array
+    return time_arrays
 
 
 def instHR(t_array):
-    """
-            .. function:: instHR(t_array)
-            Calculates instant heart rate from peak time array
-            :param t_array: a 1-d list with time values of peaks
+    """ Calculates instant heart rate from peak time array
+
+        :param t_array: a 1-d list with time values of peaks
     """
     dt_first_beat = t_array[2] - t_array[1]
 
