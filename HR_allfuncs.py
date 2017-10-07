@@ -114,7 +114,7 @@ def HR_peakdetect(data_array):
         y = peakind[c]
         time_array.append(data_array[y, 0])
 
-    return time_arrays
+    return time_array
 
 
 def instHR(t_array):
