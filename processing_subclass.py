@@ -8,6 +8,9 @@ class processing:
     :param data_array: a 2-d array with time and voltage values
     :rtype: array
     """
+    #data_array defined from sonali's class
+
+
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
     # differentiation process window, baseline correction
