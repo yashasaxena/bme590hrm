@@ -15,6 +15,7 @@ class data:
 
 
     def extraction(self, filename):
+        #  need to fix the fxn name elsewhere - used to be called dataextraction
         """ Opens CSV file, converts all numbers to float type, then creates an array to append rows
 
         :rtype: HR_data as the matrix for data analysis """
