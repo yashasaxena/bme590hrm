@@ -1,15 +1,19 @@
 # pseudocode for processing subclass
 
 class processing:
-   def peakdetect(self):
-#       insert peak detect function here, which returns t_array
+   def __init__(self, data_array):
+       self.t = []
+       self.data_array = []
+
+   def peakdetect(self, filename):
+    #       insert peak detect function here, which returns t_array
     """ Returns a time array of times where peak was detected
 
     :param data_array: a 2-d array with time and voltage values
     :rtype: array
     """
     #data_array defined from sonali's class
-    ## data_array = SonaliDataClass.[attributethatgetsdata]
+    ## self.data_array.append(SonaliDataClass(filename).[attributethatgetsdata])
 
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
@@ -30,4 +34,4 @@ class processing:
         y = peakind[c]
         time_array.append(data_array[y, 0])
 
-    self.t = time_array
+    self.t.append(time_array)
