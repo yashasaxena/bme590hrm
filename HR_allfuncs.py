@@ -14,8 +14,7 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 def dataextraction(filename):
 
 
-    """..function: dataextraction():
-     opens CSV file, converts all numbers to float type, then creates an array to append rows """
+    """ Opens CSV file, converts all numbers to float type, then creates an array to append rows """
 
     HR_data = np.array([0, 0])
 
@@ -39,8 +38,10 @@ def dataextraction(filename):
 def columncheck(filename): #checks number of columns
 
 
-    """..function columncheck():
-     makes sure the data is arranged in 2 columns"""
+    """ Confirms that data is arranged in 2 columns
+
+        :rtype: Error raised if data structure is incorrect
+    """
 
     with open(filename) as HR:
         csv_HR = csv.reader(HR)
@@ -61,8 +62,10 @@ def columncheck(filename): #checks number of columns
 
 def datatypecheck(filename):  # checks float/int
 
-    """..function: datatypecheck():
-     makes sure there are no strings in the data"""
+    """ Confirms there are no strings in the data
+
+        :rtype: Error raised if data type is incorrect
+    """
     datafile = dataextraction(filename)
     #csv_HR = csv.reader(HR)
     #next(csv_HR)
@@ -75,8 +78,10 @@ def datatypecheck(filename):  # checks float/int
 
 def datapracticality(filename):  # checks that the signal range will make sense
 
-    """..function: datapracticality():
-     checks that the signal is within an expected range (below 10mV"""
+    """ Confirms that the signal is within an expected range (below 10mV)
+    
+        :rtype: Error raised if mV values exceed 10mV
+    """
     datafile=dataextraction(filename)
     #csv_HR = csv.reader(HR)
     #next(csv_HR)
@@ -207,10 +212,7 @@ def hr_averaging(averaging_time,time_array):
 
 def tachy(average_hr_val, tachy_limit):
 
-    """
-    .. function:: tachy(average_hr_val, tachy_limit)
-
-    Determine if tachycardia occured during ECG acquisition.
+    """ Detects if tachycardia occured during ECG acquisition.
 
     :param average_hr_val: average HR value calculated from hr_averaging()
     :param tachy_limit: tachycardia limit to be specified
@@ -237,10 +239,7 @@ def tachy(average_hr_val, tachy_limit):
 
 def brachy(average_hr_val, brachy_limit):
 
-    """
-    .. function:: brachy(average_hr_val, brachy_limit)
-
-    Determine if brachycardia occured during ECG acquisition.
+    """ Detects if brachycardia occured during ECG acquisition.
 
     :param average_hr_val: average HR value calculated from hr_averaging()
     :param brachy_limit: brachycardia limit to be specified
