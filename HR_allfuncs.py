@@ -79,7 +79,7 @@ def datatypecheck(filename):  # checks float/int
 def datapracticality(filename):  # checks that the signal range will make sense
 
     """ Confirms that the signal is within an expected range (below 10mV)
-    
+
         :rtype: Error raised if mV values exceed 10mV
     """
     datafile=dataextraction(filename)
