@@ -1,8 +1,12 @@
 # where we import our combined function file
-import HR_allfuncs as hr
+#import HR_allfuncs as hr
+
+import Patient as p
+
 import sys
 #filename = "ecg_data.csv"
 
+#glob code
 
 def run_hr_func(filename, averaging_time, tachy_limit=100, brachy_limit=60):
     if hr.columncheck(filename) == 1:
@@ -11,10 +15,11 @@ def run_hr_func(filename, averaging_time, tachy_limit=100, brachy_limit=60):
         pass
     if hr.datapracticality(filename) == 1:
         pass
-    #hr_data = hr.dataextraction(filename)
-    hr_data = data.extraction(filename)
 
-    peak_times = processing.ecg_peakdetect(hr_data)
+    #hr_data = hr.dataextraction(filename)
+    hr_data = p.data.extraction(filename)
+
+    peak_times = p.processing.ecg_peakdetect(hr_data)
 
     #inst_hrval = hr.instHR(time_array)
 
