@@ -35,7 +35,7 @@ class Data:
 
         return HR_data
 
-    def columncheck(filename):
+    def columncheck(self, filename):
         """ Confirms that data is arranged in 2 columns
 
         :rtype: Error raised if data structure is incorrect
@@ -49,7 +49,7 @@ class Data:
         a=1
         return a
 
-    def typecheck(filename):
+    def typecheck(self, filename):
 
         """ Confirms there are no strings in the data
             :rtype: Error raised if data type is incorrect
@@ -65,7 +65,7 @@ class Data:
         c=1
         return c
 
-    def datapracticality(filename):
+    def datapracticality(self, filename):
         """ Confirms that the signal is within an expected range (below 10mV)
 
         :rtype: Error raised if mV values exceed 10mV
@@ -110,12 +110,12 @@ class Processing:
         fs = int(1 / t_step)  # sampling frequency that provides number of steps in 1 second
         peakind = signal.find_peaks_cwt(inverted_data, fs / rates / 10)
 
-    time_array = []
+        time_array = []
 
-    for c in range(0, len(peakind)):
-        y = peakind[c]
-        time_array.append(data_array[y, 0])
+        for c in range(0, len(peakind)):
+             y = peakind[c]
+             time_array.append(data_array[y, 0])
 
-    self.t.append(time_array)
+        self.t = time_array
 
 
