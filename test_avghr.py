@@ -87,7 +87,7 @@ def test_avghr_withfraction():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val is 60
+    assert x.avg_hr_val == 60
 
 
 def test_avghr_with_float_as_string():
@@ -97,7 +97,7 @@ def test_avghr_with_float_as_string():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val is 60
+    assert x.avg_hr_val == 60
 
 
 def test_avghr_with_float():
@@ -107,7 +107,7 @@ def test_avghr_with_float():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val is 60
+    assert x.avg_hr_val == 60
 
 
 def test_tachylim_valid():

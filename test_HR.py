@@ -31,4 +31,4 @@ def test_instHR():
     x = hr.Vitals()
     x.hr_averaging('3/20', array_test_time)
     x.inst_hr_val = int(round(x.inst_hr_val))
-    assert x.inst_hr_val is 60
+    assert x.inst_hr_val == 60
