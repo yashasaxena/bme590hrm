@@ -37,9 +37,9 @@ def testdataisgood():
     columncheck():, datatypecheck():, and datapracticality():
     and that no error is thrown when data behaves as expected"""
     x = HRimport.Data()
-    assert HRimport.columncheck("ecg_data.csv")==1
-    assert HRimport.datatypecheck("ecg_data.csv")==1
-    assert HRimport.datapracticality("ecg_data.csv")==1
+    assert x.HRimport.columncheck("ecg_data.csv")==1
+    assert x.HRimport.datatypecheck("ecg_data.csv")==1
+    assert x.HRimport.datapracticality("ecg_data.csv")==1
 
 #create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
@@ -55,15 +55,13 @@ array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
 def test_peakdetect():
+    """ Tests if the number of peaks for a defined sine wave is returned by peak detection function
     """
-    .. function:: test_peakdetect():
-    Tests if the number of peaks for a defined sine wave is returned by peak detection function
-    """
-    assert len(hr.HR_peakdetect(array_test)) == 10
+    x = HRimport.Processing()
+    assert x.HRimport.ecg_peakdetect(len(hr.HR_peakdetect(array_test)) == 10)
 
 def test_instHR():
+    """ Tests if instant heart rate calculated is equal to T * 60s/min
     """
-        .. function:: test_instHR():
-        Tests if instant heart rate calculated is equal to T * 60s/min
-    """
-    assert int(round(hr.instHR(array_test_time))) == 60
+    x = HRimport.Processing()
+    assert x.HRimport.ecg_peakdetect(int(round(hr.instHR(array_test_time))) == 60)
