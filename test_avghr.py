@@ -124,7 +124,8 @@ def test_tachy_present():
     Test to see if tachycardia is present
     """
     x = hr.Diagnosis()
-    assert x.tachy(200, tachy_limit=100) is True
+    x.tachy(200, tachy_limit=100)
+    assert x.tachy_result is True
 
 
 def test_tachy_not_present():
@@ -133,7 +134,8 @@ def test_tachy_not_present():
     Test to see if tachycardia is not present
     """
     x = hr.Diagnosis()
-    assert x.tachy(80, tachy_limit=100) is False
+    x.tachy(80, tachy_limit=100)
+    assert x.tachy_result is False
 
 
 def test_brachylim_valid():
@@ -162,7 +164,8 @@ def test_brachy_present():
     Test to see if brachycardia is present
     """
     x = hr.Diagnosis()
-    assert x.brachy(30, brachy_limit=60) is True
+    x.brachy(30, brachy_limit=60)
+    assert x.brachy_result is True
 
 
 def test_brachy_not_present():
@@ -171,4 +174,5 @@ def test_brachy_not_present():
     Test to see if brachycardia is not present
     """
     x = hr.Diagnosis()
-    assert x.brachy(65, brachy_limit=60) is False
+    x.brachy(65, brachy_limit=60)
+    assert x.brachy_result is False
