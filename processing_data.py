@@ -8,7 +8,7 @@ min_to_sec = 60
 num_arg = 3
 HR_data = np.array([0, 0])  # initialize a matrix to store data
 
-class data:
+class Data:
     def __init__(self):
         self.HR_data = []  # att used in peak detect
 
@@ -85,7 +85,7 @@ class data:
 
     self.HR_data.append(HR_data)
 
-class processing:
+class Processing:
 # pseudocode for processing subclass
    def __init__(self):
        self.t = []
