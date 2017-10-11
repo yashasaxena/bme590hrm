@@ -1,6 +1,6 @@
 import pytest
 import unittest
-import datavalidation_code
+import processing_data
 
 import numpy
 import sys
@@ -14,28 +14,32 @@ import sys
 def testcolumns():
     """ unit test to throw an error if the data is not consistently in 2 columns"""
     with pytest.raises(TypeError):
-        x = hr.data()
-        processing_data.columncheck('FaultyData_UnitTest.csv')
+        x = HRimport.Data()  # will need to change file name, "Data" is the class
+        x.HRimport.columncheck('FaultyData_UnitTest.csv') # will need to change file name, "Data" is the class
+        # and "columncheck" is method
 
 #test that the data type after the first row is all float/int
 def testdatatype():
     """ unit test to throw an error if any data is string type"""
     with pytest.raises(ValueError):
-        processing_data.datatypecheck('FaultyData_UnitTest.csv')
+        x = HRimport.Data()
+        x.HRimport.datatypecheck('FaultyData_UnitTest.csv')
 
 #test that the data values are within a practical range
 def testvaluerange():
     """ unit test to throw an error if the data is above 10mV"""
     with pytest.raises(ValueError):
-        processing_data.datapracticality('FaultyData_UnitTest.csv')
+        x = HRimport.Data()
+        x.HRimport.datapracticality('FaultyData_UnitTest.csv')
 
 def testdataisgood():
     """ unit test to make sure that all data passes
     columncheck():, datatypecheck():, and datapracticality():
     and that no error is thrown when data behaves as expected"""
-    assert processing_data.columncheck("ecg_data.csv")==1
-    assert processing_data.datatypecheck("ecg_data.csv")==1
-    assert processing_data.datapracticality("ecg_data.csv")==1
+    x = HRimport.Data()
+    assert HRimport.columncheck("ecg_data.csv")==1
+    assert HRimport.datatypecheck("ecg_data.csv")==1
+    assert HRimport.datapracticality("ecg_data.csv")==1
 
 #create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
