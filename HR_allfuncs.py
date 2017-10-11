@@ -243,7 +243,6 @@ class Diagnosis:
         else:
             self.tachy_result = False
 
-
     def brachy(self, average_hr_val, brachy_limit=60):
 
         """

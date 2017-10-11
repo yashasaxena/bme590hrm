@@ -104,7 +104,8 @@ def test_tachylim_valid():
     Test if the tachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        hr.tachy(80, -1)
+        x = hr.Diagnosis()
+        x.tachy(80, -1)
 
 
 def test_tachystring():
@@ -113,7 +114,8 @@ def test_tachystring():
     Test if the tachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        hr.tachy("word")
+        x = hr.Diagnosis
+        x.tachy("word")
 
 
 def test_tachy_present():
@@ -121,7 +123,8 @@ def test_tachy_present():
     .. function:: test_tachy_present():
     Test to see if tachycardia is present
     """
-    assert hr.tachy(200, tachy_limit=100) is True
+    x = hr.Diagnosis()
+    assert x.tachy(200, tachy_limit=100) is True
 
 
 def test_tachy_not_present():
@@ -129,7 +132,8 @@ def test_tachy_not_present():
     .. function:: test_tachy_not_present():
     Test to see if tachycardia is not present
     """
-    assert hr.tachy(80, tachy_limit=100) is False
+    x = hr.Diagnosis()
+    assert x.tachy(80, tachy_limit=100) is False
 
 
 def test_brachylim_valid():
@@ -138,7 +142,8 @@ def test_brachylim_valid():
     Test if the brachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        hr.brachy(80, -1)
+        x = hr.Diagnosis()
+        x.brachy(80, -1)
 
 
 def test_brachystring():
@@ -147,7 +152,8 @@ def test_brachystring():
     Test if the brachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        hr.brachy(80, "word")
+        x = hr.Diagnosis()
+        x.brachy(80, "word")
 
 
 def test_brachy_present():
@@ -155,7 +161,8 @@ def test_brachy_present():
     .. function:: test_brachy_present():
     Test to see if brachycardia is present
     """
-    assert hr.brachy(30, brachy_limit=60) is True
+    x = hr.Diagnosis()
+    assert x.brachy(30, brachy_limit=60) is True
 
 
 def test_brachy_not_present():
@@ -163,4 +170,5 @@ def test_brachy_not_present():
     .. function:: test_brachy_not_present():
     Test to see if brachycardia is not present
     """
-    assert hr.brachy(65, brachy_limit=60) is False
+    x = hr.Diagnosis()
+    assert x.brachy(65, brachy_limit=60) is False
