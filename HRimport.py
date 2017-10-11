@@ -81,7 +81,7 @@ class Data:
         d=1
         return d
 
-    HR.close()
+    # HR.close()
 
     self.HR_data.append(HR_data)
 
