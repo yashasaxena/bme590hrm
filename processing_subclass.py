@@ -5,16 +5,13 @@ class processing:
        self.t = []
        self.data_array = []
 
-   def peakdetect(self, filename):
+   def peakdetect(self, data_array):
     #       insert peak detect function here, which returns t_array
     """ Returns a time array of times where peak was detected
 
     :param data_array: a 2-d array with time and voltage values
     :rtype: array
     """
-    #data_array defined from sonali's class
-    ## self.data_array.append(SonaliDataClass(filename).[attributethatgetsdata])
-
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
     # differentiation process window, baseline correction
