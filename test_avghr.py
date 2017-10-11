@@ -26,7 +26,8 @@ def test_numinputs():
     Test if the number of inputs for hr_averaging() is valid, otherwise throw error
     """
     with pytest.raises(TypeError):
-        hr.hr_averaging()
+        x = hr.Vitals()
+        x.hr_averaging()
 
 
 def test_nonzero_avgingtime():
@@ -35,7 +36,8 @@ def test_nonzero_avgingtime():
     Test if the averaging time is a non-zero and positive number, otherwise throw error
     """
     with pytest.raises(ValueError):
-        hr.hr_averaging(0,array_test_time)
+        x = hr.Vitals()
+        x.hr_averaging(0, array_test_time)
 
 
 def test_validlen_avgingtime():
@@ -44,7 +46,8 @@ def test_validlen_avgingtime():
     Test if the averaging time less than or equal to the length of ECG acquisition time, otherwise throw error
     """
     with pytest.raises(ValueError):
-        hr.hr_averaging(15,array_test_time)
+        x = hr.Vitals()
+        x.hr_averaging(15, array_test_time)
 
 
 def test_isnumber_avgingtime():
@@ -53,7 +56,8 @@ def test_isnumber_avgingtime():
     Test if the averaging time is a number, otherwise throw error
     """
     with pytest.raises(ValueError):
-        hr.hr_averaging("word",array_test_time)
+        x = hr.Vitals()
+        x.hr_averaging("word", array_test_time)
 
 
 def test_fraction_divby0():
@@ -62,7 +66,8 @@ def test_fraction_divby0():
     Test if the averaging time is a valid fraction, throw error if zero division occurs
     """
     with pytest.raises(ZeroDivisionError):
-        hr.hr_averaging('1/0',array_test_time)
+        x = hr.Vitals()
+        x.hr_averaging('1/0', array_test_time)
 
 
 def test_fraction_validsyntax():
@@ -71,7 +76,8 @@ def test_fraction_validsyntax():
     Test if the averaging time uses valid fraction syntax
     """
     with pytest.raises(ValueError):
-        hr.hr_averaging('1/2/3',array_test_time)
+        x = hr.Vitals()
+        x.hr_averaging('1/2/3', array_test_time)
 
 
 def test_avghr_withfraction():
@@ -79,7 +85,9 @@ def test_avghr_withfraction():
     .. function:: test_avghr_withfraction():
     Test if the avghr function calculates the correct avg HR using a fraction
     """
-    assert(hr.hr_averaging('1/4',array_test_time), 60)
+    x = hr.Vitals()
+    x.hr_averaging('1/4', array_test_time)
+    assert x.avg_hr_val is 60
 
 
 def test_avghr_with_float_as_string():
@@ -87,7 +95,9 @@ def test_avghr_with_float_as_string():
     .. function:: test_avghr_with_float_as_string():
     Test if the avghr function calculates the correct avg HR using a decimal value passed as a string
     """
-    assert(hr.hr_averaging('.3',array_test_time), 60)
+    x = hr.Vitals()
+    x.hr_averaging('1/4', array_test_time)
+    assert x.avg_hr_val is 60
 
 
 def test_avghr_with_float():
@@ -95,7 +105,9 @@ def test_avghr_with_float():
     .. function:: test_avghr_with_float():
     Test if the avghr function calculates the correct avg HR using a decimal value
     """
-    assert(hr.hr_averaging(.333,array_test_time), 60)
+    x = hr.Vitals()
+    x.hr_averaging('1/4', array_test_time)
+    assert x.avg_hr_val is 60
 
 
 def test_tachylim_valid():

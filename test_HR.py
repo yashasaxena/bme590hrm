@@ -28,4 +28,6 @@ def test_instHR():
         .. function:: test_instHR():
         Tests if instant heart rate calculated is equal to T * 60s/min
     """
-    assert int(round(hr.instHR(array_test_time))) == 60
+    x = hr.Vitals()
+    x.hr_averaging('1/4', array_test_time)
+    assert x.inst_hr_val is 60
