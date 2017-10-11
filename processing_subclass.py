@@ -1,6 +1,5 @@
-# pseudocode for processing subclass
-
 class processing:
+# pseudocode for processing subclass
    def __init__(self):
        self.t = []
 
