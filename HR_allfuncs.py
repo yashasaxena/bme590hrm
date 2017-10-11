@@ -136,9 +136,6 @@ def instHR(t_array):
 
     return instHR
 
-class Diagnosis:
-
-
 
 def hr_averaging(averaging_time, time_array):
     """
@@ -210,14 +207,13 @@ def hr_averaging(averaging_time, time_array):
     return average_hr_val
 
 
-
-class Diagnosis(Patient):
+class Diagnosis:
 
     def __init__(self):
-        self.tachy = bool
-        self.brachy = bool
+        self.tachy_result = bool
+        self.brachy_result = bool
 
-    def tachy(self, average_hr_val, tachy_limit = 100):
+    def tachy(self, average_hr_val, tachy_limit=100):
 
         """
         .. function:: tachy(average_hr_val, tachy_limit)
@@ -228,7 +224,6 @@ class Diagnosis(Patient):
         :param tachy_limit: tachycardia limit to be specified
         :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
         """
-
 
         # check for non-zero averaging time
         if tachy_limit <= 0:
@@ -249,7 +244,7 @@ class Diagnosis(Patient):
             self.tachy_result = False
 
 
-    def brachy(self, average_hr_val, brachy_limit = 60):
+    def brachy(self, average_hr_val, brachy_limit=60):
 
         """
         .. function:: brachy(average_hr_val, brachy_limit)
