@@ -87,10 +87,10 @@ class Data:
 
 class Processing:
 # pseudocode for processing subclass
-   def __init__(self):
-       self.t = []
+    def __init__(self):
+        self.t = []
 
-   def ecg_peakdetect(self, data_array):
+    def ecg_peakdetect(self, data_array):
     #       insert peak detect function here, which returns t_array
     """ Returns a time array of times where peak was detected
 
@@ -98,17 +98,17 @@ class Processing:
     :rtype: array
     """
     # peak detection function based on variable threshold method
-    diff_filter = 0.125 * np.array([2, 1, -1, -2])
+        diff_filter = 0.125 * np.array([2, 1, -1, -2])
     # differentiation process window, baseline correction
-    pre_processing = data_array[:, 1]
-    pre_processing = np.convolve(pre_processing, diff_filter, 'same')
+        pre_processing = data_array[:, 1]
+        pre_processing = np.convolve(pre_processing, diff_filter, 'same')
     # inverting data because negative peaks have less peak noise surrounding them
-    inverted_data = np.multiply(-1, pre_processing)
+        inverted_data = np.multiply(-1, pre_processing)
     # heart rates to test, lower spectrum to higher spectrum
-    rates = np.array(range(40, 200)) / 60
-    t_step = data_array[1, 0] - data_array[0, 0]
-    fs = int(1 / t_step)  # sampling frequency that provides number of steps in 1 second
-    peakind = signal.find_peaks_cwt(inverted_data, fs / rates / 10)
+        rates = np.array(range(40, 200)) / 60
+        t_step = data_array[1, 0] - data_array[0, 0]
+        fs = int(1 / t_step)  # sampling frequency that provides number of steps in 1 second
+        peakind = signal.find_peaks_cwt(inverted_data, fs / rates / 10)
 
     time_array = []
 
