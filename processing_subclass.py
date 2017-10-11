@@ -1,9 +1,8 @@
 # pseudocode for processing subclass
 
 class processing:
-   def __init__(self, data_array):
+   def __init__(self):
        self.t = []
-       self.data_array = []
 
    def peakdetect(self, data_array):
     #       insert peak detect function here, which returns t_array
