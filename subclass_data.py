@@ -10,9 +10,7 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 class data:
     def __init__(self):
-        self.imported_data = []  # intended attribute??? for yasha's processing subclass
-        self.HR_data = []  # output used in peak detect. not sure if i need both of these lines?
-
+        self.HR_data = []  # att used in peak detect
 
     def extraction(self, filename):
         #  need to fix the fxn name elsewhere - used to be called dataextraction
@@ -37,7 +35,7 @@ class data:
 
         return HR_data
 
-    def columncheck(self, filename):
+    def columncheck(filename):
         """ Confirms that data is arranged in 2 columns
 
         :rtype: Error raised if data structure is incorrect
@@ -51,7 +49,7 @@ class data:
         a=1
         return a
 
-    def typecheck(self, filename):
+    def typecheck(filename):
 
         """ Confirms there are no strings in the data
             :rtype: Error raised if data type is incorrect
@@ -85,4 +83,4 @@ class data:
 
 HR.close()
 
-self.HR_data = HR_data # need help on this too?? don't think this is needed?
+self.HR_data.append(HR_data)
