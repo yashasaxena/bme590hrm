@@ -22,8 +22,6 @@ class Data:
 
         with open(filename) as HR:
             csv_HR = csv.reader(HR)
-            #        data = list(csv_HR)
-            #        N = len(data)
             next(csv_HR)
             for row in csv_HR:
                 time = float(row[0])
@@ -31,7 +29,7 @@ class Data:
                 self.HR_data = np.vstack([self.HR_data, [time, signal]])
 
         HR.close()
-        self.HR_data = np.delete(self.HR_data, (0), axis=0)
+        self.HR_data = np.delete(self.HR_data, 0, axis=0)
 
         return self.HR_data
 
@@ -46,7 +44,7 @@ class Data:
             for row in csv_HR:
                 if len(row)!= 2:
                     raise TypeError('Data is not organized in 2 columns, please check and try again.')
-        a=1
+        a = 1
         return a
 
     def typecheck(self, filename):
@@ -60,7 +58,7 @@ class Data:
         for x in range(0,len(datafile)):
             if (type(datafile[x,1])== str):
                 raise TypeError('Data is not of correct type, please check and try again')
-        c=1
+        c = 1
         return c
 
     def practicalitycheck(self, filename):
@@ -76,7 +74,7 @@ class Data:
         for x in range(0,len(datafile)):
             if datafile[x,1]>=10: #check mV range for typical ECG Data
                 raise TypeError('Data seems irregular, please check and try again')
-        d=1
+        d = 1
         return d
 
         # HR.close()
@@ -84,7 +82,7 @@ class Data:
         self.HR_data.append(HR_data)
 
 class Processing:
-# pseudocode for processing subclass
+    # pseudocode for processing subclass
     def __init__(self):
         self.t = []
 
@@ -111,9 +109,7 @@ class Processing:
         time_array = []
 
         for c in range(0, len(peakind)):
-             y = peakind[c]
-             time_array.append(data_array[y, 0])
+            y = peakind[c]
+            time_array.append(data_array[y, 0])
 
         self.t = time_array
-
-
