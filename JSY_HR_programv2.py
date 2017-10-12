@@ -1,25 +1,22 @@
 # where we import our combined function file
-#import HR_allfuncs as hr
+import HRimport as hr
 
-import Patient as p
 
-import sys
-#filename = "ecg_data.csv"
+def main(filename = 'ecg_data.csv', averaging_time = 10, tachy_limit= 100, brachy_limit= 60, retu):
+    p_data = Data(filename)
 
-#glob code
-
-def run_hr_func(filename, averaging_time, tachy_limit=100, brachy_limit=60):
-    if hr.columncheck(filename) == 1:
+    if p_data.columncheck(filename) == 1:
         pass
-    if hr.datatypecheck(filename) == 1:
+    if p_data.typecheck(filename) == 1:
         pass
-    if hr.datapracticality(filename) == 1:
+    if p_data.practicality(filename) == 1:
         pass
-
     #hr_data = hr.dataextraction(filename)
-    hr_data = p.data.extraction(filename)
+    p_data.extraction(filename)
 
-    peak_times = p.processing.ecg_peakdetect(hr_data)
+    hr_data = p_data.HR_data
+    time_array = Processing(hr_data).t
+
 
     #inst_hrval = hr.instHR(time_array)
 
@@ -45,39 +42,30 @@ def run_hr_func(filename, averaging_time, tachy_limit=100, brachy_limit=60):
         print(line)
     f.close()
 
-# use Sonali's functions to validate data before extraction
-# use Sonali's function to extract data
-# use peak detection function to collect peak times, store in a time array
-# import time array into instant heart rate function, store in a float variable
-# import time array into average heart rate function, store in a float variable
-# import average heart rate value into tachy-,brachycardia function, store in a boolean variable
 
-# basic syntax on opening, and writing to a file
+    # if len(sys.argv) < 2:
+    #     print("Please input an averaging time.")
+    # if len(sys.argv) == 2:
+    #     averaging_time = sys.argv[1]
+    #     run_hr_func(averaging_time)
+    # if len(sys.argv) == 3:
+    #     averaging_time = sys.argv[1]
+    #     tachy_limit = sys.argv[2]
+    #     tachy_limit = complex(tachy_limit)
+    #     tachy_limit = tachy_limit.real
+    #     run_hr_func(averaging_time, tachy_limit)
+    # if len(sys.argv) == 4:
+    #     averaging_time = sys.argv[1]
+    #     tachy_limit = sys.argv[2]
+    #     tachy_limit = complex(tachy_limit)
+    #     tachy_limit = tachy_limit.real
+    #     brachy_limit = sys.argv[3]
+    #     brachy_limit = complex(brachy_limit)
+    #     brachy_limit = brachy_limit.real
+    #     run_hr_func(averaging_time, tachy_limit, brachy_limit)
+    # if len(sys.argv) > 4:
+    #     print("Please view the README.md file for proper usage, you have too many arguments.")
 
-
-def main():
-    if len(sys.argv) < 2:
-        print("Please input an averaging time.")
-    if len(sys.argv) == 2:
-        averaging_time = sys.argv[1]
-        run_hr_func(averaging_time)
-    if len(sys.argv) == 3:
-        averaging_time = sys.argv[1]
-        tachy_limit = sys.argv[2]
-        tachy_limit = complex(tachy_limit)
-        tachy_limit = tachy_limit.real
-        run_hr_func(averaging_time, tachy_limit)
-    if len(sys.argv) == 4:
-        averaging_time = sys.argv[1]
-        tachy_limit = sys.argv[2]
-        tachy_limit = complex(tachy_limit)
-        tachy_limit = tachy_limit.real
-        brachy_limit = sys.argv[3]
-        brachy_limit = complex(brachy_limit)
-        brachy_limit = brachy_limit.real
-        run_hr_func(averaging_time, tachy_limit, brachy_limit)
-    if len(sys.argv) > 4:
-        print("Please view the README.md file for proper usage, you have too many arguments.")
 
 
 if __name__ == "__main__":
