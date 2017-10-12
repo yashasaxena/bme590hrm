@@ -52,7 +52,7 @@ class Data:
     def typecheck(self, filename):
 
         """ Confirms there are no strings in the data
-        
+
             :rtype: Error raised if data type is incorrect
         """
 
