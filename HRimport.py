@@ -10,7 +10,7 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 class Data:
     def __init__(self):
-        self.HR_data = []  # att used in peak detect
+        self.HR_data = np.array([0, 0])  # att used in peak detect
 
     def extraction(self, filename):
         #  need to fix the fxn name elsewhere - used to be called dataextraction
@@ -18,7 +18,7 @@ class Data:
 
         :rtype: HR_data as the matrix for data analysis """
 
-        HR_data = np.array([0, 0])
+        # HR_data = np.array([0, 0])
 
         with open(filename) as HR:
             csv_HR = csv.reader(HR)
@@ -28,12 +28,12 @@ class Data:
             for row in csv_HR:
                 time = float(row[0])
                 signal = float(row[1])
-                HR_data = np.vstack([HR_data, [time, signal]])
+                self.HR_data = np.vstack([self.HR_data, [time, signal]])
 
         HR.close()
-        HR_data = np.delete(HR_data, (0), axis=0)
+        self.HR_data = np.delete(self.HR_data, (0), axis=0)
 
-        return HR_data
+        return self.HR_data
 
     def columncheck(self, filename):
         """ Confirms that data is arranged in 2 columns
@@ -55,23 +55,20 @@ class Data:
             :rtype: Error raised if data type is incorrect
         """
 
-        datafile = dataextraction(filename)
-        #csv_HR = csv.reader(HR)
-        #next(csv_HR)
-        #for row in csv_HR:
+        datafile = Data.extraction(self, filename)
         for x in range(0,len(datafile)):
             if (type(datafile[x,1])== str):
                 raise TypeError('Data is not of correct type, please check and try again')
         c=1
         return c
 
-    def datapracticality(self, filename):
+    def practicalitycheck(self, filename):
         """ Confirms that the signal is within an expected range (below 10mV)
 
         :rtype: Error raised if mV values exceed 10mV
         """
 
-        datafile=dataextraction(filename)
+        datafile = Data.extraction(self, filename)
         #csv_HR = csv.reader(HR)
         #next(csv_HR)
         #for row in csv_HR:

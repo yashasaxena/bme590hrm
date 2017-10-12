@@ -23,23 +23,24 @@ def testdatatype():
     """ unit test to throw an error if any data is string type"""
     with pytest.raises(ValueError):
         x = HRimport.Data()
-        x.datatypecheck('FaultyData_UnitTest.csv')
+        x.typecheck('FaultyData_UnitTest.csv')
+
 
 #test that the data values are within a practical range
 def testvaluerange():
     """ unit test to throw an error if the data is above 10mV"""
     with pytest.raises(ValueError):
         x = HRimport.Data()
-        x.datapracticality('FaultyData_UnitTest.csv')
+        x.practicalitycheck('FaultyData_UnitTest.csv')
 
 def testdataisgood():
     """ unit test to make sure that all data passes
-    columncheck():, datatypecheck():, and datapracticality():
+    columncheck():, typecheck():, and practicality():
     and that no error is thrown when data behaves as expected"""
     x = HRimport.Data()
     assert x.columncheck("ecg_data.csv")==1
-    assert x.datatypecheck("ecg_data.csv")==1
-    assert x.datapracticality("ecg_data.csv")==1
+    assert x.typecheck("ecg_data.csv")==1
+    assert x.practicalitycheck("ecg_data.csv")==1
 
 #create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
