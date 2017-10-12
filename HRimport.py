@@ -8,6 +8,7 @@ min_to_sec = 60
 num_arg = 3
 HR_data = np.array([0, 0])  # initialize a matrix to store data
 
+
 class Data:
     def __init__(self):
         self.HR_data = np.array([0, 0])  # att used in peak detect
@@ -21,9 +22,9 @@ class Data:
         # HR_data = np.array([0, 0])
 
         with open(filename) as HR:
-            csv_HR = csv.reader(HR)
-            next(csv_HR)
-            for row in csv_HR:
+            csv_hr = csv.reader(HR)
+            next(csv_hr)
+            for row in csv_hr:
                 time = float(row[0])
                 signal = float(row[1])
                 self.HR_data = np.vstack([self.HR_data, [time, signal]])
@@ -40,9 +41,9 @@ class Data:
         """
 
         with open(filename) as HR:
-            csv_HR = csv.reader(HR)
-            for row in csv_HR:
-                if len(row)!= 2:
+            csv_hr = csv.reader(HR)
+            for row in csv_hr:
+                if len(row) != 2:
                     raise TypeError('Data is not organized in 2 columns, please check and try again.')
         a = 1
         return a
@@ -55,8 +56,8 @@ class Data:
         """
 
         datafile = Data.extraction(self, filename)
-        for x in range(0,len(datafile)):
-            if (type(datafile[x,1])== str):
+        for x in range(0, len(datafile)):
+            if type(datafile[x, 1]) == str:
                 raise TypeError('Data is not of correct type, please check and try again')
         c = 1
         return c
@@ -68,18 +69,14 @@ class Data:
         """
 
         datafile = Data.extraction(self, filename)
-        #csv_HR = csv.reader(HR)
-        #next(csv_HR)
-        #for row in csv_HR:
-        for x in range(0,len(datafile)):
-            if datafile[x,1]>=10: #check mV range for typical ECG Data
+        for x in range(0, len(datafile)):
+            if datafile[x, 1] >= 10:  # check mV range for typical ECG Data
                 raise TypeError('Data seems irregular, please check and try again')
         d = 1
         return d
 
         # HR.close()
 
-        self.HR_data.append(HR_data)
 
 class Processing:
     # pseudocode for processing subclass
