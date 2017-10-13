@@ -136,8 +136,6 @@ class Vitals:
         num_arg = 3
         min_to_sec = 60
 
-    """ Calculate the average HR based upon ECG data.
-
 
         """
         .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
