@@ -14,9 +14,7 @@ signal = abs(np.sin(t*np.pi)**3)
 array_test = np.column_stack((t, signal))
 array_test_time = hr.HR_peakdetect(array_test)
 """
-
 unit tests for average HR code
-
 """
 
 
