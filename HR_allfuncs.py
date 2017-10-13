@@ -13,12 +13,7 @@ HR_data = np.array([0, 0])  # initialize a matrix to store data
 
 def dataextraction(filename):
 
-
-    """
-    ..function: dataextraction():
-     opens CSV file, converts all numbers to float type, then creates an array to append rows
-     """
-
+    """ Opens CSV file, converts all numbers to float type, then creates an array to append rows """
     HR_data = np.array([0, 0])
 
     with open(filename) as HR:
@@ -40,9 +35,12 @@ def dataextraction(filename):
 # DATA VALIDATION
 def columncheck(filename):  # checks number of columns
 
-    """
-    ..function columncheck():
-    makes sure the data is arranged in 2 columns
+
+
+    """ Confirms that data is arranged in 2 columns
+
+        :rtype: Error raised if data structure is incorrect
+
     """
 
     with open(filename) as HR:
@@ -64,9 +62,9 @@ def columncheck(filename):  # checks number of columns
 
 
 def datatypecheck(filename):  # checks float/int
-    """
-    ..function: datatypecheck():
-    makes sure there are no strings in the data
+    """ Confirms there are no strings in the data
+
+        :rtype: Error raised if data type is incorrect
     """
     datafile = dataextraction(filename)
     # csv_HR = csv.reader(HR)
@@ -80,15 +78,17 @@ def datatypecheck(filename):  # checks float/int
 
 
 def datapracticality(filename):  # checks that the signal range will make sense
-    """"""
-    """..function: datapracticality():
-     checks that the signal is within an expected range (below 10mV"""
-    datafile = dataextraction(filename)
-    # csv_HR = csv.reader(HR)
-    # next(csv_HR)
-    # for row in csv_HR:
-    for x in range(0, len(datafile)):
-        if datafile[x, 1] >= 10:  # check mV range for typical ECG Data
+
+    """ Confirms that the signal is within an expected range (below 10mV)
+
+        :rtype: Error raised if mV values exceed 10mV
+    """
+    datafile=dataextraction(filename)
+    #csv_HR = csv.reader(HR)
+    #next(csv_HR)
+    #for row in csv_HR:
+    for x in range(0,len(datafile)):
+        if datafile[x,1]>=10: #check mV range for typical ECG Data
             raise TypeError('Data seems irregular, please check and try again')
     d = 1
     return d
@@ -96,10 +96,9 @@ def datapracticality(filename):  # checks that the signal range will make sense
 
 
 def HR_peakdetect(data_array):
-    """
-            .. function:: HR_peakdetect(data_array)
-            Returns a time array of times where peak was detected
-            :param data_array: a 2-d array with time and voltage values
+    """ Returns a time array of times where peak was detected
+
+    :param data_array: a 2-d array with time and voltage values
     """
     # peak detection function based on variable threshold method
     diff_filter = 0.125 * np.array([2, 1, -1, -2])
@@ -125,7 +124,9 @@ def HR_peakdetect(data_array):
 
 
 
+
 class Vitals:
+
 
     def __init__(self):
         self.avg_hr_val = float
@@ -134,6 +135,9 @@ class Vitals:
     def hr_averaging(self, averaging_time, time_array):
         num_arg = 3
         min_to_sec = 60
+
+    """ Calculate the average HR based upon ECG data.
+
 
         """
         .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
@@ -206,7 +210,9 @@ class Vitals:
         self.inst_hr_val = min_to_sec  * 1 / dt_first_beat
 
 
+
 class Diagnosis:
+
 
     def __init__(self):
         self.tachy_result = bool
@@ -234,6 +240,7 @@ class Diagnosis:
             tachy_limit = tachy_limit.real
         except ValueError:
             print("Your tachycardia threshold input is not a number, please input a number.")
+
 
         if average_hr_val > tachy_limit:
             print("Tachycardia was found!")
