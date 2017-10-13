@@ -1,6 +1,7 @@
 import pytest
 import unittest
 import HRimport
+import scipy
 
 import numpy as np
 import sys
