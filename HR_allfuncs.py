@@ -7,14 +7,17 @@ import sys
 
 HR_data = np.array([0, 0])  # initialize a matrix to store data
 
-#Open CSV
-#filename = 'ecg_data.csv'
+# Open CSV
+# filename = 'ecg_data.csv'
+
 
 def dataextraction(filename):
 
-    """ """
-    """..function: dataextraction():
-     opens CSV file, converts all numbers to float type, then creates an array to append rows """
+
+    """
+    ..function: dataextraction():
+     opens CSV file, converts all numbers to float type, then creates an array to append rows
+     """
 
     HR_data = np.array([0, 0])
 
@@ -29,64 +32,67 @@ def dataextraction(filename):
             HR_data = np.vstack([HR_data, [time, signal]])
 
     HR.close()
-    HR_data = np.delete(HR_data, (0), axis=0)
+    HR_data = np.delete(HR_data, 0, axis=0)
 
     return HR_data
 
 
 # DATA VALIDATION
-def columncheck(filename): #checks number of columns
+def columncheck(filename):  # checks number of columns
 
-    """"""
-    """..function columncheck():
-     makes sure the data is arranged in 2 columns"""
+    """
+    ..function columncheck():
+    makes sure the data is arranged in 2 columns
+    """
 
     with open(filename) as HR:
         csv_HR = csv.reader(HR)
         for row in csv_HR:
-            if len(row)!= 2:
+            if len(row) != 2:
                 raise TypeError('Data is not organized in 2 columns, please check and try again.')
-    a=1
+    a = 1
     return a
 
-#def headearcheck(filename):  # checks presence of headers
+# def headercheck(filename):  # checks presence of headers
 #    with open(filename) as HR:
 #        csv_HR = csv.reader(HR)
 #        header_row = next(csv_HR)
-#        if (type(heder_row[0]) != str) or (type(header_row[1]) != str):
+#        if (type(header_row[0]) != str) or (type(header_row[1]) != str):
 #            raise ValueError('Data headers are not present, please check and try again.')
 #   b=1
 #   return b
 
+
 def datatypecheck(filename):  # checks float/int
-    """"""
-    """..function: datatypecheck():
-     makes sure there are no strings in the data"""
+    """
+    ..function: datatypecheck():
+    makes sure there are no strings in the data
+    """
     datafile = dataextraction(filename)
-    #csv_HR = csv.reader(HR)
-    #next(csv_HR)
-    #for row in csv_HR:
-    for x in range(0,len(datafile)):
-        if (type(datafile[x,1])== str):
+    # csv_HR = csv.reader(HR)
+    # next(csv_HR)
+    # for row in csv_HR:
+    for x in range(0, len(datafile)):
+        if type(datafile[x, 1] == str):
             raise TypeError('Data is not of correct type, please check and try again')
-    c=1
+    c = 1
     return c
+
 
 def datapracticality(filename):  # checks that the signal range will make sense
     """"""
     """..function: datapracticality():
      checks that the signal is within an expected range (below 10mV"""
-    datafile=dataextraction(filename)
-    #csv_HR = csv.reader(HR)
-    #next(csv_HR)
-    #for row in csv_HR:
-    for x in range(0,len(datafile)):
-        if datafile[x,1]>=10: #check mV range for typical ECG Data
+    datafile = dataextraction(filename)
+    # csv_HR = csv.reader(HR)
+    # next(csv_HR)
+    # for row in csv_HR:
+    for x in range(0, len(datafile)):
+        if datafile[x, 1] >= 10:  # check mV range for typical ECG Data
             raise TypeError('Data seems irregular, please check and try again')
-    d=1
+    d = 1
     return d
-
-#HR.close()
+# HR.close()
 
 
 def HR_peakdetect(data_array):
@@ -119,8 +125,6 @@ def HR_peakdetect(data_array):
 
 
 
-
-
 class Vitals:
 
     def __init__(self):
@@ -140,6 +144,8 @@ class Vitals:
         :param time_array: the time_array after peak_detect has been called
         :rtype: integer value of average HR
         """
+
+
 
         # check for valid num_args
         try:
@@ -200,60 +206,66 @@ class Vitals:
         self.inst_hr_val = min_to_sec  * 1 / dt_first_beat
 
 
-def tachy(average_hr_val, tachy_limit):
+class Diagnosis:
 
-    """
-    .. function:: tachy(average_hr_val, tachy_limit)
+    def __init__(self):
+        self.tachy_result = bool
+        self.brachy_result = bool
 
-    Determine if tachycardia occured during ECG acquisition.
+    def tachy(self, average_hr_val, tachy_limit=100):
 
-    :param average_hr_val: average HR value calculated from hr_averaging()
-    :param tachy_limit: tachycardia limit to be specified
-    :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
-    """
+        """
+        .. function:: tachy(average_hr_val, tachy_limit)
 
-    # check for non-zero averaging time
-    if tachy_limit <= 0:
-        print("Your tachycardia limit must be greater than zero.")
-        raise ValueError
+        Determine if tachycardia occurred during ECG acquisition.
 
-    try:
-        tachy_limit = complex(tachy_limit)
-        tachy_limit = tachy_limit.real
-    except ValueError:
-        print("Your tachycardia threshold input is not a number, please input a number.")
+        :param average_hr_val: average HR value calculated from hr_averaging()
+        :param tachy_limit: tachycardia limit to be specified
+        :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
+        """
 
-    if average_hr_val > tachy_limit:
-        print("Tachycardia was found!")
-        return True
-    else:
-        return False
+        # check for non-zero averaging time
+        if tachy_limit <= 0:
+            print("Your tachycardia limit must be greater than zero.")
+            raise ValueError
 
+        try:
+            tachy_limit = complex(tachy_limit)
+            tachy_limit = tachy_limit.real
+        except ValueError:
+            print("Your tachycardia threshold input is not a number, please input a number.")
 
-def brachy(average_hr_val, brachy_limit):
+        if average_hr_val > tachy_limit:
+            print("Tachycardia was found!")
 
-    """
-    .. function:: brachy(average_hr_val, brachy_limit)
+            self.tachy_result = True
+        else:
+            self.tachy_result = False
 
-    Determine if brachycardia occured during ECG acquisition.
+    def brachy(self, average_hr_val, brachy_limit=60):
 
-    :param average_hr_val: average HR value calculated from hr_averaging()
-    :param brachy_limit: brachycardia limit to be specified
-    :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
-    """
+        """
+        .. function:: brachy(average_hr_val, brachy_limit)
 
-    if brachy_limit <= 0:
-        print("Your brachycardia limit must be greater than zero.")
-        raise ValueError
-    try:
-        brachy_limit = complex(brachy_limit)
-        brachy_limit = brachy_limit.real
-    except ValueError:
-        print("Your brachycardia threshold input is not a number, please input a number.")
+        Determine if brachycardia occurred during ECG acquisition.
 
-    if average_hr_val < brachy_limit:
-        print("Brachycardia was found!")
-        return True
+        :param average_hr_val: average HR value calculated from hr_averaging()
+        :param brachy_limit: brachycardia limit to be specified
+        :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
+        """
 
-    else:
-        return False
+        if brachy_limit <= 0:
+            print("Your brachycardia limit must be greater than zero.")
+            raise ValueError
+        try:
+            brachy_limit = complex(brachy_limit)
+            brachy_limit = brachy_limit.real
+        except ValueError:
+            print("Your brachycardia threshold input is not a number, please input a number.")
+
+        if average_hr_val < brachy_limit:
+            print("Brachycardia was found!")
+            self.brachy_result = True
+
+        else:
+            self.brachy_result = False

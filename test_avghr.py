@@ -2,7 +2,7 @@ import pytest
 import HR_allfuncs as hr
 import numpy as np
 
-#create a sine wave array to test peak finder, instant heart rate function
+# create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
 # time step will be 1 ms (0.001 s), t array goes from 0 to 10,000 ms (10 s)
 # expected peaks should be 10
@@ -10,7 +10,7 @@ import numpy as np
 t = np.arange(0, 60, 0.001)
 signal = abs(np.sin(t*np.pi)**3)
 
-#combine t and sin_vals arrays
+# combine t and sin_vals arrays
 array_test = np.column_stack((t, signal))
 array_test_time = hr.HR_peakdetect(array_test)
 """
@@ -49,7 +49,6 @@ def test_validlen_avgingtime():
         x = hr.Vitals()
         x.hr_averaging(15, array_test_time)
 
-
 def test_isnumber_avgingtime():
     """
     .. function:: test_isnumber_avgingtime():
@@ -59,7 +58,6 @@ def test_isnumber_avgingtime():
         x = hr.Vitals()
         x.hr_averaging("word", array_test_time)
 
-
 def test_fraction_divby0():
     """
     .. function:: test_fraction_divby0():
@@ -68,7 +66,6 @@ def test_fraction_divby0():
     with pytest.raises(ZeroDivisionError):
         x = hr.Vitals()
         x.hr_averaging('1/0', array_test_time)
-
 
 def test_fraction_validsyntax():
     """
@@ -99,7 +96,6 @@ def test_avghr_with_float_as_string():
     x.hr_averaging('1/4', array_test_time)
     assert x.avg_hr_val == 60
 
-
 def test_avghr_with_float():
     """
     .. function:: test_avghr_with_float():
@@ -109,14 +105,14 @@ def test_avghr_with_float():
     x.hr_averaging('1/4', array_test_time)
     assert x.avg_hr_val == 60
 
-
 def test_tachylim_valid():
     """
     .. function:: test_tachylim_valid():
     Test if the tachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        hr.tachy(80, -1)
+        x = hr.Diagnosis()
+        x.tachy(80, -1)
 
 
 def test_tachystring():
@@ -125,7 +121,8 @@ def test_tachystring():
     Test if the tachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        hr.tachy("word")
+        x = hr.Diagnosis
+        x.tachy("word")
 
 
 def test_tachy_present():
@@ -133,7 +130,9 @@ def test_tachy_present():
     .. function:: test_tachy_present():
     Test to see if tachycardia is present
     """
-    assert(hr.tachy(200, tachy_limit=100),  True)
+    x = hr.Diagnosis()
+    x.tachy(200, tachy_limit=100)
+    assert x.tachy_result is True
 
 
 def test_tachy_not_present():
@@ -141,7 +140,9 @@ def test_tachy_not_present():
     .. function:: test_tachy_not_present():
     Test to see if tachycardia is not present
     """
-    assert(hr.tachy(80, tachy_limit=100),  False)
+    x = hr.Diagnosis()
+    x.tachy(80, tachy_limit=100)
+    assert x.tachy_result is False
 
 
 def test_brachylim_valid():
@@ -150,7 +151,8 @@ def test_brachylim_valid():
     Test if the brachycardia limit is a valid threshold
     """
     with pytest.raises(ValueError):
-        hr.brachy(80, -1)
+        x = hr.Diagnosis()
+        x.brachy(80, -1)
 
 
 def test_brachystring():
@@ -159,7 +161,8 @@ def test_brachystring():
     Test if the brachy_limit input is a valid number
     """
     with pytest.raises(TypeError):
-        hr.brachy(80, "word")
+        x = hr.Diagnosis()
+        x.brachy(80, "word")
 
 
 def test_brachy_present():
@@ -167,7 +170,9 @@ def test_brachy_present():
     .. function:: test_brachy_present():
     Test to see if brachycardia is present
     """
-    assert(hr.brachy(30, brachy_limit=60), True)
+    x = hr.Diagnosis()
+    x.brachy(30, brachy_limit=60)
+    assert x.brachy_result is True
 
 
 def test_brachy_not_present():
@@ -175,4 +180,6 @@ def test_brachy_not_present():
     .. function:: test_brachy_not_present():
     Test to see if brachycardia is not present
     """
-    assert (hr.brachy(65, brachy_limit=60), False)
+    x = hr.Diagnosis()
+    x.brachy(65, brachy_limit=60)
+    assert x.brachy_result is False
