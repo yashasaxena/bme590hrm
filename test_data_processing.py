@@ -1,6 +1,6 @@
 import pytest
 import unittest
-import HRimport
+import HRM_classfile
 import scipy
 
 import numpy as np
@@ -15,7 +15,7 @@ import sys
 def testcolumns():
     """ unit test to throw an error if the data is not consistently in 2 columns"""
     with pytest.raises(TypeError):
-        x = HRimport.Data()  # will need to change file name, "Data" is the class
+        x = HRM_classfile.Data()  # will need to change file name, "Data" is the class
         x.columncheck('FaultyData_UnitTest.csv')  # will need to change file name, "Data" is the class
         # and "columncheck" is method
 
@@ -23,7 +23,7 @@ def testcolumns():
 def testdatatype():
     """ unit test to throw an error if any data is string type"""
     with pytest.raises(ValueError):
-        x = HRimport.Data()
+        x = HRM_classfile.Data()
         x.typecheck('FaultyData_UnitTest.csv')
 
 
@@ -31,14 +31,14 @@ def testdatatype():
 def testvaluerange():
     """ unit test to throw an error if the data is above 10mV"""
     with pytest.raises(ValueError):
-        x = HRimport.Data()
+        x = HRM_classfile.Data()
         x.practicalitycheck('FaultyData_UnitTest.csv')
 
 def testdataisgood():
     """ unit test to make sure that all data passes
     columncheck():, typecheck():, and practicality():
     and that no error is thrown when data behaves as expected"""
-    x = HRimport.Data()
+    x = HRM_classfile.Data()
     assert x.columncheck("ecg_data.csv")==1
     assert x.typecheck("ecg_data.csv")==1
     assert x.practicalitycheck("ecg_data.csv")==1
@@ -59,7 +59,7 @@ array_test = np.column_stack((t, signal))
 def test_peakdetect():
     """ Tests if the number of peaks for a defined sine wave is returned by peak detection function
     """
-    x = HRimport.Processing()
+    x = HRM_classfile.Processing()
     peak_times = x.ecg_peakdetect(array_test)
     assert len(x.t) == 10
 
