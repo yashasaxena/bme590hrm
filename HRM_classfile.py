@@ -100,8 +100,8 @@ class Processing:
         # differentiation process
         # window, baseline correction
         pre_processing = data_array[:, 1]
-        pre_processing = np.convolve\ 
-        (pre_processing, diff_filter, 'same')
+        pre_processing = np.convolve(pre_processing,
+                                     diff_filter, 'same')
         # inverting data because negative
         # peaks have less peak noise surrounding them
         inverted_data = np.multiply(-1, pre_processing)
