@@ -106,9 +106,8 @@ class Processing:
         # peaks have less peak noise surrounding them
         inverted_data = np.multiply(-1, pre_processing)
         # heart rates to test, lower spectrum to higher spectrum
-        rates = np.array\(range(40, 200)) / 60
-        t_step = data_array[1, 0]\
-                 - data_array[0, 0]
+        rates = np.array(range(40, 200)) / 60
+        t_step = data_array[1, 0] - data_array[0, 0]
         # sampling frequency that provides number of steps in 1 second
         fs = int(1 / t_step)
         peakind = signal.find_peaks_cwt(inverted_data, fs / rates / 10)
