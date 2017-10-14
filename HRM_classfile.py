@@ -131,7 +131,7 @@ class Vitals:
         num_arg = 3
         min_to_sec = 60
         """ Calculate the average HR based upon ECG data.
-    
+            
         :param averaging_time: time period (in min) used
         to calculate average HR
         :param time_array: the time_array after peak_detect has been called
