@@ -34,9 +34,9 @@ def test_dataisgood():
     columncheck():, typecheck():, and practicality():
     and that no error is thrown when data behaves as expected"""
     x = HRM_classfile.Data()
-    assert x.columncheck("ecg_data.csv")==1
-    assert x.typecheck("ecg_data.csv")==1
-    assert x.practicalitycheck("ecg_data.csv")==1
+    assert x.column_check("ecg_data.csv")==1
+    assert x.type_check("ecg_data.csv")==1
+    assert x.practicality_check("ecg_data.csv")==1
 
 # create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
