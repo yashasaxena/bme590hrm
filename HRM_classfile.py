@@ -104,7 +104,7 @@ class Processing:
             (pre_processing, diff_filter, 'same')
         # inverting data because negative
         # peaks have less peak noise surrounding them
-        inverted_data = \np.multiply(-1, pre_processing)
+        inverted_data = np.multiply(-1, pre_processing)
         # heart rates to test, lower spectrum to higher spectrum
         rates = np.array\(range(40, 200)) / 60
         t_step = data_array[1, 0]\
