@@ -11,10 +11,11 @@ num_arg = 3
 
 class Data:
     def __init__(self):
-        self.HR_data = np.array([0, 0])  # initialize a matrix to store data; att used in peak detect
+        self.HR_data = np.array([0, 0])
 
     def extraction(self, filename):
-        """ Opens CSV file, converts all numbers to float type, then creates an array to append rows
+        """ Opens CSV file, converts all numbers to float type,
+        then creates an array to append rows
 
         :param filename: csv file with HR data
         :rtype: HR_data as the matrix for data analysis """
@@ -43,7 +44,8 @@ class Data:
             csv_hr = csv.reader(HR)
             for row in csv_hr:
                 if len(row) != 2:
-                    raise TypeError('Data is not organized in 2 columns, please check and try again.')
+                    raise TypeError('Data is not organized in 2 columns, '
+                                    'please check and try again.')
         a = 1
         return a
 
@@ -58,12 +60,14 @@ class Data:
         datafile = Data.extraction(self, filename)
         for x in range(0, len(datafile)):
             if type(datafile[x, 1]) == str:
-                raise TypeError('Data is not of correct type, please check and try again')
+                raise TypeError('Data is not of correct type, '
+                                'please check and try again')
         c = 1
         return c
 
     def practicality_check(self, filename):
-        """ Confirms that the signal is within an expected range (below 10mV)
+        """ Confirms that the signal is within an
+        expected range (below 10mV)
 
         :param filename: csv file with HR data
         :rtype: Error raised if mV values exceed 10mV
@@ -72,7 +76,8 @@ class Data:
         datafile = Data.extraction(self, filename)
         for x in range(0, len(datafile)):
             if datafile[x, 1] >= 10:
-                raise TypeError('Data seems irregular, please check and try again')
+                raise TypeError('Data seems irregular, '
+                                'please check and try again')
         d = 1
         return d
 
@@ -82,22 +87,30 @@ class Processing:
         self.t = []
 
     def ecg_peakdetect(self, data_array):
-        """ Peak detection function returning a time array of times when peak was detected
+        """ Peak detection function returning a
+        time array of times when peak was detected
 
-        :param data_array: a 2-d array with time and voltage values
+        :param data_array: a 2-d array with time
+        and voltage values
         :rtype: array
         """
-        # peak detection function based on variable threshold method
+        # peak detection function based
+        # on variable threshold method
         diff_filter = 0.125 * np.array([2, 1, -1, -2])
-        # differentiation process window, baseline correction
+        # differentiation process
+        # window, baseline correction
         pre_processing = data_array[:, 1]
-        pre_processing = np.convolve(pre_processing, diff_filter, 'same')
-        # inverting data because negative peaks have less peak noise surrounding them
-        inverted_data = np.multiply(-1, pre_processing)
+        pre_processing = np.convolve\
+            (pre_processing, diff_filter, 'same')
+        # inverting data because negative
+        # peaks have less peak noise surrounding them
+        inverted_data = \np.multiply(-1, pre_processing)
         # heart rates to test, lower spectrum to higher spectrum
-        rates = np.array(range(40, 200)) / 60
-        t_step = data_array[1, 0] - data_array[0, 0]
-        fs = int(1 / t_step)  # sampling frequency that provides number of steps in 1 second
+        rates = np.array\(range(40, 200)) / 60
+        t_step = data_array[1, 0]\
+                 - data_array[0, 0]
+        # sampling frequency that provides number of steps in 1 second
+        fs = int(1 / t_step)
         peakind = signal.find_peaks_cwt(inverted_data, fs / rates / 10)
 
         time_array = []
@@ -118,7 +131,6 @@ class Vitals:
     def hr_averaging(self, averaging_time, time_array):
         num_arg = 3
         min_to_sec = 60
-
         """ Calculate the average HR based upon ECG data.
         
         :param averaging_time: time period (in min) used to calculate average HR
@@ -148,7 +160,8 @@ class Vitals:
         try:
             averaging_time = float(averaging_time)
         except TypeError:
-            print("Your averaging time input is not a a valid number, please input a number.")
+            print("Your averaging time input is not a a "
+                  "valid number, please input a number.")
 
         averaging_time_sec = averaging_time * min_to_sec
 
@@ -157,7 +170,8 @@ class Vitals:
 
         # check if averaging time is longer than ECG acq time
         if averaging_time_sec > max_acq_time:
-            print("Your averaging time is longer than the ECG acquisition time, try a new value")
+            print("Your averaging time is longer than the "
+                  "ECG acquisition time, try a new value")
             raise ValueError
         else:
             pass
@@ -179,7 +193,8 @@ class Vitals:
         # avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
         time_array_sliced = time_array[:final_ind+1]
-        self.avg_hr_val = int(round((len(time_array_sliced))/averaging_time))
+        self.avg_hr_val = int(
+            round((len(time_array_sliced))/averaging_time))
         dt_first_beat = time_array[2] - time_array[1]
         self.inst_hr_val = min_to_sec * 1 / dt_first_beat
 
@@ -194,7 +209,8 @@ class Diagnosis:
 
         :param average_hr_val: average HR value calculated from hr_averaging()
         :param tachy_limit: tachycardia limit to be specified
-        :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
+        :rtype: bool (True if tachycardia is not present,
+        False if tachycardia is present)
         """
 
         # check for non-zero averaging time
@@ -206,7 +222,8 @@ class Diagnosis:
             tachy_limit = complex(tachy_limit)
             tachy_limit = tachy_limit.real
         except ValueError:
-            print("Your tachycardia threshold input is not a number, please input a number.")
+            print("Your tachycardia threshold input "
+                  "is not a number, please input a number.")
 
         if average_hr_val > tachy_limit:
             print("Tachycardia was found!")
@@ -221,7 +238,8 @@ class Diagnosis:
 
         :param average_hr_val: average HR value calculated from hr_averaging()
         :param brachy_limit: brachycardia limit to be specified
-        :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
+        :rtype: bool (True if brachycardia is not present, F
+        alse if brachycardia is present)
         """
 
         if brachy_limit <= 0:
