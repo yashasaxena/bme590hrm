@@ -11,30 +11,25 @@ import sys
 # import "pytest-cov"
 # import "pytest-pep8"
 
-#test that the data is correctly in 2 columns
-def testcolumns():
+def test_columns():
     """ unit test to throw an error if the data is not consistently in 2 columns"""
     with pytest.raises(TypeError):
-        x = HRM_classfile.Data()  # will need to change file name, "Data" is the class
-        x.columncheck('FaultyData_UnitTest.csv')  # will need to change file name, "Data" is the class
-        # and "columncheck" is method
+        x = HRM_classfile.Data()
+        x.column_check('FaultyData_UnitTest.csv')
 
-#test that the data type after the first row is all float/int
-def testdatatype():
+def test_datatype():
     """ unit test to throw an error if any data is string type"""
     with pytest.raises(ValueError):
         x = HRM_classfile.Data()
-        x.typecheck('FaultyData_UnitTest.csv')
+        x.type_check('FaultyData_UnitTest.csv')
 
-
-#test that the data values are within a practical range
-def testvaluerange():
+def test_valuerange():
     """ unit test to throw an error if the data is above 10mV"""
     with pytest.raises(ValueError):
         x = HRM_classfile.Data()
-        x.practicalitycheck('FaultyData_UnitTest.csv')
+        x.practicality_check('FaultyData_UnitTest.csv')
 
-def testdataisgood():
+def test_dataisgood():
     """ unit test to make sure that all data passes
     columncheck():, typecheck():, and practicality():
     and that no error is thrown when data behaves as expected"""
@@ -43,7 +38,7 @@ def testdataisgood():
     assert x.typecheck("ecg_data.csv")==1
     assert x.practicalitycheck("ecg_data.csv")==1
 
-#create a sine wave array to test peak finder, instant heart rate function
+# create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
 # time step will be 1 ms (0.001 s), t array goes from 0 to 10,000 ms (10 s)
 # expected peaks should be 10
@@ -51,9 +46,9 @@ def testdataisgood():
 t = np.arange(0, 10, 0.001)
 signal = abs(np.sin(t*np.pi)**3)
 
-#combine t and sin_vals arrays
+# combine t and sin_vals arrays
 array_test = np.column_stack((t, signal))
-#array_test_time = hr.HR_peakdetect(array_test)
+# array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
 def test_peakdetect():
@@ -63,7 +58,7 @@ def test_peakdetect():
     peak_times = x.ecg_peakdetect(array_test)
     assert len(x.t) == 10
 
-#def test_instHR():
+# def test_instHR():
 #   """ Tests if instant heart rate calculated is equal to T * 60s/min
 #    """
 #    x = HRimport.Processing()
