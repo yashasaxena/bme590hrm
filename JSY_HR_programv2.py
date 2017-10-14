@@ -1,9 +1,9 @@
 # where we import our combined function file
-import HRimport as hr
+import HR_classfile as hr
 
 
-def main(filename = 'ecg_data.csv', averaging_time = 10, tachy_limit= 100, brachy_limit= 60, retu):
-    p_data = Data(filename)
+def main(filename = 'ecg_data.csv', avg_time = 10, tachy_limit= 100, brachy_limit= 60, return_file ='HR_Specs.txt'):
+    p_data = hr.Data(filename)
 
     if p_data.columncheck(filename) == 1:
         pass
@@ -17,18 +17,21 @@ def main(filename = 'ecg_data.csv', averaging_time = 10, tachy_limit= 100, brach
     hr_data = p_data.HR_data
     time_array = Processing(hr_data).t
 
+    vital_results = hr.Vitals(avg_time,time_array)
+    instant_hr = vital_results.inst_hr_val
 
-    #inst_hrval = hr.instHR(time_array)
+    average_hr = vital_results.avg_hr_val
 
-    #average_hr_val = hr.hr_averaging(averaging_time, time_array)
+    diag_results = hr.Diagnosis()
+    diag_results..tachy(average_hr,tachy_limit)
+    diag_results.brachy(average_hr,brachy_limit)
+    tachy_present = diag_results.tachy_result
+    brachy_present = diag_results.brachy_result
 
-    #tachy_present = hr.tachy(average_hr_val, tachy_limit)
-    #brachy_present = hr.brachy(average_hr_val, brachy_limit)
-
-    hr_txt = open("HR_Specs.txt", "w")
+    hr_txt = open(return_file, "w")
     hr_txt.write("Patient Name: Heart Patient Dude\n")
-    hr_txt.write("Estimated instant heart rate: {:.3f}\n".format(inst_hrval))
-    hr_txt.write("Estimated average heart rate: {:.3f}\n".format(average_hr_val))
+    hr_txt.write("Estimated instant heart rate: {:.3f}\n".format(instant_hr))
+    hr_txt.write("Estimated average heart rate: {:.3f}\n".format(average_hr))
     hr_txt.write("Sign of tachycardia: " + str(tachy_present) + "\n")
     hr_txt.write("Sign of brachycardia: " + str(brachy_present) + "\n")
     hr_txt.write("Please note that values were extracted from a fixed sample of data.\n")
@@ -37,7 +40,7 @@ def main(filename = 'ecg_data.csv', averaging_time = 10, tachy_limit= 100, brach
     hr_txt.close()
 
     # read from the file to command line
-    f = open('HR_Specs.txt')
+    f = open(return_file)
     for line in iter(f):
         print(line)
     f.close()
