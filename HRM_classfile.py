@@ -132,7 +132,8 @@ class Vitals:
         min_to_sec = 60
         """ Calculate the average HR based upon ECG data.
         
-        :param averaging_time: time period (in min) used to calculate average HR
+        :param averaging_time: time period (in min) used
+        to calculate average HR
         :param time_array: the time_array after peak_detect has been called
         :rtype: integer value of average HR
         """
@@ -248,7 +249,8 @@ class Diagnosis:
             brachy_limit = complex(brachy_limit)
             brachy_limit = brachy_limit.real
         except ValueError:
-            print("Your brachycardia threshold input is not a number, please input a number.")
+            print("Your brachycardia threshold input is not a number, "
+                  "please input a number.")
 
         if average_hr_val < brachy_limit:
             print("Brachycardia was found!")
