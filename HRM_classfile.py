@@ -100,8 +100,8 @@ class Processing:
         # differentiation process
         # window, baseline correction
         pre_processing = data_array[:, 1]
-        pre_processing = np.convolve\
-            (pre_processing, diff_filter, 'same')
+        pre_processing = np.convolve\ 
+        (pre_processing, diff_filter, 'same')
         # inverting data because negative
         # peaks have less peak noise surrounding them
         inverted_data = np.multiply(-1, pre_processing)
@@ -131,7 +131,7 @@ class Vitals:
         num_arg = 3
         min_to_sec = 60
         """ Calculate the average HR based upon ECG data.
-        
+    
         :param averaging_time: time period (in min) used
         to calculate average HR
         :param time_array: the time_array after peak_detect has been called
