@@ -112,7 +112,6 @@ class Processing:
 
 class Vitals:
 
-
     def __init__(self):
         self.avg_hr_val = float
         self.inst_hr_val = float
@@ -121,9 +120,8 @@ class Vitals:
         num_arg = 3
         min_to_sec = 60
 
-
         """ Calculate the average HR based upon ECG data.
-
+        
         :param averaging_time: time period (in min) used to calculate average HR
         :param time_array: the time_array after peak_detect has been called
         :rtype: integer value of average HR
@@ -184,23 +182,16 @@ class Vitals:
         time_array_sliced = time_array[:final_ind+1]
         self.avg_hr_val = int(round((len(time_array_sliced))/averaging_time))
         dt_first_beat = time_array[2] - time_array[1]
-        self.inst_hr_val = min_to_sec  * 1 / dt_first_beat
-
+        self.inst_hr_val = min_to_sec * 1 / dt_first_beat
 
 
 class Diagnosis:
-
-
     def __init__(self):
         self.tachy_result = bool
         self.brachy_result = bool
 
     def tachy(self, average_hr_val, tachy_limit=100):
-
-        """
-        .. function:: tachy(average_hr_val, tachy_limit)
-
-        Determine if tachycardia occurred during ECG acquisition.
+        """ Determine if tachycardia occurred during ECG acquisition.
 
         :param average_hr_val: average HR value calculated from hr_averaging()
         :param tachy_limit: tachycardia limit to be specified
@@ -217,7 +208,6 @@ class Diagnosis:
             tachy_limit = tachy_limit.real
         except ValueError:
             print("Your tachycardia threshold input is not a number, please input a number.")
-
 
         if average_hr_val > tachy_limit:
             print("Tachycardia was found!")
