@@ -30,6 +30,6 @@ def test_instHR():
         Tests if instant heart rate calculated is equal to T * 60s/min
     """
     x = v.Vitals('3/20', array_test_time)
-    x.hr_averaging()
+   # x.hr_averaging()
     x.inst_hr_val = int(round(x.inst_hr_val))
     assert x.inst_hr_val == 60

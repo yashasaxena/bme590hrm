@@ -6,10 +6,17 @@ class Vitals:
     MIN_TO_SEC = 60
 
     def __init__(self, averaging_time, time_array):
+        """
+        Initialize Vitals class
+        :param averaging_time: user inputted averaging time
+        :param time_array: time_array that consists of identified peaks
+        """
         self.avg_hr_val = None
         self.inst_hr_val = None
         self.averaging_time = averaging_time
         self.time_array = time_array
+        self.hr_averaging()
+
 
     def hr_averaging(self):
 
@@ -22,13 +29,6 @@ class Vitals:
         :rtype: integer value of average HR
         """
 
-        # check for valid num_args
-        """
-        try:
-            num_arg == sys.argv
-        except TypeError:
-            print("Please input the correct number of arguments") 
-        """
         # check if the averaging time was inputted as a fraction and convert to float
         try:
             test_fraction = Fraction(self.averaging_time)
@@ -59,7 +59,7 @@ class Vitals:
         if averaging_time_sec > max_acq_time:
             print("Your averaging time is longer than the ECG acquisition time, try a new value")
             raise ValueError
-
+        # find the smallest distance between the averaging_time
         final_ind = 0
         final_min = abs(self.time_array[0] - averaging_time_sec)
 

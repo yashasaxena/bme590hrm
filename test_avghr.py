@@ -12,7 +12,7 @@ import HR_allfuncs as hr
 t = np.arange(0, 60, 0.001)
 signal = abs(np.sin(t*np.pi)**3)
 
-# combine t and sin_vals arrays
+# combine t and signal arrays
 array_test = np.column_stack((t, signal))
 array_test_time = hr.HR_peakdetect(array_test)
 """
@@ -29,7 +29,6 @@ def test_numinputs():
     """
     with pytest.raises(TypeError):
         x = v.Vitals()
-        x.hr_averaging()
 
 
 def test_nonzero_avgingtime():
@@ -39,7 +38,6 @@ def test_nonzero_avgingtime():
     """
     with pytest.raises(ValueError):
         x = v.Vitals(0, array_test_time)
-        x.hr_averaging()
 
 
 def test_validlen_avgingtime():
@@ -49,7 +47,6 @@ def test_validlen_avgingtime():
     """
     with pytest.raises(ValueError):
         x = v.Vitals(15, array_test_time)
-        x.hr_averaging()
 
 
 def test_isnumber_avgingtime():
@@ -59,7 +56,6 @@ def test_isnumber_avgingtime():
     """
     with pytest.raises(ValueError):
         x = v.Vitals("word", array_test_time)
-        x.hr_averaging()
 
 
 def test_fraction_divby0():
@@ -69,7 +65,6 @@ def test_fraction_divby0():
     """
     with pytest.raises(ZeroDivisionError):
         x = v.Vitals('1/0', array_test_time)
-        x.hr_averaging()
 
 
 def test_fraction_validsyntax():
@@ -79,7 +74,6 @@ def test_fraction_validsyntax():
     """
     with pytest.raises(ValueError):
         x = v.Vitals('1/2/3', array_test_time)
-        x.hr_averaging()
 
 
 def test_avghr_withfraction():
@@ -88,7 +82,6 @@ def test_avghr_withfraction():
     Test if the avghr function calculates the correct avg HR using a fraction
     """
     x = v.Vitals('1/4', array_test_time)
-    x.hr_averaging()
     assert x.avg_hr_val == 60
 
 
@@ -98,7 +91,6 @@ def test_avghr_with_float_as_string():
     Test if the avghr function calculates the correct avg HR using a decimal value passed as a string
     """
     x = v.Vitals('1/4', array_test_time)
-    x.hr_averaging()
     assert x.avg_hr_val == 60
 
 def test_avghr_with_float():
@@ -107,7 +99,6 @@ def test_avghr_with_float():
     Test if the avghr function calculates the correct avg HR using a decimal value
     """
     x = v.Vitals('1/4', array_test_time)
-    x.hr_averaging()
     assert x.avg_hr_val == 60
 
 def test_tachylim_valid():
@@ -117,7 +108,6 @@ def test_tachylim_valid():
     """
     with pytest.raises(ValueError):
         x = d.Diagnosis(80, -1)
-        x.tachy()
 
 
 def test_tachystring():
@@ -127,7 +117,6 @@ def test_tachystring():
     """
     with pytest.raises(TypeError):
         x = d.Diagnosis(100, "word")
-        x.tachy()
 
 
 def test_tachy_present():
@@ -136,7 +125,6 @@ def test_tachy_present():
     Test to see if tachycardia is present
     """
     x = d.Diagnosis(120, 100)
-    x.tachy()
     assert x.tachy_result is True
 
 
@@ -146,7 +134,6 @@ def test_tachy_not_present():
     Test to see if tachycardia is not present
     """
     x = d.Diagnosis(80, 100)
-    x.tachy()
     assert x.tachy_result is False
 
 
@@ -157,7 +144,6 @@ def test_brachylim_valid():
     """
     with pytest.raises(ValueError):
         x = d.Diagnosis(80, 100, -1)
-        x.brachy()
 
 
 def test_brachystring():
@@ -167,7 +153,6 @@ def test_brachystring():
     """
     with pytest.raises(TypeError):
         x = d.Diagnosis(80, 100, "word")
-        x.brachy()
 
 
 def test_brachy_present():
@@ -176,7 +161,6 @@ def test_brachy_present():
     Test to see if brachycardia is present
     """
     x = d.Diagnosis(40, 100, 60)
-    x.brachy()
     assert x.brachy_result is True
 
 
@@ -186,5 +170,4 @@ def test_brachy_not_present():
     Test to see if brachycardia is not present
     """
     x = d.Diagnosis(80, 100, 60)
-    x.brachy()
     assert x.brachy_result is False

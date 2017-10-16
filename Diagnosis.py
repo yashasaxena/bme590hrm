@@ -1,11 +1,20 @@
 class Diagnosis:
 
     def __init__(self, average_hr_val, tachy_limit=100, brachy_limit=60):
+        """
+        Initializes Diagnosis class for brachycardia and tachycardia tests
+        :param average_hr_val: average HR which is calculated in the Vitals class
+        :param tachy_limit: user inputted tachycardia limit (default is 100)
+        :param brachy_limit: user inputted brachycardia limit (default is 60)
+        """
         self.average_hr_val = average_hr_val
         self.tachy_limit = tachy_limit
         self.brachy_limit = brachy_limit
         self.tachy_result = None
         self.brachy_result = None
+        self.tachy()
+        self.brachy()
+
 
     def tachy(self):
 
