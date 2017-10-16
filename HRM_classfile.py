@@ -6,12 +6,12 @@ import sys
 
 min_to_sec = 60
 num_arg = 3
-# HR_data = np.array([0, 0])
 
 
 class Data:
-    def __init__(self):
+    def __init__(self, filename):
         self.HR_data = np.array([0, 0])
+        self.extraction(filename)
 
     def extraction(self, filename):
         """ Opens CSV file, converts all numbers to float type,
@@ -20,12 +20,18 @@ class Data:
         :param filename: csv file with HR data
         :rtype: HR_data as the matrix for data analysis """
 
+        try:
+            self.column_check(filename)
+        except:
+            #  placeholder
+
         with open(filename) as HR:
             csv_hr = csv.reader(HR)
             next(csv_hr)
             for row in csv_hr:
-                time = float(row[0])
-                signal = float(row[1])
+                if len(row) != 2:
+                    time = float(row[0])
+                    signal = float(row[1])
                 self.HR_data = np.vstack([self.HR_data, [time, signal]])
 
         HR.close()
@@ -57,7 +63,7 @@ class Data:
         :rtype: Error raised if data type is incorrect
         """
 
-        datafile = Data.extraction(self, filename)
+        datafile = self.HR_data;
         for x in range(0, len(datafile)):
             if type(datafile[x, 1]) == str:
                 raise TypeError('Data is not of correct type, '
