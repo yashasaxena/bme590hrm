@@ -1,10 +1,11 @@
-class processing:
+import numpy as np
+
+class Processing:
 # pseudocode for processing subclass
    def __init__(self):
        self.t = []
 
    def peakdetect(self, data_array):
-    #       insert peak detect function here, which returns t_array
     """ Returns a time array of times where peak was detected
 
     :param data_array: a 2-d array with time and voltage values
@@ -29,4 +30,4 @@ class processing:
         y = peakind[c]
         time_array.append(data_array[y, 0])
 
-    self.t.append(time_array)
+    self.t = time_array
