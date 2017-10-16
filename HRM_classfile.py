@@ -22,8 +22,18 @@ class Data:
 
         try:
             self.column_check(filename)
-        except:
-            #  placeholder
+        except Exception as ex:
+            print(ex)
+
+        try:
+            self.type_check(filename)
+        except Exception as ex:
+            print(ex)
+
+        try:
+            self.practicality_check(filename)
+        except Exception as ex:
+            print(ex)
 
         with open(filename) as HR:
             csv_hr = csv.reader(HR)
@@ -63,7 +73,7 @@ class Data:
         :rtype: Error raised if data type is incorrect
         """
 
-        datafile = self.HR_data;
+        datafile = self.HR_data
         for x in range(0, len(datafile)):
             if type(datafile[x, 1]) == str:
                 raise TypeError('Data is not of correct type, '
@@ -79,7 +89,7 @@ class Data:
         :rtype: Error raised if mV values exceed 10mV
         """
 
-        datafile = Data.extraction(self, filename)
+        datafile = self.HR_data
         for x in range(0, len(datafile)):
             if datafile[x, 1] >= 10:
                 raise TypeError('Data seems irregular, '
