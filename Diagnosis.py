@@ -20,8 +20,7 @@ class Diagnosis:
 
         """
         .. function:: tachy(self)
-
-        Determine if tachycardia occurred during ECG acquisition.
+        Determine if tachycardia occurred during ECG acquisition. Stores boolean attribute of tachycardia result.
 
         """
 
@@ -45,9 +44,8 @@ class Diagnosis:
     def brachy(self):
 
         """
-        .. function:: brachy()
-
-        Determine if brachycardia occurred during ECG acquisition.
+        .. function:: brachy(self)
+        Determine if brachycardia occurred during ECG acquisition. Stores boolean attribute of brachycardia result.
 
         """
         # Ensure the brachycardia limit is above 0

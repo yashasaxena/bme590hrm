@@ -7,7 +7,9 @@ class Vitals:
 
     def __init__(self, averaging_time, time_array):
         """
-        Initialize Vitals class
+        Initialize Vitals class. Stores average and instantaneous HR values, calculated using the inputted time_array
+        and user-specified averaging time.
+
         :param averaging_time: user inputted averaging time
         :param time_array: time_array that consists of identified peaks
         """
@@ -21,12 +23,10 @@ class Vitals:
     def hr_averaging(self):
 
         """
-        .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
+        .. function:: hr_averaging(self)
 
-        Calculate the average HR based upon ECG data.
+        Calculate the average HR based upon ECG data. Stores attributes with instant and average HR values.
 
-
-        :rtype: integer value of average HR
         """
 
         # check if the averaging time was inputted as a fraction and convert to float
