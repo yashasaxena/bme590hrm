@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import signal
 
 class Processing:
 # pseudocode for processing subclass
