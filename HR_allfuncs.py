@@ -122,41 +122,39 @@ def HR_peakdetect(data_array):
     return time_array
 
 
-
-
-
 class Vitals:
 
+    # num_arg = 3
+    MIN_TO_SEC = 60
 
-    def __init__(self):
-        self.avg_hr_val = float
-        self.inst_hr_val = float
+    def __init__(self, averaging_time, time_array):
+        self.avg_hr_val = None
+        self.inst_hr_val = None
+        self.averaging_time = averaging_time
+        self.time_array = time_array
 
-    def hr_averaging(self, averaging_time, time_array):
-        num_arg = 3
-        min_to_sec = 60
-
+    def hr_averaging(self):
 
         """
         .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
 
         Calculate the average HR based upon ECG data.
 
-        :param averaging_time: time period (in min) used to calculate average HR
-        :param time_array: the time_array after peak_detect has been called
+
         :rtype: integer value of average HR
         """
 
-
-
         # check for valid num_args
+        """
         try:
             num_arg == sys.argv
         except TypeError:
-            print("Please input the correct number of arguments")
+            print("Please input the correct number of arguments") 
+        """
+        # check if the averaging time was inputted as a fraction and convert to float
         try:
-            test_fraction = Fraction(averaging_time)
-            averaging_time = float(Fraction(test_fraction))
+            test_fraction = Fraction(Vitals.averaging_time)
+            Vitals.averaging_time = float(Fraction(test_fraction))
         except ValueError:
             print("That is not a valid fraction, float, or int")
             raise ValueError
@@ -164,37 +162,35 @@ class Vitals:
             print("You cannot divide by zero")
             raise ZeroDivisionError
         # check for non-zero averaging time
-        if averaging_time <= 0:
+        if Vitals.averaging_time <= 0:
             print("Your averaging time input must be greater than zero.")
             raise ValueError
-        # convert averaging time to float
+
+        # attempt to convert averaging time to float if it isn't a fraction
         try:
-            averaging_time = float(averaging_time)
+            Vitals.averaging_time = float(Vitals.averaging_time)
         except TypeError:
             print("Your averaging time input is not a a valid number, please input a number.")
 
-        averaging_time_sec = averaging_time * min_to_sec
+        averaging_time_sec = Vitals.averaging_time * Vitals.MIN_TO_SEC
 
-        # extract hr data from .csv file
-        max_acq_time = max(time_array)
+        # find the total acquisition time
+        max_acq_time = max(Vitals.time_array)
 
-        # check if averaging time is longer than ECG acq time
+        # check if averaging time is longer than the ECG acquisition time
         if averaging_time_sec > max_acq_time:
             print("Your averaging time is longer than the ECG acquisition time, try a new value")
             raise ValueError
-        else:
-            pass
-
 
         final_ind = 0
-        final_min = abs(time_array[0] - averaging_time_sec)
+        final_min = abs(Vitals.time_array[0] - averaging_time_sec)
         # XXX = []
         # test_pos = np.argwhere(min(abs(time_array - averaging_time_sec)))
         # print(test_pos)
 
-        for i in range(0, len(time_array)):
+        for i in range(0, len(Vitals.time_array)):
 
-            min_val = abs(time_array[i] - averaging_time_sec)
+            min_val = abs(Vitals.time_array[i] - averaging_time_sec)
             if min_val < final_min:
                 final_min = min_val
                 final_ind = i
@@ -202,73 +198,68 @@ class Vitals:
         # final_ind = np.argwhere(min(abs(time_array - averaging_time_sec)))
         # avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
 
-        time_array_sliced = time_array[:final_ind+1]
-        self.avg_hr_val = int(round((len(time_array_sliced))/averaging_time))
-        dt_first_beat = time_array[2] - time_array[1]
-        self.inst_hr_val = min_to_sec  * 1 / dt_first_beat
-
+        time_array_sliced = Vitals.time_array[:final_ind+1]
+        self.avg_hr_val = int(round((len(time_array_sliced))/Vitals.averaging_time))
+        dt_first_beat = Vitals.time_array[2] - Vitals.time_array[1]
+        self.inst_hr_val = Vitals.MIN_TO_SEC * 1 / dt_first_beat
 
 
 class Diagnosis:
 
+    def __init__(self, average_hr_val, tachy_limit=100, brachy_limit=60):
+        self.average_hr_val = average_hr_val
+        self.tachy_limit = tachy_limit
+        self.brachy_limit = brachy_limit
+        self.tachy_result = None
+        self.brachy_result = None
 
-    def __init__(self):
-        self.tachy_result = bool
-        self.brachy_result = bool
-
-    def tachy(self, average_hr_val, tachy_limit=100):
+    def tachy(self):
 
         """
-        .. function:: tachy(average_hr_val, tachy_limit)
+        .. function:: tachy(self)
 
         Determine if tachycardia occurred during ECG acquisition.
 
-        :param average_hr_val: average HR value calculated from hr_averaging()
-        :param tachy_limit: tachycardia limit to be specified
-        :rtype: bool (True if tachycardia is not present, False if tachycardia is present)
+        :rtype: bool (True if tachycardia is  present, False if tachycardia is not present)
         """
 
-        # check for non-zero averaging time
-        if tachy_limit <= 0:
+        # Ensure the brachycardia limit is above 0
+        if Diagnosis.tachy_limit <= 0:
             print("Your tachycardia limit must be greater than zero.")
             raise ValueError
-
+        # Convert the brachycardia limit to type float
         try:
-            tachy_limit = complex(tachy_limit)
-            tachy_limit = tachy_limit.real
+            Diagnosis.tachy_limit = float(Diagnosis.tachy_limit)
         except ValueError:
             print("Your tachycardia threshold input is not a number, please input a number.")
-
-
-        if average_hr_val > tachy_limit:
+        # Evaluate whether tachycardia is present based upon the average HR value calculated previously
+        if Diagnosis.average_hr_val > Diagnosis.tachy_limit:
             print("Tachycardia was found!")
 
             self.tachy_result = True
         else:
             self.tachy_result = False
 
-    def brachy(self, average_hr_val, brachy_limit=60):
+    def brachy(self):
 
         """
         .. function:: brachy(average_hr_val, brachy_limit)
 
         Determine if brachycardia occurred during ECG acquisition.
 
-        :param average_hr_val: average HR value calculated from hr_averaging()
-        :param brachy_limit: brachycardia limit to be specified
-        :rtype: bool (True if brachycardia is not present, False if brachycardia is present)
+        :rtype: bool (True if brachycardia is present, False if brachycardia is not present)
         """
-
-        if brachy_limit <= 0:
+        # Ensure the brachycardia limit is above 0
+        if Diagnosis.brachy_limit <= 0:
             print("Your brachycardia limit must be greater than zero.")
             raise ValueError
+        # Convert the brachycardia limit to type float
         try:
-            brachy_limit = complex(brachy_limit)
-            brachy_limit = brachy_limit.real
+            Diagnosis.brachy_limit = float(Diagnosis.brachy_limit)
         except ValueError:
             print("Your brachycardia threshold input is not a number, please input a number.")
-
-        if average_hr_val < brachy_limit:
+        # Evaluate whether brachycardia is present based upon the average HR value calculated previously
+        if Diagnosis.average_hr_val < Diagnosis.brachy_limit:
             print("Brachycardia was found!")
             self.brachy_result = True
 
