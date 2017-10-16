@@ -1,5 +1,6 @@
 import HR_allfuncs as hr
 import numpy as np
+import Vitals as v
 import pytest
 
 
@@ -28,7 +29,7 @@ def test_instHR():
         .. function:: test_instHR():
         Tests if instant heart rate calculated is equal to T * 60s/min
     """
-    x = hr.Vitals()
-    x.hr_averaging('3/20', array_test_time)
+    x = v.Vitals('3/20', array_test_time)
+    x.hr_averaging()
     x.inst_hr_val = int(round(x.inst_hr_val))
     assert x.inst_hr_val == 60
