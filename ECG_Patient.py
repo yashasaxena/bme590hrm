@@ -10,12 +10,25 @@ import Diagnosis
 class Patient:
     def __init__(self, filename = 'ecg_data.csv', avg_time, tachy_limit=100,
                  brachy_limit=60, return_file = 'HR_Specs.txt'):
+        '''Instantiates patient class
+
+        :param filename:
+        :param avg_time:
+        :param tachy_limit:
+        :param brachy_limit:
+        :param return_file:
+        '''
+
         self.data = Data(filename)
         self.pd_processing = Processing(self.data.HR_array)
-        self.vitals = Vitals(self.pd_processing.t)
-        self.diagnosis = Diagnosis(self.vitals.avg_HR)
+        self.vitals = Vitals(avg_time, self.pd_processing.t)
+        self.diagnosis = Diagnosis(self.vitals.avg_HR, tachy_limit, brachy_limit)
 
     def create_patient_file(self):
+        '''Generates a text file with relevant heart patient information
+
+        :rtype: text file
+        '''
         hr_txt = open(return_file, "w")
         hr_txt.write("Patient Name: Heart Patient Dude\n")
         hr_txt.write("Patient file: " + file_name + "\n")
