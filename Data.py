@@ -19,12 +19,12 @@ class Data:
             print(ex)
 
         try:
-            self.type_check(filename)
+            self.type_check()
         except Exception as ex:
             print(ex)
 
         try:
-            self.practicality_check(filename)
+            self.practicality_check()
         except Exception as ex:
             print(ex)
 
@@ -35,7 +35,7 @@ class Data:
                 if len(row) != 2:
                     time = float(row[0])
                     signal = float(row[1])
-                self.HR_data = np.vstack([self.HR_data, [time, signal]])
+                    self.HR_data = np.vstack([self.HR_data, [time, signal]])
 
         HR.close()
         self.HR_data = np.delete(self.HR_data, 0, axis=0)
@@ -47,7 +47,6 @@ class Data:
         :param filename: csv file with HR data
         :rtype: Error raised if data structure is incorrect
         """
-
         with open(filename) as HR:
             csv_hr = csv.reader(HR)
             for row in csv_hr:
@@ -57,7 +56,7 @@ class Data:
         a = 1
         return a
 
-    def type_check(self, filename):
+    def type_check(self):
 
         """ Confirms there are no strings in the data
         :param filename: csv file with HR data
@@ -72,16 +71,16 @@ class Data:
         c = 1
         return c
 
-    def practicality_check(self, filename):
+    def practicality_check(self):
         """ Confirms that the signal is within an
-        expected range (below 10mV)
+        expected range (below 300mV)
         :param filename: csv file with HR data
         :rtype: Error raised if mV values exceed 10mV
         """
 
         datafile = self.HR_data
         for x in range(0, len(datafile)):
-            if datafile[x, 1] >= 10:
+            if datafile[x, 1] >= 300:
                 raise TypeError('Data seems irregular, '
                                 'please check and try again')
         d = 1
