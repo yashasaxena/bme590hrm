@@ -1,7 +1,7 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-
+import HR_allfuncs as hr
 
 def extraction(filename):
     """ Opens CSV file, converts all numbers to float type,
@@ -78,8 +78,12 @@ def ecg_peakdetect(data_array):
 
 HR_data = extraction('./test_data/Tests1_27/test_data5.csv')
 indices = ecg_peakdetect(HR_data)
+x = hr.Vitals()
+x.hr_averaging(5/60, indices)
+avg_time = x.avg_hr_val
 
 print(indices)
+print(avg_time)
 
 plt.plot(HR_data[:,0], HR_data[:,1])
 

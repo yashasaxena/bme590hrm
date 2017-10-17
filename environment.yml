@@ -1,4 +1,6 @@
 name: bme590hrm
+channels:
+  - cbetters
 dependencies:
   - python>=3.5
   - numpy
@@ -7,3 +9,5 @@ dependencies:
   - pytest-pep8
   - pytest-cov
   - ipython
+  - peakutils
+  - matplotlib
