@@ -58,3 +58,4 @@ class Patient:
 def main(avg_time, filename='ecg_data.csv', tachy_limit=100,
     brachy_limit=60, return_file='HR_Specs.txt'):
     Patient.create_patient_file(self)
+

@@ -72,3 +72,4 @@ def test_brachy_not_present():
     """
     x = d.Diagnosis(80, 100, 60)
     assert x.brachy_result is False
+

@@ -91,3 +91,4 @@ def test_avghr_with_float():
     x = v.Vitals('1/4', array_test_time)
     assert x.avg_hr_val == 60
 
+
