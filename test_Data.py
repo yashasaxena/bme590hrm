@@ -1,5 +1,5 @@
 import pytest
-import Data1 as SC
+import Data as SC
 
 
 def test_columns():
