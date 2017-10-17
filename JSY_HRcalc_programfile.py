@@ -1,7 +1,9 @@
 # where we import our combined function file
 import HR_allfuncs as hr
 import sys
-filename = "ecg_data.csv"
+import ECG_Patient
+
+# filename = "ecg_data.csv"
 
 
 def run_hr_func(averaging_time, tachy_limit=100, brachy_limit=60):
@@ -45,33 +47,13 @@ def run_hr_func(averaging_time, tachy_limit=100, brachy_limit=60):
 # import time array into instant heart rate function, store in a float variable
 # import time array into average heart rate function, store in a float variable
 # import average heart rate value into tachy-,brachycardia function, store in a boolean variable
-
 # basic syntax on opening, and writing to a file
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Please input an averaging time.")
-    if len(sys.argv) == 2:
-        averaging_time = sys.argv[1]
-        run_hr_func(averaging_time)
-    if len(sys.argv) == 3:
-        averaging_time = sys.argv[1]
-        tachy_limit = sys.argv[2]
-        tachy_limit = complex(tachy_limit)
-        tachy_limit = tachy_limit.real
-        run_hr_func(averaging_time, tachy_limit)
-    if len(sys.argv) == 4:
-        averaging_time = sys.argv[1]
-        tachy_limit = sys.argv[2]
-        tachy_limit = complex(tachy_limit)
-        tachy_limit = tachy_limit.real
-        brachy_limit = sys.argv[3]
-        brachy_limit = complex(brachy_limit)
-        brachy_limit = brachy_limit.real
-        run_hr_func(averaging_time, tachy_limit, brachy_limit)
-    if len(sys.argv) > 4:
-        print("Please view the README.md file for proper usage, you have too many arguments.")
+def main(avg_time, filename = 'ecg_data.csv', tachy_limit=100,
+                 brachy_limit=60, return_file = 'HR_Specs.txt'):
+    patient = ECG_Patient.Patient(avg_time, filename, tachy_limit, brachy_limit, return_file)
+    patient.create_patient_file()
 
 
 if __name__ == "__main__":
