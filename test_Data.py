@@ -1,33 +1,19 @@
+import Data as Alternative_Data
+import numpy as np
 import pytest
-import Data as SC
 
-
-def test_columns():
-    """ unit test to throw an error if the data is not consistently in 2 columns"""
+def test_column_number():
     with pytest.raises(TypeError):
-        x = SC.Data('FaultyData_UnitTest.csv')
-        x.column_check('FaultyData_UnitTest.csv')
+        x = Alternative_Data.Data('FaultyData_UnitTest.csv')
+        x.column_check()
 
 
-def test_datatype():
-    """ unit test to throw an error if any data is string type"""
+def test_value_type():
     with pytest.raises(TypeError):
-        x = SC.Data('FaultyData_UnitTest2.csv')
-        x.type_check()
+        x = Alternative_Data.Data('FaultyData_UnitTest.csv')
+        x.value_type()
 
-
-def test_valuerange():
-    """ unit test to throw an error if the data is above 10mV"""
+def test_value_range():
     with pytest.raises(ValueError):
-        x = SC.Data('FaultyData_UnitTest2.csv')
-        x.practicality_check()
-
-
-def test_dataisgood():
-    """ unit test to make sure that all data passes
-    columncheck():, typecheck():, and practicality():
-    and that no error is thrown when data behaves as expected"""
-    x = SC.Data('GoodData_UnitTest.csv')
-    assert x.column_check('GoodData_UnitTest.csv') == 1
-    assert x.type_check() == 1
-    assert x.practicality_check() == 1
+        x = Alternative_Data.Data('FaultyData_UnitTest.csv')
+        x.value_range()
