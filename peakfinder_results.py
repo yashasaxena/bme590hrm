@@ -62,10 +62,10 @@ def ecg_peakdetect(data_array):
 
     for d in range(0, len(time_differences)):
         if time_differences[d] > 0.3:
-            time_array_clean.append(data_array[d, 0])
+            time_array_clean.append(time_array[d])
+
 
     time_array_clean.append(time_array[-1])
-
     return time_array_clean
 
 # for x in glob.glob('/test_data/Tests1-27/*.csv'):
@@ -79,7 +79,7 @@ def ecg_peakdetect(data_array):
 HR_data = extraction('./test_data/Tests1_27/test_data5.csv')
 indices = ecg_peakdetect(HR_data)
 
-print(len(indices))
+print(indices)
 
 plt.plot(HR_data[:,0], HR_data[:,1])
 
