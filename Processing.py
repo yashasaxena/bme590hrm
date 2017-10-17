@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class processing:
+class Processing:
 
    def __init__(self):
        self.t = []

@@ -58,7 +58,7 @@ class Data:
             else:
                 self.value_range_result = True
 
-    def extraction(self, filename):
+    def extraction(self):
         """ Opens CSV file, converts all numbers to float type,
         then creates an array to append rows
         :param filename: csv file with HR data
@@ -89,7 +89,7 @@ class Data:
         for x in range(1, len(f[:, 0])):
             if f[x, 1] == 0.0:
                 f[x, 1] = (f[x + 1, 0]+f[x - 1, 0]) / 2
-        self.f = f
+        self.HR_data = f
 
         # for row in f:
         #     time = float(row[0])
