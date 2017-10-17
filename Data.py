@@ -6,6 +6,15 @@ class Data:
     def __init__(self, filename):
         self.HR_data = np.array([0, 0])
         self.extraction(filename)
+    #    self.raw_data= np.array([0, 0])
+
+    # def load_raw_data(self, filename):
+    #     with open(filename) as HR:
+    #         csv_hr = csv.reader(HR)
+    #         next(csv_hr)
+    #
+    #         for row in csv_hr:
+    #             self.raw_data = np.vstack([self.raw_data, [row[0], row[1]]])
 
     def extraction(self, filename):
         """ Opens CSV file, converts all numbers to float type,
@@ -17,16 +26,19 @@ class Data:
             self.column_check(filename)
         except Exception as ex:
             print(ex)
+            return
 
         try:
-            self.type_check()
+            self.type_check(filename)
         except Exception as ex:
             print(ex)
+            return
 
         try:
-            self.practicality_check()
+            self.practicality_check(filename)
         except Exception as ex:
             print(ex)
+            return
 
         with open(filename) as HR:
             csv_hr = csv.reader(HR)
@@ -56,32 +68,57 @@ class Data:
         a = 1
         return a
 
-    def type_check(self):
+    def type_check(self, filename):
 
         """ Confirms there are no strings in the data
         :param filename: csv file with HR data
         :rtype: Error raised if data type is incorrect
         """
 
-        datafile = self.HR_data
-        for x in range(0, len(datafile)):
-            if type(datafile[x, 1]) == str:
-                raise TypeError('Data is not of correct type, '
-                                'please check and try again')
+        with open(filename) as HR:
+            datafile = csv.reader(HR)
+            next(datafile)
+            for z in datafile:
+                if type(datafile[z, 1]) is str:
+                    raise TypeError('data error')
+
+            # for x in datafile:
+            #     check = x[1]
+            # for y in range(0, len(check)):
+            #         if type(y) == str:
+            #             raise TypeError('data error')
+                # range(0, len(datafile)):
+                # if type(datafile[x, 1]) == str:
+                #     raise TypeError('Data is not of correct type, please check and try again')
         c = 1
         return c
 
-    def practicality_check(self):
+    def practicality_check(self, filename):
         """ Confirms that the signal is within an
         expected range (below 300mV)
         :param filename: csv file with HR data
         :rtype: Error raised if mV values exceed 10mV
         """
 
-        datafile = self.HR_data
-        for x in range(0, len(datafile)):
-            if datafile[x, 1] >= 300:
-                raise TypeError('Data seems irregular, '
-                                'please check and try again')
+        with open(filename) as HR:
+            datafile = csv.reader(HR)
+            next(datafile)
+            for z in datafile:
+                if datafile[z, 1] >= 300:
+                    raise ValueError('data error')
+
+            #
+            # for x in datafile:
+            #     check = x[1]
+            # for y in range(0, len(check)):
+            #         if y >= 300:
+            #             raise ValueError('data error')
+
+        # with open(filename) as HR:
+        #     datafile = csv.reader(HR)
+        #     next(datafile)
+        #     for x in range(0, len(datafile)):
+        #         if datafile[x, 1] >= 300:
+        #             raise TypeError('Data seems irregular, please check and try again')
         d = 1
         return d
