@@ -1,17 +1,17 @@
 import numpy as np
 
 
-class Processing:
+class processing:
 
    def __init__(self):
        self.t = []
 
    def ecg_peakdetect(self, data_array):
-    """ Returns a time array of times where peak was detected
+        """ Returns a time array of times where peak was detected
 
-    :param data_array: a 2-d array with time and voltage values
-    :rtype: array
-    """
+        :param data_array: a 2-d array with time and voltage values
+        :rtype: array
+        """
         # peak detection function based on variable threshold method
         diff_filter = 0.125 * np.array([2, 1, -1, -2])
         # differentiation process/bandpass filter window, baseline correction
