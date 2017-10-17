@@ -10,7 +10,7 @@ class processing:
         """ Returns a time array of times where peak was detected
 
         :param data_array: a 2-d array with time and voltage values
-        :rtype: array
+        :rtype: 1-d array
         """
         # peak detection function based on variable threshold method
         diff_filter = 0.125 * np.array([2, 1, -1, -2])
@@ -18,6 +18,7 @@ class processing:
         pre_processing = data_array[:, 1]
         pre_processing = np.convolve(pre_processing, diff_filter, 'same')
 
+        # thresholding detection method based on baseline corrected peaks
         max_peak = np.max(pre_processing)
         threshold = max_peak - 0.5 * max_peak
         peakind = []
@@ -31,10 +32,12 @@ class processing:
 
         time_differences = np.diff(time_array)
 
+        # accounting for peaks that may have been tripled at a t step by convolution
         for d in range(0, len(time_differences)):
             if time_differences[d] > 0.3:
                 time_array_clean.append(time_array[d])
 
+        # filling in last time value because np.diff cuts off 1 t value
         time_array_clean.append(time_array[-1])
 
         self.t = time_array_clean
