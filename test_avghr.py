@@ -1,6 +1,7 @@
 import pytest
-import HR_allfuncs as hr
+import Processing
 import numpy as np
+import HR_allfuncs as hr
 
 # create a sine wave array to test peak finder, instant heart rate function
 # f = 1 hz, T = 1000 ms
@@ -12,7 +13,10 @@ signal = abs(np.sin(t*np.pi)**3)
 
 # combine t and sin_vals arrays
 array_test = np.column_stack((t, signal))
-array_test_time = hr.HR_peakdetect(array_test)
+x = Processing.processing()
+x.ecg_peakdetect(array_test)
+array_test_time = x.t
+
 """
 unit tests for average HR code
 """
@@ -82,7 +86,7 @@ def test_avghr_withfraction():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val == 60
+    assert int(x.avg_hr_val/10)*10 == 60
 
 
 def test_avghr_with_float_as_string():
@@ -92,7 +96,7 @@ def test_avghr_with_float_as_string():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val == 60
+    assert int(x.avg_hr_val/10)*10 == 60
 
 def test_avghr_with_float():
     """
@@ -101,7 +105,7 @@ def test_avghr_with_float():
     """
     x = hr.Vitals()
     x.hr_averaging('1/4', array_test_time)
-    assert x.avg_hr_val == 60
+    assert int(x.avg_hr_val/10)*10 == 60
 
 def test_tachylim_valid():
     """
