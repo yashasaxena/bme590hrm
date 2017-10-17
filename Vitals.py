@@ -19,7 +19,6 @@ class Vitals:
         self.time_array = time_array
         self.hr_averaging()
 
-
     def hr_averaging(self):
 
         """

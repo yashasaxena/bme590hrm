@@ -15,7 +15,6 @@ class Diagnosis:
         self.tachy()
         self.brachy()
 
-
     def tachy(self):
 
         """
