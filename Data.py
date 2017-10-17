@@ -1,6 +1,6 @@
 import numpy as np
 import csv
-
+import pandas as pd
 
 class Data:
     def __init__(self, filename):
@@ -46,11 +46,17 @@ class Data:
             csv_hr = csv.reader(HR)
             next(csv_hr)
             for row in csv_hr:
+                if bool(row[0])== False:
+                    row[0] = 0
+            for row in csv_hr:
                 if len(row) != 2:
                     time = float(row[0])
                     signal = float(row[1])
                     self.HR_data = np.vstack([self.HR_data, [time, signal]])
 
+            for x in range(0,len(self.HR_data[:,0])):
+                if self.HR_data[x,0] == 0:
+                    self.HR_data[x, 0] = (self.HR_data[x+1, 0] + self.HR_data[x-1, 0])/2
         HR.close()
         self.HR_data = np.delete(self.HR_data, 0, axis=0)
 
