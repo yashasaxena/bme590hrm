@@ -21,7 +21,7 @@ class Patient:
 
         self.data = Data.Data(filename)
         self.pd_processing = Processing.Processing()  # self.data.HR_array
-        self.pd_processing.ecg_peakdetect(self.data.HR_data)
+        self.pd_processing.ecg_peakdetect(self.data.hr_data)
         self.vitals = Vitals.Vitals(avg_time, self.pd_processing.t)
         self.diagnosis = Diagnosis.Diagnosis(self.vitals.avg_hr_val, tachy_limit, brachy_limit)
         self.f = filename
