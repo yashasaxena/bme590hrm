@@ -9,7 +9,7 @@ Contributors: Hoballah, S. Shah, Saxena
 Travis CI Build Status
 ---
 
-[![Travis Badge] (https://travis-ci.org/yashasaxena/bme590hrm.svg?branch=ClassComposition)
+![Travis Badge] (https://travis-ci.org/yashasaxena/bme590hrm.svg?branch=ClassComposition)
 
 License
 ---
