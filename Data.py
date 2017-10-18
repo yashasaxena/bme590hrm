@@ -84,9 +84,9 @@ class Data:
         for x in range(1, len(f[:, 0])):
             if f[x, 0] == 0.0:
                 f[x, 0] = (f[x + 1, 0]+f[x - 1, 0]) / 2
-        for x in range(1, len(f[:, 0])):
-            if f[x, 1] == 0.0:
-                f[x, 1] = (f[x + 1, 0]+f[x - 1, 0]) / 2
+        #for x in range(1, len(f[:, 0])):
+         #   if f[x, 1] == 0.0:
+          #      f[x, 1] = (f[x + 1, 0]+f[x - 1, 0]) / 2
         self.HR_data = f
 
         # for row in f:
