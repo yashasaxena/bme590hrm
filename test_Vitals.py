@@ -1,7 +1,7 @@
 import pytest
-import Vitals as v
-import Processing as p
-import Data as d
+import Vitals
+import Processing
+import Data
 
 """
 
@@ -9,9 +9,9 @@ unit tests for average HR code
 
 """
 
-test_data = d.Data('test_data5.csv')
+test_data = Data.Data('test_data5.csv')
 test_data.extraction()
-processed_data = p.Processing()
+processed_data = Processing.Processing()
 processed_data.ecg_peakdetect(test_data.hr_data)
 array_test_time = processed_data.t
 
@@ -23,7 +23,7 @@ def test_nonzero_avgingtime():
     """
 
     with pytest.raises(ValueError):
-        x = v.Vitals(0, array_test_time)
+        Vitals.Vitals(0, array_test_time)
 
 
 def test_validlen_avgingtime():
@@ -33,16 +33,17 @@ def test_validlen_avgingtime():
     """
 
     with pytest.raises(ValueError):
-        x = v.Vitals(15, array_test_time)
+        Vitals.Vitals(15, array_test_time)
 
 
 def test_isnumber_avgingtime():
     """
     .. function:: test_isnumber_avgingtime():
     Test if the averaging time is a number, otherwise throw error
+    """
 
     with pytest.raises(ValueError):
-        x = v.Vitals("word", array_test_time)"""
+        Vitals.Vitals("word", array_test_time)
 
 
 def test_fraction_divby0():
@@ -52,7 +53,7 @@ def test_fraction_divby0():
     """
 
     with pytest.raises(ZeroDivisionError):
-        x = v.Vitals('1/0', array_test_time)
+        Vitals.Vitals('1/0', array_test_time)
 
 
 def test_fraction_validsyntax():
@@ -62,7 +63,7 @@ def test_fraction_validsyntax():
     """
 
     with pytest.raises(ValueError):
-        x = v.Vitals('1/2/3', array_test_time)
+        Vitals.Vitals('1/2/3', array_test_time)
 
 
 def test_avghr_withfraction():
@@ -70,7 +71,7 @@ def test_avghr_withfraction():
     .. function:: test_avghr_withfraction():
     Test if the avghr function calculates the correct avg HR using a fraction
     """
-    x = v.Vitals('5/60', array_test_time)
+    x = Vitals.Vitals('5/60', array_test_time)
     assert x.avg_hr_val == 84
 
 
@@ -79,8 +80,9 @@ def test_avghr_with_float_as_string():
     .. function:: test_avghr_with_float_as_string():
     Test if the avghr function calculates the correct avg HR using a decimal value passed as a string
     """
-    x = v.Vitals('.083333333', array_test_time)
+    x = Vitals.Vitals('.083333333', array_test_time)
     assert x.avg_hr_val == 84
+
 
 def test_avghr_with_float():
     """
@@ -88,6 +90,6 @@ def test_avghr_with_float():
     Test if the avghr function calculates the correct avg HR using a decimal value
     """
 
-    x = v.Vitals(0.083333333, array_test_time)
+    x = Vitals.Vitals(0.083333333, array_test_time)
 
     assert x.avg_hr_val == 84

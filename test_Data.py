@@ -1,10 +1,10 @@
-import Data as imp
+import Data as Import
 import pytest
 
 
 def test_column_number():
     with pytest.raises(TypeError):
-        x = imp.Data('FaultyData_UnitTest.csv')
+        x = Import.Data('FaultyData_UnitTest.csv')
         x.column_check()
 
 # def test_value_type():
@@ -15,12 +15,12 @@ def test_column_number():
 
 def test_value_range():
     with pytest.raises(ValueError):
-        x = imp.Data('FaultyData_UnitTest.csv')
+        x = Import.Data('FaultyData_UnitTest.csv')
         x.value_range()
 
 
 def test_data_is_good():
-    good_test_data = imp.Data('GoodData_UnitTest.csv')
+    good_test_data = Import.Data('GoodData_UnitTest.csv')
     good_test_data.column_check()
     # good_test_data.value_type()
     good_test_data.value_range()

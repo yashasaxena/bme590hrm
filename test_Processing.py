@@ -1,4 +1,4 @@
-import Processing as p
+import Processing
 import numpy as np
 
 # create a sine wave array to test peak finder, instant heart rate function
@@ -19,6 +19,6 @@ array_test = np.column_stack((t, signal))
 def test_peakdetect():
     """ Tests if the number of peaks for a defined sine wave is returned by peak detection function
     """
-    x = p.Processing()
+    x = Processing.Processing()
     x.ecg_peakdetect(array_test)
     assert len(x.t) == 10
