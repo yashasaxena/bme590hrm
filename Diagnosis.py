@@ -63,4 +63,3 @@ class Diagnosis:
 
         else:
             self.brachy_result = False
-

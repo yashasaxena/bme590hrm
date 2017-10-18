@@ -1,23 +1,7 @@
 import pytest
 import Vitals as v
-import numpy as np
 import Processing as p
 import Data as d
-import HR_allfuncs as hr
-
-# create a sine wave array to test peak finder, instant heart rate function
-# f = 1 hz, T = 1000 ms
-# time step will be 1 ms (0.001 s), t array goes from 0 to 10,000 ms (10 s)
-# expected peaks should be 10
-
-# t = np.arange(0, 60, 0.001)
-# signal = abs(np.sin(t*np.pi)**3)
-#
-# # combine t and signal arrays
-# array_test = np.column_stack((t, signal))
-# array_test_time = hr.HR_peakdetect(array_test)
-
-
 
 """
 
@@ -28,7 +12,7 @@ unit tests for average HR code
 test_data = d.Data('test_data5.csv')
 test_data.extraction()
 processed_data = p.Processing()
-processed_data.ecg_peakdetect(test_data.HR_data)
+processed_data.ecg_peakdetect(test_data.hr_data)
 array_test_time = processed_data.t
 
 

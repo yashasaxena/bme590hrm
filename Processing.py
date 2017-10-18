@@ -3,10 +3,10 @@ import numpy as np
 
 class Processing:
 
-   def __init__(self):
-       self.t = []
+    def __init__(self):
+        self.t = []
 
-   def ecg_peakdetect(self, data_array):
+    def ecg_peakdetect(self, data_array):
         """ Returns a time array of times where peak was detected
         :param data_array: a 2-d array with time and voltage values
         :rtype: 1-d array

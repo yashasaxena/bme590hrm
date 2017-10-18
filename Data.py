@@ -6,8 +6,7 @@ class Data:
     def __init__(self, filename='ecg_testdata.csv'):
         self.filename_array = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='',
                                             filling_values=0.0)
-        # self.HR_data = np.array([0, 0])
-        self.HR_data = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
+        self.hr_data = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
         self.column_check_result = None
         self.value_type_result = None
         self.value_range_result = None
@@ -60,7 +59,7 @@ class Data:
         """ Opens CSV file, runs unit tests to throw any needed errors, then creates an array with any gaps in
         data filled with averages of previous/next data
         :param: csv file with HR data
-        :rtype: HR_data as the matrix for data analysis """
+        :rtype: hr_data as the matrix for data analysis """
 
         try:
             self.column_check()
@@ -80,21 +79,9 @@ class Data:
             print(ex)
             return
 
-        f = self.HR_data
+        f = self.hr_data
         for x in range(1, len(f[:, 0])):
             if f[x, 0] == 0.0:
                 f[x, 0] = (f[x + 1, 0]+f[x - 1, 0]) / 2
-        #for x in range(1, len(f[:, 0])):
-         #   if f[x, 1] == 0.0:
-          #      f[x, 1] = (f[x + 1, 0]+f[x - 1, 0]) / 2
-        self.HR_data = f
 
-        # for row in f:
-        #     time = float(row[0])
-        #     signal = float(row[1])
-        # self.HR_data = np.vstack([self.filename_array, [time, signal]])
-        # self.HR_data = self.filename_array
-        # HR.close()
-        # self.HR_data = np.delete(self.HR_data, 0, axis=0)
-
-        # return self.HR_data
+        self.hr_data = f
