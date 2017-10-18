@@ -93,3 +93,13 @@ def test_avghr_with_float():
     x = Vitals.Vitals(0.083333333, array_test_time)
 
     assert x.avg_hr_val == 84
+
+
+def test_instHR():
+    """
+        .. function:: test_instHR():
+        Tests if instant heart rate calculated is equal to T * 60s/min
+    """
+    x = Vitals.Vitals('5/60', array_test_time)
+    x.inst_hr_val = int(round(x.inst_hr_val))
+    assert round(x.inst_hr_val) == 72

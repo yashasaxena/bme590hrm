@@ -6,7 +6,7 @@ import Diagnosis
 
 
 class Patient:
-    def __init__(self, avg_time, filename='ecg_data.csv', tachy_limit=100,
+    def __init__(self, avg_time=.25, filename='ecg_data.csv', tachy_limit=100,
                  brachy_limit=60, return_file='HR_Specs.txt'):
         """
         Instantiates patient class
@@ -20,6 +20,7 @@ class Patient:
         """
 
         self.data = Data.Data(filename)
+        self.data.extraction()
         self.pd_processing = Processing.Processing()  # self.data.HR_array
         self.pd_processing.ecg_peakdetect(self.data.hr_data)
         self.vitals = Vitals.Vitals(avg_time, self.pd_processing.t)
@@ -59,6 +60,10 @@ class Patient:
         # f.close()
 
 
-def main(avg_time, filename='ecg_data.csv', tachy_limit=100, brachy_limit=60, return_file='HR_Specs.txt'):
+def main(avg_time=.25, filename='ecg_data.csv', tachy_limit=100, brachy_limit=60, return_file='HR_Specs.txt'):
     current_patient = Patient(avg_time, filename, tachy_limit, brachy_limit, return_file)
     current_patient.create_patient_file()
+
+
+if __name__ == "__main__":
+    main()

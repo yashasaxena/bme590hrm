@@ -5,7 +5,7 @@ class Data:
 
     def __init__(self, filename='ecg_testdata.csv'):
         self.filename_array = np.genfromtxt(filename,
-                                            delimiter=',',skip_header=1, missing_values='', filling_values=0.0)
+                                            delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
         self.hr_data = np.genfromtxt(filename, delimiter=',',
                                      skip_header=1, missing_values='', filling_values=0.0)
         self.column_check_result = None
