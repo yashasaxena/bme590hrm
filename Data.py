@@ -4,15 +4,14 @@ import numpy as np
 class Data:
 
     def __init__(self, filename='ecg_testdata.csv'):
-        self.filename_array = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
+        self.filename_array = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='',
+                                            filling_values=0.0)
         # self.HR_data = np.array([0, 0])
         self.HR_data = np.genfromtxt(filename, delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
         self.column_check_result = None
         self.value_type_result = None
         self.value_range_result = None
         self.f = np.array([0, 0])
-
-#   , missing_values='',filling_values=0.0
 
     def column_check(self):
         """ Confirms that data is arranged in 2 columns
@@ -43,10 +42,9 @@ class Data:
     #         self.value_type_result = True
 
     def value_range(self):
-        """ Confirms that the signal is within an
-        expected range (below 300mV)
+        """ Confirms that the signal is within an expected range (below 300mV)
         :param: csv file with HR data
-        :rtype: Error raised if mV values exceed 10mV
+        :rtype: Error raised if mV values exceed 300mV
         """
 
         # rows, columns = self.filename_array.shape
@@ -59,9 +57,9 @@ class Data:
                 self.value_range_result = True
 
     def extraction(self):
-        """ Opens CSV file, converts all numbers to float type,
-        then creates an array to append rows
-        :param filename: csv file with HR data
+        """ Opens CSV file, runs unit tests to throw any needed errors, then creates an array with any gaps in
+        data filled with averages of previous/next data
+        :param: csv file with HR data
         :rtype: HR_data as the matrix for data analysis """
 
         try:

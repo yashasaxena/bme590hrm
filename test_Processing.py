@@ -1,4 +1,3 @@
-import pytest
 import Processing as p
 import numpy as np
 
@@ -15,6 +14,8 @@ array_test = np.column_stack((t, signal))
 # array_test_time = hr.HR_peakdetect(array_test)
 
 # unit test peak detection
+
+
 def test_peakdetect():
     """ Tests if the number of peaks for a defined sine wave is returned by peak detection function
     """
