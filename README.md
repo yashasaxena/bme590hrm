@@ -9,9 +9,7 @@ Contributors: Hoballah, S. Shah, Saxena
 Travis CI Build Status
 ---
 
-![Travis Badge] (https://travis-ci.org/yashasaxena/bme590hrm.svg?branch=master)
-
-
+[![Build Status](https://travis-ci.org/yashasaxena/bme590hrm.svg?branch=master)](https://travis-ci.org/yashasaxena/bme590hrm)
 License
 ---
 
@@ -25,22 +23,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Running the Code:
 ---
-Pull from master branch.
+Pull from ClassComposition branch.
 Set up Conda environment (bme590hrm).
-To run file, python JSY_HRcalc_programfile.py XX YY ZZ(data file must be titled "ecg_data.csv").
 
-Where XX is desired averaging time(m) (integers, decimals and fractions are acceptable), YY is tachycardia limit (bpm, integer or float acceptable), and ZZ is brachycardia limit (bpm, integer or float acceptable). XX parameter is required. YY and ZZ parameter are optional and default values are 100 and 60 respectively. If you wish to change the brachycardia_limit, you must input XX YY and ZZ. For changing the tachycardia_limit, you only need to input XX and YY.
+To run our program: In your Python script, import ECG_Patient as ecp_p (or however you wish to define it).
 
-3.a) This file should output all required information to the command line. Output will also be stored in a test file will named HR_Specs.txt and will be saved in the repository you are working in.
+Instantiate an object of the Patient class.
 
-Note: There is a file ecg_data.csv in the master branch right now, please keep this in mind when running code.
+For example:
 
-Unit Test Files:
+    import ECG_Patient as ecg_p
 
-    test_import.py
+    John_Smith = ecg_p.Patient(5/60, 'test_data5.csv', tachy_limit=110, brachy_limit=75, return_file='John_Smith.txt')
 
-    test_HR.py
+    John_Smith.create_patient_file()
 
-    test_Vitals.py
-
-    test_Diagnosis.py
+This will create a file named John_Smith.txt in your current directory with the results of our HR monitor.
