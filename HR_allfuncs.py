@@ -117,3 +117,83 @@ def HR_peakdetect(data_array):
         time_array.append(data_array[y, 0])
 
     return time_array
+
+class Vitals:
+
+
+    def __init__(self):
+        self.avg_hr_val = float
+        self.inst_hr_val = float
+
+    def hr_averaging(self, averaging_time, time_array):
+        num_arg = 3
+        min_to_sec = 60
+
+
+        """
+        .. function:: hr_averaging(averaging_time, tachy_limit = 100, brachy_limit = 60)
+        Calculate the average HR based upon ECG data.
+        :param averaging_time: time period (in min) used to calculate average HR
+        :param time_array: the time_array after peak_detect has been called
+        :rtype: integer value of average HR
+        """
+
+
+
+        # check for valid num_args
+        try:
+            num_arg == sys.argv
+        except TypeError:
+            print("Please input the correct number of arguments")
+        try:
+            test_fraction = Fraction(averaging_time)
+            averaging_time = float(Fraction(test_fraction))
+        except ValueError:
+            print("That is not a valid fraction, float, or int")
+            raise ValueError
+        except ZeroDivisionError:
+            print("You cannot divide by zero")
+            raise ZeroDivisionError
+        # check for non-zero averaging time
+        if averaging_time <= 0:
+            print("Your averaging time input must be greater than zero.")
+            raise ValueError
+        # convert averaging time to float
+        try:
+            averaging_time = float(averaging_time)
+        except TypeError:
+            print("Your averaging time input is not a a valid number, please input a number.")
+
+        averaging_time_sec = averaging_time * min_to_sec
+
+        # extract hr data from .csv file
+        max_acq_time = max(time_array)
+
+        # check if averaging time is longer than ECG acq time
+        if averaging_time_sec > max_acq_time:
+            print("Your averaging time is longer than the ECG acquisition time, try a new value")
+            raise ValueError
+        else:
+            pass
+
+
+        final_ind = 0
+        final_min = abs(time_array[0] - averaging_time_sec)
+        # XXX = []
+        # test_pos = np.argwhere(min(abs(time_array - averaging_time_sec)))
+        # print(test_pos)
+
+        for i in range(0, len(time_array)):
+
+            min_val = abs(time_array[i] - averaging_time_sec)
+            if min_val < final_min:
+                final_min = min_val
+                final_ind = i
+
+        # final_ind = np.argwhere(min(abs(time_array - averaging_time_sec)))
+        # avg_index = (np.abs(time_array - averaging_time_sec)).argmin()
+
+        time_array_sliced = time_array[:final_ind+1]
+        self.avg_hr_val = int(round((len(time_array_sliced))/averaging_time))
+        dt_first_beat = time_array[2] - time_array[1]
+        self.inst_hr_val = min_to_sec  * 1 / dt_first_beat
