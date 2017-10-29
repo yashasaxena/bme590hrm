@@ -25,8 +25,9 @@ def test_tachy_present():
     .. function:: test_tachy_present():
     Test to see if tachycardia is present
     """
-    x = Diagnosis.Diagnosis(120, 100)
-    assert x.tachy_result is True
+    x = Diagnosis.Diagnosis([120, 110, 140], 100)
+    for i in range(x.inst_hr_array):
+        assert any(x.tachy_result) is True
 
 
 def test_tachy_not_present():
@@ -34,8 +35,9 @@ def test_tachy_not_present():
     .. function:: test_tachy_not_present():
     Test to see if tachycardia is not present
     """
-    x = Diagnosis.Diagnosis(80, 100)
-    assert x.tachy_result is False
+    x = Diagnosis.Diagnosis([60, 70, 80], 100)
+    for i in range(x.inst_hr_array):
+        assert not any(x.tachy_result) is True
 
 
 def test_brachylim_valid():
@@ -61,8 +63,10 @@ def test_brachy_present():
     .. function:: test_brachy_present():
     Test to see if brachycardia is present
     """
-    x = Diagnosis.Diagnosis(40, 100, 60)
-    assert x.brachy_result is True
+    x = Diagnosis.Diagnosis([120, 60, 40], 100, 60)
+
+    for i in range(x.inst_hr_array):
+        assert any(x.brachy_result) is True
 
 
 def test_brachy_not_present():
@@ -70,5 +74,7 @@ def test_brachy_not_present():
     .. function:: test_brachy_not_present():
     Test to see if brachycardia is not present
     """
-    x = Diagnosis.Diagnosis(80, 100, 60)
-    assert x.brachy_result is False
+    x = Diagnosis.Diagnosis([120, 60, 40], 100, 60)
+
+    for i in range(x.inst_hr_array):
+        assert not any(x.brachy_result) is True
