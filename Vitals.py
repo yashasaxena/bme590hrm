@@ -1,6 +1,5 @@
 from fractions import Fraction
-import numpy as np
-
+import math
 
 class Vitals:
 
@@ -75,5 +74,6 @@ class Vitals:
 
         for i in range(0, len(self.time_array) - 1):
             dt_first_beat = self.time_array[i+1] - self.time_array[i]
-            self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
-            self.inst_hr_array[i] = round(self.inst_hr_array[i])
+            self.inst_hr_array.insert(i, self.MIN_TO_SEC/dt_first_beat)
+            #self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
+            self.inst_hr_array[i] = (self.inst_hr_array[i])

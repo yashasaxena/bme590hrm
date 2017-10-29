@@ -2,6 +2,7 @@ import pytest
 import Vitals
 import Processing
 import Data
+import numpy as np
 
 """
 
@@ -14,6 +15,15 @@ test_data.extraction()
 processed_data = Processing.Processing()
 processed_data.ecg_peakdetect(test_data.hr_data)
 array_test_time = processed_data.t
+
+t = np.arange(0, 60, 0.001)
+signal = abs(np.sin(t*np.pi)**3)
+
+# combine t and signal arrays
+sine_array_test = np.column_stack((t, signal))
+sine_data = Processing.Processing()
+sine_data.ecg_peakdetect(sine_array_test)
+sine_array_test_time = sine_data.t
 
 
 
@@ -101,7 +111,7 @@ def test_instHR():
         .. function:: test_instHR():
         Tests if instant heart rate calculated is equal to T * 60s/min
     """
-    x = Vitals.Vitals('5/60', array_test_time)
+    x = Vitals.Vitals('4/60', sine_array_test_time)
 
     for i in range(0, len(x.inst_hr_array)):
-        assert x.inst_hr_array[i] == 72.0
+        assert x.inst_hr_array[i] == 60
