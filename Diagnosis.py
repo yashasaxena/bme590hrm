@@ -3,7 +3,7 @@ class Diagnosis:
     def __init__(self, inst_hr_array, tachy_limit=100, brachy_limit=60):
         """
         Initializes Diagnosis class for brachycardia and tachycardia tests
-        :param average_hr_val: average HR which is calculated in the Vitals class
+        :param inst_hr_array: inst_hr_array from Vitals class
         :param tachy_limit: user inputted tachycardia limit (default is 100)
         :param brachy_limit: user inputted brachycardia limit (default is 60)
         """
@@ -19,7 +19,8 @@ class Diagnosis:
 
         """
         .. function:: tachy(self)
-        Determine if tachycardia occurred during ECG acquisition. Stores boolean attribute of tachycardia result.
+        Determine if tachycardia occurred during ECG acquisition. Stores boolean
+        array of tachycardia result.
 
         """
 
@@ -31,20 +32,22 @@ class Diagnosis:
         try:
             self.tachy_limit = float(self.tachy_limit)
         except ValueError:
-            print("Your tachycardia threshold input is not a number, please input a number.")
-        # Evaluate whether tachycardia is present based upon the average HR value calculated previously
-        if self.average_hr_val > self.tachy_limit:
-            print("Tachycardia was found!")
+            print("Your tachycardia threshold input is not a number,"
+                  " please input a number.")
+        # Evaluate if tachycardia is present in inst_hr_array
+        for i in range(self.inst_hr_array):
+            if self.inst_hr_array[i] > self.tachy_limit:
+                self.tachy_limit[i] = True
 
-            self.tachy_result = True
-        else:
-            self.tachy_result = False
+            else:
+                self.tachy_limit[i] = False
 
     def brachy(self):
 
         """
         .. function:: brachy(self)
-        Determine if brachycardia occurred during ECG acquisition. Stores boolean attribute of brachycardia result.
+        Determine if brachycardia occurred during ECG acquisition. Stores
+        boolean array of brachycardia result.
 
         """
         # Ensure the brachycardia limit is above 0
@@ -55,11 +58,11 @@ class Diagnosis:
         try:
             self.brachy_limit = float(self.brachy_limit)
         except ValueError:
-            print("Your brachycardia threshold input is not a number, please input a number.")
-        # Evaluate whether brachycardia is present based upon the average HR value calculated previously
-        if self.average_hr_val < self.brachy_limit:
-            print("Brachycardia was found!")
-            self.brachy_result = True
-
-        else:
-            self.brachy_result = False
+            print("Your brachycardia threshold input is not a number,"
+                  " please input a number.")
+        # Evaluate if brachycardia is present in inst_hr_array
+        for i in range(self.inst_hr_array):
+            if self.inst_hr_array[i] < self.brachy_limit:
+                self.brachy_result[i] = True
+            else:
+                self.brachy_result[i] = False
