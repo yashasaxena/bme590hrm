@@ -1,4 +1,3 @@
-import numpy as np
 class Diagnosis:
 
     def __init__(self, inst_hr_array, tachy_limit=100, brachy_limit=60):
