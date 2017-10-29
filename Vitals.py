@@ -1,4 +1,5 @@
 from fractions import Fraction
+import numpy as np
 
 
 class Vitals:
@@ -14,7 +15,7 @@ class Vitals:
         :param time_array: time_array that consists of identified peaks
         """
         self.avg_hr_val = None
-        self.inst_hr_val = None
+        self.inst_hr_array = []
         self.averaging_time = averaging_time
         self.time_array = time_array
         self.hr_averaging()
@@ -71,5 +72,8 @@ class Vitals:
 
         time_array_sliced = self.time_array[:final_ind+1]
         self.avg_hr_val = int(round((len(time_array_sliced))/self.averaging_time))
-        dt_first_beat = self.time_array[2] - self.time_array[1]
-        self.inst_hr_val = self.MIN_TO_SEC * 1 / dt_first_beat
+
+        for i in range(0, len(self.time_array) - 1):
+            dt_first_beat = self.time_array[i+1] - self.time_array[i]
+            self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
+            self.inst_hr_array[i] = round(self.inst_hr_array[i])

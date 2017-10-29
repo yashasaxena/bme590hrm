@@ -1,3 +1,4 @@
+import numpy as np
 class Diagnosis:
 
     def __init__(self, inst_hr_array, tachy_limit=100, brachy_limit=60):
@@ -35,12 +36,12 @@ class Diagnosis:
             print("Your tachycardia threshold input is not a number,"
                   " please input a number.")
         # Evaluate if tachycardia is present in inst_hr_array
-        for i in range(self.inst_hr_array):
+        for i in range(0, len(self.inst_hr_array)):
             if self.inst_hr_array[i] > self.tachy_limit:
-                self.tachy_limit[i] = True
+                self.tachy_result.insert(i, True)
 
             else:
-                self.tachy_limit[i] = False
+                self.tachy_result.insert(i, False)
 
     def brachy(self):
 
@@ -61,8 +62,8 @@ class Diagnosis:
             print("Your brachycardia threshold input is not a number,"
                   " please input a number.")
         # Evaluate if brachycardia is present in inst_hr_array
-        for i in range(self.inst_hr_array):
+        for i in range(0, len(self.inst_hr_array)):
             if self.inst_hr_array[i] < self.brachy_limit:
-                self.brachy_result[i] = True
+                self.brachy_result.insert(i, True)
             else:
-                self.brachy_result[i] = False
+                self.brachy_result.insert(i, False)

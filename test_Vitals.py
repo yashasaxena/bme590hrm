@@ -16,6 +16,7 @@ processed_data.ecg_peakdetect(test_data.hr_data)
 array_test_time = processed_data.t
 
 
+
 def test_nonzero_avgingtime():
     """
     .. function:: test_nonzero_avgingtime():
@@ -102,5 +103,5 @@ def test_instHR():
     """
     x = Vitals.Vitals('5/60', array_test_time)
 
-    for i in range(x.inst_hr_array):
-        assert x.inst_hr_array[i] == 60
+    for i in range(0, len(x.inst_hr_array)):
+        assert x.inst_hr_array[i] == 72.0
