@@ -1,13 +1,13 @@
 class Diagnosis:
 
-    def __init__(self, inst_hr_array, tachy_limit=100, brachy_limit=60):
+    def __init__(self, hr_array, tachy_limit=100, brachy_limit=60):
         """
         Initializes Diagnosis class for brachycardia and tachycardia tests
         :param inst_hr_array: inst_hr_array from Vitals class
         :param tachy_limit: user inputted tachycardia limit (default is 100)
         :param brachy_limit: user inputted brachycardia limit (default is 60)
         """
-        self.inst_hr_array = inst_hr_array
+        self.hr_array = hr_array
         self.tachy_limit = tachy_limit
         self.brachy_limit = brachy_limit
         self.tachy_result = []
@@ -35,8 +35,8 @@ class Diagnosis:
             print("Your tachycardia threshold input is not a number,"
                   " please input a number.")
         # Evaluate if tachycardia is present in inst_hr_array
-        for i in range(0, len(self.inst_hr_array)):
-            if self.inst_hr_array[i] > self.tachy_limit:
+        for i in range(0, len(self.hr_array)):
+            if self.hr_array[i] > self.tachy_limit:
                 self.tachy_result.insert(i, True)
 
             else:
@@ -61,8 +61,8 @@ class Diagnosis:
             print("Your brachycardia threshold input is not a number,"
                   " please input a number.")
         # Evaluate if brachycardia is present in inst_hr_array
-        for i in range(0, len(self.inst_hr_array)):
-            if self.inst_hr_array[i] < self.brachy_limit:
+        for i in range(0, len(self.hr_array)):
+            if self.hr_array[i] < self.brachy_limit:
                 self.brachy_result.insert(i, True)
             else:
                 self.brachy_result.insert(i, False)
