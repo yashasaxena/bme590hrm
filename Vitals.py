@@ -1,5 +1,4 @@
 from fractions import Fraction
-import math
 
 
 class Vitals:
@@ -24,7 +23,6 @@ class Vitals:
         self.hr_averaging()
 
     def hr_averaging(self):
-
         """
         .. function:: hr_averaging(self)
 
@@ -90,6 +88,26 @@ class Vitals:
             self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
             self.inst_hr_array[i] = int(round(self.inst_hr_array[i]))
 
+        # initialize variables for interpolated inst_hr_array
+        temp_inst_hr_array = []
+        lower_bound = 0
+        upper_bound = self.peak_time_array[0]
+        counter = 0
+
+        for time in self.time_array:
+            if time < self.peak_time_array[0]:
+                temp_inst_hr_array.append(self.inst_hr_array[0])
+            elif lower_bound <= time < upper_bound:
+                temp_inst_hr_array.append(self.inst_hr_array[counter])
+            elif time > upper_bound:
+                lower_bound = upper_bound
+                counter = counter + 1
+                upper_bound = temp_inst_hr_array[counter]
+                temp_inst_hr_array.append(self.inst_hr_array[counter])
+            elif time > max(self.peak_time_array):
+                temp_inst_hr_array.append\
+                    (self.inst_hr_array[max(self.peak_time_array)])
+        self.inst_hr_array = temp_inst_hr_array
         # calculate average hr array
         for i in range(0, len(self.peak_time_array)):
 
