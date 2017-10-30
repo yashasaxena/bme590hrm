@@ -3,7 +3,7 @@ class Diagnosis:
     def __init__(self, hr_array, tachy_limit=100, brachy_limit=60):
         """
         Initializes Diagnosis class for brachycardia and tachycardia tests
-        :param inst_hr_array: inst_hr_array from Vitals class
+        :param hr_array: hr_array that is compared w/ brachy and tachy limits
         :param tachy_limit: user inputted tachycardia limit (default is 100)
         :param brachy_limit: user inputted brachycardia limit (default is 60)
         """
