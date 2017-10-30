@@ -88,7 +88,7 @@ class Vitals:
             dt_first_beat = self.peak_time_array[i + 1] \
                             - self.peak_time_array[i]
             self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
-            self.inst_hr_array[i] = math.floor(self.inst_hr_array[i])
+            self.inst_hr_array[i] = int(round(self.inst_hr_array[i]))
 
         # calculate average hr array
         for i in range(0, len(self.peak_time_array)):
