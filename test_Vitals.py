@@ -34,7 +34,7 @@ def test_nonzero_avgingtime():
     """
 
     with pytest.raises(ValueError):
-        Vitals.Vitals(0, array_test_time)
+        Vitals.Vitals(0, array_test_time, array_test_time)
 
 
 def test_validlen_avgingtime():
@@ -45,7 +45,7 @@ def test_validlen_avgingtime():
     """
 
     with pytest.raises(ValueError):
-        Vitals.Vitals(15, array_test_time)
+        Vitals.Vitals(15, array_test_time, array_test_time)
 
 
 def test_isnumber_avgingtime():
@@ -55,7 +55,7 @@ def test_isnumber_avgingtime():
     """
 
     with pytest.raises(ValueError):
-        Vitals.Vitals("word", array_test_time)
+        Vitals.Vitals("word", array_test_time, array_test_time)
 
 
 def test_fraction_divby0():
@@ -66,7 +66,7 @@ def test_fraction_divby0():
     """
 
     with pytest.raises(ZeroDivisionError):
-        Vitals.Vitals('1/0', array_test_time)
+        Vitals.Vitals('1/0', array_test_time, array_test_time)
 
 
 def test_fraction_validsyntax():
@@ -76,7 +76,7 @@ def test_fraction_validsyntax():
     """
 
     with pytest.raises(ValueError):
-        Vitals.Vitals('1/2/3', array_test_time)
+        Vitals.Vitals('1/2/3', array_test_time, array_test_time)
 
 
 def test_avghr_withfraction():
@@ -84,7 +84,7 @@ def test_avghr_withfraction():
     .. function:: test_avghr_withfraction():
     Test if the avghr function calculates the correct avg HR using a fraction
     """
-    x = Vitals.Vitals('5/60', array_test_time)
+    x = Vitals.Vitals('5/60', array_test_time, array_test_time)
     assert x.avg_hr_val == 84
 
 
@@ -94,7 +94,7 @@ def test_avghr_with_float_as_string():
     Test if the avghr function calculates the correct avg HR using a decimal
     value passed as a string
     """
-    x = Vitals.Vitals('.083333333', array_test_time)
+    x = Vitals.Vitals('.083333333', array_test_time, array_test_time)
     assert x.avg_hr_val == 84
 
 
@@ -105,7 +105,7 @@ def test_avghr_with_float():
     decimal value
     """
 
-    x = Vitals.Vitals(0.083333333, array_test_time)
+    x = Vitals.Vitals(0.083333333, array_test_time, array_test_time)
 
     assert x.avg_hr_val == 84
 
@@ -115,7 +115,7 @@ def test_insthr():
         .. function:: test_instHR():
         Tests if instant heart rate calculated is equal to T * 60s/min
     """
-    x = Vitals.Vitals('5/60', sine_array_test_time)
+    x = Vitals.Vitals('5/60', sine_array_test_time, sine_array_test_time)
 
     for i in range(0, len(x.inst_hr_array)):
         assert x.inst_hr_array[i] == 60

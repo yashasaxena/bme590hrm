@@ -6,18 +6,20 @@ class Vitals:
 
     MIN_TO_SEC = 60
 
-    def __init__(self, averaging_time, time_array):
+    def __init__(self, averaging_time, peak_time_array, time_array):
         """
         Initialize Vitals class. Stores average and instantaneous HR values,
         calculated using the inputted time_array
         and user-specified averaging time.
 
         :param averaging_time: user inputted averaging time
-        :param time_array: time_array that consists of identified peaks
+        :param peak_time_array: holds time values at an identified peak
+        :param time_array: original time array that was passed in
         """
         self.avg_hr_val = None
         self.inst_hr_array = []
         self.averaging_time = averaging_time
+        self.peak_time_array = peak_time_array
         self.time_array = time_array
         self.hr_averaging()
 
@@ -56,7 +58,7 @@ class Vitals:
         averaging_time_sec = self.averaging_time * self.MIN_TO_SEC
 
         # find the total acquisition time
-        max_acq_time = self.time_array[-1]
+        max_acq_time = self.peak_time_array[-1]
 
         # check if averaging time is longer than the ECG acquisition time
         if averaging_time_sec > max_acq_time:
@@ -66,18 +68,8 @@ class Vitals:
             raise ValueError
         # find the smallest distance between the averaging_time
         final_ind = 0
-        final_min = abs(self.time_array[0] - averaging_time_sec)
+        final_min = abs(self.peak_time_array[0] - averaging_time_sec)
 
-        for i in range(0, len(self.time_array)):
-
-            min_val = abs(self.time_array[i] - averaging_time_sec)
-            if min_val < final_min:
-                final_min = min_val
-                final_ind = i
-
-        time_array_sliced = self.time_array[:final_ind+1]
-        self.avg_hr_val = \
-            int(round((len(time_array_sliced))/self.averaging_time))
         # for i in range(1, len(self.time_array)):
         #     if i == 1:
         #         dt_first_beat = self.time_array[i-1]
@@ -89,9 +81,23 @@ class Vitals:
         #
         #     # self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
         #     self.inst_hr_array[i-1] = int(round(self.inst_hr_array[i-1]))
-        for i in range(0, len(self.time_array)-1):
-            dt_first_beat = self.time_array[i+1] - self.time_array[i]
-            self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1/dt_first_beat)
-            # self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
+
+        # calculate instantaneous hr array
+        for i in range(0, len(self.peak_time_array) - 1):
+
+            dt_first_beat = self.peak_time_array[i + 1] \
+                            - self.peak_time_array[i]
+            self.inst_hr_array.insert(i, self.MIN_TO_SEC * 1 / dt_first_beat)
             self.inst_hr_array[i] = math.floor(self.inst_hr_array[i])
-            # self.inst_hr_array[i] = int(round(self.inst_hr_array[i]))
+
+        # calculate average hr array
+        for i in range(0, len(self.peak_time_array)):
+
+            min_val = abs(self.peak_time_array[i] - averaging_time_sec)
+            if min_val < final_min:
+                final_min = min_val
+                final_ind = i
+
+        time_array_sliced = self.peak_time_array[:final_ind+1]
+        self.avg_hr_val = \
+            int(round((len(time_array_sliced))/self.averaging_time))
