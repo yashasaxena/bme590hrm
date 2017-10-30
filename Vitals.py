@@ -58,7 +58,7 @@ class Vitals:
         averaging_time_sec = self.averaging_time * self.MIN_TO_SEC
 
         # find the total acquisition time
-        max_acq_time = self.peak_time_array[-1]
+        max_acq_time = max(self.peak_time_array)
 
         # check if averaging time is longer than the ECG acquisition time
         if averaging_time_sec > max_acq_time:
