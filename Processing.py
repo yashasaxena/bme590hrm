@@ -19,7 +19,14 @@ class Processing:
         pre_processing = np.convolve(pre_processing, diff_filter, 'same')
 
         # thresholding detection method based on baseline corrected peaks
-        max_peak = np.max(pre_processing)
+        n_2secs = int(round(len(data_array[:, 0]) / 2000)) - 1
+
+        max_array = []
+        for j in range(0, n_2secs):
+            temp = pre_processing[j * 2000:(j * 2000 + 2000)]
+            max_array.append(np.nanmax(temp))
+
+        max_peak = np.median(max_array)
         threshold = max_peak - 0.5 * max_peak
         peakind = []
         time_array = []

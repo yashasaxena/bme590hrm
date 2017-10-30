@@ -6,7 +6,7 @@ import numpy as np
 
 #John_Smith.create_patient_file()
 
-testing_data = d.Data('test_data/Tests1_27/test_data24.csv')
+testing_data = d.Data('test_data/Tests28_30/test_data30.csv')
 testing_data.extraction()
 array = testing_data.hr_data
 
@@ -27,17 +27,16 @@ def ecg_peakdetect(data_array):
     pre_processing = np.convolve(pre_processing,
         diff_filter, 'same')
 
-    # inverting data because negative
-    # peaks have less peak noise surrounding them
-    #inverted_data = np.multiply(-1, pre_processing)
-    # heart rates to test, lower spectrum to higher spectrum
-    #rates = np.array(range(40, 200)) / 60
-    t_step = data_array[1, 0] - data_array[0, 0]
+    n_2secs = int(round(len(data_array[:, 0])/2000)) - 1
     # sampling frequency that provides number of steps in 1 second
-    fs = int(1 / t_step)
+    #fs = int(1 / t_step) - 500
 
-    max_peak = np.nanmax(pre_processing)
+    max_array = []
+    for j in range(0, n_2secs):
+        temp = pre_processing[j*2000:(j*2000+2000)]
+        max_array.append(np.nanmax(temp))
 
+    max_peak = np.median(max_array)
     threshold = max_peak - 0.5*max_peak
     peakind = []
     time_array = []
@@ -54,9 +53,8 @@ def ecg_peakdetect(data_array):
         if time_differences[d] > 0.3:
             time_array_clean.append(time_array[d])
 
-
     time_array_clean.append(time_array[-1])
-    return pre_processing
+    return time_array_clean
 
 # for x in glob.glob('/test_data/Tests1-27/*.csv'):
 #     HR_data = extraction(x)
@@ -70,8 +68,9 @@ indices = ecg_peakdetect(array)
 
 
 print(indices)
+print(len(indices))
 
-plt.plot(array[:, 0], indices)
+plt.plot(array[:, 0], array[:, 1])
 
 #plt.plot(HR_data[indices, 0], HR_data[indices, 1], 'r')
 
