@@ -11,14 +11,22 @@ class Processing:
         :param data_array: a 2-d array with time and voltage values
         :rtype: 1-d array
         """
+        pre_processing = data_array[:, 1]
         # peak detection function based on variable threshold method
         diff_filter = 0.125 * np.array([2, 1, -1, -2])
         # differentiation process/bandpass filter window, baseline correction
-        pre_processing = data_array[:, 1]
+
         pre_processing = np.convolve(pre_processing, diff_filter, 'same')
 
         # thresholding detection method based on baseline corrected peaks
-        max_peak = np.max(pre_processing)
+        n_2secs = int(round(len(data_array[:, 0]) / 2000)) - 1
+
+        max_array = []
+        for j in range(0, n_2secs):
+            temp = pre_processing[j * 2000:(j * 2000 + 2000)]
+            max_array.append(np.nanmax(temp))
+
+        max_peak = np.median(max_array)
         threshold = max_peak - 0.5 * max_peak
         peakind = []
         time_array = []
