@@ -19,8 +19,8 @@ class Diagnosis:
 
         """
         .. function:: tachy(self)
-        Determine if tachycardia occurred during ECG acquisition. Stores boolean
-        array of tachycardia result.
+        Determine if tachycardia occurred during ECG acquisition. Stores
+        boolean array of tachycardia result.
 
         """
 

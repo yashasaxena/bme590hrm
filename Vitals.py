@@ -95,7 +95,7 @@ class Vitals:
                 counter = counter + 1
                 upper_bound = temp_inst_hr_array[counter]
                 temp_inst_hr_array.append(self.inst_hr_array[counter])
-            # append last inter-peak inst_hr value for times after the last peak
+            # append last inter-peak inst_hr value for times after final peak
             elif time > max(self.peak_time_array):
                 temp_inst_hr_array.append(self.inst_hr_array[
                                               max(self.peak_time_array)])
