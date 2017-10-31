@@ -31,7 +31,7 @@ class Diagnosis:
         # Convert the brachycardia limit to type float
         try:
             self.tachy_limit = float(self.tachy_limit)
-        except ValueError:
+        except TypeError:
             print("Your tachycardia threshold input is not a number,"
                   " please input a number.")
         # Evaluate if tachycardia is present in inst_hr_array
