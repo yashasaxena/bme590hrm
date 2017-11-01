@@ -49,7 +49,7 @@ def test_is_number_averaging_time():
     """
 
     with pytest.raises(ValueError):
-        Vitals.Vitals(sine_array_test_time, t,"word")
+        Vitals.Vitals(sine_array_test_time, t, "word")
 
 
 def test_fraction_div_by_0():

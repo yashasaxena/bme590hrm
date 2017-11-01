@@ -36,9 +36,9 @@ class Vitals:
         try:
             test_fraction = Fraction(self.averaging_time)
             self.averaging_time = float(Fraction(test_fraction))
-        except ValueError:
+        except TypeError:
             print("That is not a valid fraction, float, or int")
-            raise ValueError
+            raise TypeError
         except ZeroDivisionError:
             print("You cannot divide by zero")
             raise ZeroDivisionError
