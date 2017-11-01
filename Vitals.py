@@ -36,9 +36,9 @@ class Vitals:
         try:
             test_fraction = Fraction(self.averaging_time)
             self.averaging_time = float(Fraction(test_fraction))
-        except TypeError:
+        except ValueError:
             print("That is not a valid fraction, float, or int")
-            raise TypeError
+            raise ValueError
         except ZeroDivisionError:
             print("You cannot divide by zero")
             raise ZeroDivisionError
@@ -50,7 +50,7 @@ class Vitals:
         # attempt to convert averaging time to float if it isn't a fraction
         try:
             self.averaging_time = float(self.averaging_time)
-        except TypeError:
+        except ValueError:
             print("Your averaging time input is not a a valid number,"
                   " please input a number.")
 
