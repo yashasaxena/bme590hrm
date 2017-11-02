@@ -27,7 +27,7 @@ class Diagnosis:
         # Ensure the brachycardia limit is above 0
         if self.tachy_limit <= 0:
             print("Your tachycardia limit must be greater than zero.")
-            raise ValueError
+            raise ValueError("Your tachycardia limit must be > 0")
         # Convert the brachycardia limit to type float
         try:
             self.tachy_limit = float(self.tachy_limit)
@@ -53,7 +53,7 @@ class Diagnosis:
         # Ensure the brachycardia limit is above 0
         if self.brachy_limit <= 0:
             print("Your brachycardia limit must be greater than zero.")
-            raise ValueError
+            raise ValueError("Your brachycardia limit must be > 0")
         # Convert the brachycardia limit to type float
         try:
             self.brachy_limit = float(self.brachy_limit)
