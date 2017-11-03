@@ -1,7 +1,7 @@
 from fractions import Fraction
 import numpy as np
 
-
+counter = 0
 class Vitals:
 
     MIN_TO_SEC = 60
@@ -77,7 +77,7 @@ class Vitals:
         temp_inst_hr_array = []
         lower_bound = self.peak_time_array[0]
         upper_bound = self.peak_time_array[1]
-        counter = 0
+
 
         # interpolate instantaneous hr values for all peak times
         for time in self.time_array:
@@ -92,6 +92,7 @@ class Vitals:
             # append next inst_hr value after passing the inter-peak interval
             elif time > upper_bound:
                 lower_bound = upper_bound
+                global counter
                 counter = counter + 1
                 upper_bound = temp_inst_hr_array[counter]
                 temp_inst_hr_array.append(self.inst_hr_array[counter])
