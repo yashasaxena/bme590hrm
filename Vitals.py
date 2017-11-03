@@ -7,7 +7,7 @@ class Vitals:
 
     MIN_TO_SEC = 60
 
-    def __init__(self, peak_time_array, time_array, averaging_time=.25, ):
+    def __init__(self, peak_time_array, time_array, averaging_time=.01, ):
         """
         Initialize Vitals class. Stores average and instantaneous HR values,
         calculated using the inputted time_array
@@ -22,7 +22,8 @@ class Vitals:
         self.averaging_time = averaging_time
         self.peak_time_array = peak_time_array
         self.time_array = time_array
-        self.counter = 0
+        self.back_peak = 0
+        self.front_peak = 1
         self.hr_averaging()
 
 
@@ -84,24 +85,35 @@ class Vitals:
 
         # interpolate instantaneous hr values for all peak times
         for time in self.time_array:
+
+
+
+
             # append first inst_hr for times before first peak
             if time < self.peak_time_array[0]:
                 temp_inst_hr_array.append(self.inst_hr_array[0])
+                print('step 1')
 
             # append the inst_hr value from the inter-peak time interval
             elif lower_bound <= time <= upper_bound:
-                temp_inst_hr_array.append(self.inst_hr_array[self.counter])
+                temp_inst_hr_array.append(self.inst_hr_array[self.back_peak])
+
+                print('step 2')
+
+            # append last inter-peak inst_hr value for times after final peak
+            elif time > max(self.peak_time_array):
+                print('step 3')
+                temp_inst_hr_array.append(self.inst_hr_array[-1])
 
             # append next inst_hr value after passing the inter-peak interval
             elif time > upper_bound:
+                print('step 4')
                 lower_bound = upper_bound
-                self.counter = self.counter + 1
-                upper_bound = temp_inst_hr_array[self.counter]
-                temp_inst_hr_array.append(self.inst_hr_array[self.counter])
-            # append last inter-peak inst_hr value for times after final peak
-            elif time > max(self.peak_time_array):
-                temp_inst_hr_array.append(self.inst_hr_array[
-                                              max(self.peak_time_array)])
+                self.back_peak = self.front_peak
+                self.front_peak = self.front_peak + 1
+                upper_bound = self.peak_time_array[self.front_peak]
+                temp_inst_hr_array.append(self.inst_hr_array[self.back_peak])
+
         # set inst_hr_array to the interpolated inst_hr_array
         self.inst_hr_array = temp_inst_hr_array
 

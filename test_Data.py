@@ -1,4 +1,4 @@
-import bme590hrm.Data as Import
+import Data as Import
 import pytest
 
 
