@@ -1,7 +1,7 @@
 from fractions import Fraction
 import numpy as np
 
-vitals_counter = 0
+
 
 class Vitals:
 
@@ -22,7 +22,9 @@ class Vitals:
         self.averaging_time = averaging_time
         self.peak_time_array = peak_time_array
         self.time_array = time_array
+        self.counter = 0
         self.hr_averaging()
+
 
     def hr_averaging(self):
         """
@@ -88,15 +90,14 @@ class Vitals:
 
             # append the inst_hr value from the inter-peak time interval
             elif lower_bound <= time <= upper_bound:
-                temp_inst_hr_array.append(self.inst_hr_array[vitals_counter])
+                temp_inst_hr_array.append(self.inst_hr_array[self.counter])
 
             # append next inst_hr value after passing the inter-peak interval
             elif time > upper_bound:
                 lower_bound = upper_bound
-                global vitals_counter
-                vitals_counter = vitals_counter + 1
-                upper_bound = temp_inst_hr_array[vitals_counter]
-                temp_inst_hr_array.append(self.inst_hr_array[vitals_counter])
+                self.counter = self.counter + 1
+                upper_bound = temp_inst_hr_array[self.counter]
+                temp_inst_hr_array.append(self.inst_hr_array[self.counter])
             # append last inter-peak inst_hr value for times after final peak
             elif time > max(self.peak_time_array):
                 temp_inst_hr_array.append(self.inst_hr_array[
