@@ -2,7 +2,6 @@ from fractions import Fraction
 import numpy as np
 
 
-
 class Vitals:
 
     MIN_TO_SEC = 60
@@ -25,7 +24,6 @@ class Vitals:
         self.back_peak = 0
         self.front_peak = 1
         self.hr_averaging()
-
 
     def hr_averaging(self):
         """
@@ -82,12 +80,8 @@ class Vitals:
         lower_bound = self.peak_time_array[0]
         upper_bound = self.peak_time_array[1]
 
-
         # interpolate instantaneous hr values for all peak times
         for time in self.time_array:
-
-
-
 
             # append first inst_hr for times before first peak
             if time < self.peak_time_array[0]:

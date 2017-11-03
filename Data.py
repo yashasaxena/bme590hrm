@@ -5,9 +5,12 @@ class Data:
 
     def __init__(self, filename='ecg_testdata.csv'):
         self.filename_array = np.genfromtxt(filename,
-                                            delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
+                                            delimiter=',', skip_header=1,
+                                            missing_values='',
+                                            filling_values=0.0)
         self.hr_data = np.genfromtxt(filename, delimiter=',',
-                                     skip_header=1, missing_values='', filling_values=0.0)
+                                     skip_header=1, missing_values='',
+                                     filling_values=0.0)
         self.column_check_result = None
         self.value_type_result = None
         self.value_range_result = None
@@ -42,7 +45,8 @@ class Data:
                 self.value_range_result = True
 
     def extraction(self):
-        """ Opens CSV file, runs unit tests to throw any needed errors, then creates an array with any gaps in
+        """ Opens CSV file, runs unit tests to throw any needed errors,
+        then creates an array with any gaps in
         data filled with averages of previous/next data
         :param: csv file with HR data
         :rtype: hr_data as the matrix for data analysis """

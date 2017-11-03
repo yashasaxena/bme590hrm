@@ -17,7 +17,8 @@ array_test = np.column_stack((t, signal))
 
 
 def test_peakdetect():
-    """ Tests if the number of peaks for a defined sine wave is returned by peak detection function
+    """ Tests if the number of peaks for a defined sine wave is returned
+     by peak detection function
     """
     x = Processing.Processing()
     x.ecg_peakdetect(array_test)

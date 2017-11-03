@@ -39,7 +39,7 @@ class Processing:
 
         time_differences = np.diff(time_array)
 
-        # accounting for peaks that may have been tripled at a t step by convolution
+        # accounts for peaks that may have tripled at t-step by convolution
         for d in range(0, len(time_differences)):
             if time_differences[d] > 0.3:
                 time_array_clean.append(time_array[d])
