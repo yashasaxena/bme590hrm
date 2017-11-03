@@ -141,7 +141,7 @@ class Vitals:
                                         np.ones(final_ind) / final_ind, 'same')
         self.avg_hr_array = np.around(self.avg_hr_array)
         self.avg_hr_array = self.avg_hr_array.astype(int)
-
+        self.avg_hr_array = self.avg_hr_array.tolist()
         # # calculate average hr array
         # time_array_sliced = self.peak_time_array[:final_ind+1]
         # self.avg_hr_val = \
